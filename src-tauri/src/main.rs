@@ -2,5 +2,8 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    sky_aware_lib::run()
+    let context = tauri::generate_context!();
+    tauri::Builder::default()
+        .run(context)
+        .expect("error while running OhMyBox application");
 }

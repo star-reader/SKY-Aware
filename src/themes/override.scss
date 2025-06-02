@@ -1,0 +1,41 @@
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+
+  &:hover {
+    background: #a8a8a8;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  &:active {
+    background: #8f8f8f;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+// 当滚动条处于非悬停状态时，使其更细
+::-webkit-scrollbar-thumb:vertical {
+  min-height: 30px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  min-width: 30px;
+}
+
+// 角落的样式
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
