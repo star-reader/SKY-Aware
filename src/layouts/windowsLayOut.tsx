@@ -32,7 +32,8 @@ const useStyles = makeStyles({
     overflow: "hidden",
     display: "flex",
     height: "100vh",
-    backgroundColor: "transparent"
+    userSelect: "none",
+    WebkitUserSelect: "none",
   },
   nav: {
     width: "135px",

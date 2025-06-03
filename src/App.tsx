@@ -2,7 +2,6 @@ import { webLightTheme, webDarkTheme, FluentProvider, makeStyles } from '@fluent
 import WindowsLayOut from './layouts/windowsLayOut'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
-import { listen } from '@tauri-apps/api/event'
 
 const useStyles = makeStyles({
   root: {
