@@ -41,6 +41,7 @@ export default () => {
     <FluentProvider 
       theme={theme} 
       className={isDark ? styles.darkRoot : styles.root}
+      aria-label={isDark ? "dark" : "light"}
     >
       <WindowsLayOut />
     </FluentProvider>

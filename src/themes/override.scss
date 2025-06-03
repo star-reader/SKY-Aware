@@ -39,3 +39,23 @@
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+
+// 夜间模式或日间模式的导航栏侧边背景色
+div[aria-label="light"]{
+  .fui-InlineDrawer{
+    background-color: #EFF4F9;
+    button{
+      background-color: #EFF4F9;
+    }
+  }
+}
+
+div[aria-label="dark"]{
+  .fui-InlineDrawer{
+    background-color: #1E1E1E;
+    button{
+      background-color: #1E1E1E;
+    }
+  }
+}
