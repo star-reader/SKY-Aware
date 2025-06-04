@@ -116,7 +116,7 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
   return (
     <div className={styles.root}>
       <NavDrawer
-        defaultSelectedValue="map"
+        defaultSelectedValue="settings"
         defaultSelectedCategoryValue=""
         open={true}
         type="inline"

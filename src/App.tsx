@@ -7,7 +7,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window'
 export default () => {
   const [theme, setTheme] = useState(webLightTheme)
   const [isDark, setIsDark] = useState(false)
-  const [currentTab, setCurrentTab] = useState('map')
+  const [currentTab, setCurrentTab] = useState('settings')
 
   useEffect(() => {
     // 初始化检测系统主题
