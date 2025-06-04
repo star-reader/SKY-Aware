@@ -1,3 +1,8 @@
+/*
+* Chunhao Jin
+* Windows原生Fluent UI的设置页面，用作Windows版本的设置页面
+*/
+
 import { makeStyles, Title2, Subtitle2, 
     Dropdown, Option, useId, Field,
     OptionOnSelectData} from "@fluentui/react-components"

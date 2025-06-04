@@ -1,3 +1,8 @@
+/*
+* Chunhao Jin
+* Windows原生Fluent UI的左侧导航栏，用作Windows版本的导航栏布局
+*/
+
 import { useEffect, useState } from "react"
 import WindowsSettingPage from "../pages/SettingPage/WindowsSettingPage"
 
@@ -110,7 +115,10 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
         onNavItemSelect={(_, data) => onNavItemSelect(data)}
       >
         <NavDrawerHeader>
-          <Tooltip content={isCollapsed ? "展开导航" : "收起导航"} relationship="label">
+          <Tooltip 
+            content={isCollapsed ? "展开导航" : "收起导航"} 
+            relationship="label"
+            positioning="before-top">
             <Hamburger onClick={() => setIsCollapsed(!isCollapsed)} />
           </Tooltip>
         </NavDrawerHeader>
