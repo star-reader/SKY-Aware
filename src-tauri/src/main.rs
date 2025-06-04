@@ -4,6 +4,7 @@
 fn main() {
     let context = tauri::generate_context!();
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         .run(context)
         .expect("error while running OhMyBox application");
 }

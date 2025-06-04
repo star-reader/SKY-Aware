@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import pubsub from 'pubsub-js'
-import WindowsLayOut from './layouts/windowsLayOut'
+import WindowsLayOut from './layouts/WindowsLayOut'
 import MobileLayOut from './layouts/MaterialLayOut'
 import getPlatform from './utils/getPlatform'
 
@@ -77,6 +77,7 @@ export default () => {
     // 初始化的一瞬间获取平台信息
     const handlePlatformChange = async () => {
       const platform = await getPlatform()
+      console.log('platform', platform)
       setPlatform(platform)
     }
     handlePlatformChange()

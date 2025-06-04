@@ -65,11 +65,10 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gridRowGap: tokens.spacingVerticalS,
   },
-});
+})
 
-// icons
+// Fluent Ui的icons
 const Dashboard = bundleIcon(Board20Filled, Board20Regular)
-// const Announcements = bundleIcon(MegaphoneLoud20Filled, MegaphoneLoud20Regular)
 const MapIcon = bundleIcon(Map20Filled, Map20Regular)
 const ListIcon = bundleIcon(AppsList20Filled, AppsList20Regular)
 const SettingsIcon = bundleIcon(Settings20Filled, Settings20Regular)
@@ -86,16 +85,13 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isShowText, setIsShowText] = useState(true)
 
-
-  const linkDestination = ""
-
   useEffect(() => {
     if (isCollapsed){
-        setIsShowText(false)
+      setIsShowText(false)
     }else {
-        setTimeout(() => {
-            setIsShowText(!isCollapsed)
-        }, 200)
+      setTimeout(() => {
+          setIsShowText(!isCollapsed)
+      }, 200)
     }
   }, [isCollapsed])
 
@@ -124,19 +120,19 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
         </NavDrawerHeader>
 
         <NavDrawerBody>
-          <NavItem href={linkDestination} icon={<MapIcon />} value="map">
+          <NavItem icon={<MapIcon />} value="map">
             {isShowText && "地图"}
           </NavItem>
-          <NavItem href={linkDestination} icon={<ListIcon />} value="list">
+          <NavItem icon={<ListIcon />} value="list">
             {isShowText && "列表"}
           </NavItem>
-          <NavItem href={linkDestination} icon={<Dashboard />} value="statistic">
+          <NavItem icon={<Dashboard />} value="statistic">
             {isShowText && "统计"}
           </NavItem>
-          <NavItem href={linkDestination} icon={<SettingsIcon />} value="settings">
+          <NavItem icon={<SettingsIcon />} value="settings">
             {isShowText && "设置"}
           </NavItem>
-          <NavItem href={linkDestination} icon={<InfoIcon />} value="about">
+          <NavItem icon={<InfoIcon />} value="about">
             {isShowText && "关于"}
           </NavItem>
         </NavDrawerBody>
