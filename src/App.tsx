@@ -1,19 +1,10 @@
-import { webLightTheme, webDarkTheme, FluentProvider, makeStyles } from '@fluentui/react-components'
+import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
 import WindowsLayOut from './layouts/windowsLayOut'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
-  },
-  darkRoot: {
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-  }
-})
 
 export default () => {
-  const styles = useStyles()
   const [theme, setTheme] = useState(webLightTheme)
   const [isDark, setIsDark] = useState(false)
   const [currentTab, setCurrentTab] = useState('map')
@@ -45,7 +36,6 @@ export default () => {
   return (
     <FluentProvider 
       theme={theme} 
-      className={isDark ? styles.darkRoot : styles.root}
       aria-label={isDark ? "dark" : "light"}
     >
       <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />

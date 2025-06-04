@@ -59,14 +59,14 @@ div[aria-label="light"]{
 
 div[aria-label="dark"]{
   .fui-InlineDrawer{
-    background-color: #1E1E1E;
+    background-color: #1A2229;
     button{
-      background-color: #1E1E1E;
+      background-color: #1A2229;
       &:hover{
-        background-color: #282828;
+        background-color: #232B30;
       }
       &[aria-current="page"]{
-        background-color: #2e2d2d;
+        background-color: #272F34;
       }
     }
   }

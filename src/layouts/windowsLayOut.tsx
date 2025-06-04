@@ -7,13 +7,11 @@ import {
   NavDrawerBody,
   NavDrawerHeader,
   NavItem,
-  NavSectionHeader,
 } from "@fluentui/react-nav-preview";
 
 import {
   makeStyles,
   tokens,
-  Button,
   Tooltip
 } from "@fluentui/react-components";
 import {
@@ -52,7 +50,7 @@ const useStyles = makeStyles({
     display: "grid",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    backgroundColor: "transparent"
+    backgroundColor: tokens.colorNeutralBackground1
   },
   field: {
     display: "flex",
@@ -132,7 +130,6 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
         </NavDrawerHeader>
 
         <NavDrawerBody>
-          <NavSectionHeader>在线数据</NavSectionHeader>
           <NavItem href={linkDestination} icon={<MapIcon />} value="map">
             {isShowText && "地图"}
           </NavItem>
@@ -142,7 +139,6 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
           <NavItem href={linkDestination} icon={<Dashboard />} value="statistic">
             {isShowText && "统计"}
           </NavItem>
-          <NavSectionHeader>系统信息</NavSectionHeader>
           <NavItem href={linkDestination} icon={<SettingsIcon />} value="settings">
             {isShowText && "设置"}
           </NavItem>
