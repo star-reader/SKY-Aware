@@ -16,6 +16,7 @@ export default () => {
   const styles = useStyles()
   const [theme, setTheme] = useState(webLightTheme)
   const [isDark, setIsDark] = useState(false)
+  const [currentTab, setCurrentTab] = useState('map')
 
   useEffect(() => {
     // 初始化检测系统主题
@@ -37,13 +38,17 @@ export default () => {
     initTheme()
   }, [])
 
+  const onNavTabSelect = (to: string) => {
+    setCurrentTab(to)
+  }
+
   return (
     <FluentProvider 
       theme={theme} 
       className={isDark ? styles.darkRoot : styles.root}
       aria-label={isDark ? "dark" : "light"}
     >
-      <WindowsLayOut />
+      <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />
     </FluentProvider>
   )
 }

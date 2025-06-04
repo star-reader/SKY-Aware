@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import WindowsSettingPage from "../pages/SettingPage/WindowsSettingPage"
 
 import {
   Hamburger,
@@ -6,12 +7,14 @@ import {
   NavDrawerBody,
   NavDrawerHeader,
   NavItem,
+  NavSectionHeader,
 } from "@fluentui/react-nav-preview";
 
 import {
   makeStyles,
   tokens,
-  Button
+  Button,
+  Tooltip
 } from "@fluentui/react-components";
 import {
   Board20Filled,
@@ -68,8 +71,12 @@ const ListIcon = bundleIcon(AppsList20Filled, AppsList20Regular)
 const SettingsIcon = bundleIcon(Settings20Filled, Settings20Regular)
 const InfoIcon = bundleIcon(Info20Filled, Info20Regular)
 
+interface WindowsLayOutProps {
+  onNavTabSelect: (to: string) => void
+  currentTab: string
+}
 
-export default () => {
+export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
   const styles = useStyles();
 
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -88,6 +95,26 @@ export default () => {
     }
   }, [isCollapsed])
 
+  // 处理导航选择变化
+  const onNavItemSelect = (e: Event | React.SyntheticEvent<Element, Event>) => {
+    // @ts-ignore
+    const selectedValue = e.target.textContent
+    switch (selectedValue) {
+      case '地图':
+        onNavTabSelect('map')
+        break
+      case '列表':
+        onNavTabSelect('list')
+        break
+      case '设置':
+        onNavTabSelect('settings')
+        break
+      case '关于':
+        onNavTabSelect('about')
+        break
+    }
+  }
+
   return (
     <div className={styles.root}>
       <NavDrawer
@@ -96,12 +123,16 @@ export default () => {
         open={true}
         type="inline"
         className={isCollapsed ? styles.navCollapsed : styles.nav}
+        onNavItemSelect={e => onNavItemSelect(e)}
       >
         <NavDrawerHeader>
+          <Tooltip content={isCollapsed ? "展开导航" : "收起导航"} relationship="label">
             <Hamburger onClick={() => setIsCollapsed(!isCollapsed)} />
+          </Tooltip>
         </NavDrawerHeader>
 
         <NavDrawerBody>
+          <NavSectionHeader>在线数据</NavSectionHeader>
           <NavItem href={linkDestination} icon={<MapIcon />} value="map">
             {isShowText && "地图"}
           </NavItem>
@@ -111,7 +142,7 @@ export default () => {
           <NavItem href={linkDestination} icon={<Dashboard />} value="statistic">
             {isShowText && "统计"}
           </NavItem>
-
+          <NavSectionHeader>系统信息</NavSectionHeader>
           <NavItem href={linkDestination} icon={<SettingsIcon />} value="settings">
             {isShowText && "设置"}
           </NavItem>
@@ -121,11 +152,11 @@ export default () => {
         </NavDrawerBody>
       </NavDrawer>
       <div className={styles.content}>
-        
+        {currentTab === 'settings' && <WindowsSettingPage />}
         {/* 主要显示区域 */}
-        <Button>MicroSoft, HugeHard</Button>
+        {/* <Button>MicroSoft, HugeHard</Button> */}
 
       </div>
     </div>
-  );
+  )
 }
