@@ -1,10 +1,10 @@
 import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
-import { ThemeProvider, createTheme, useColorScheme } from '@mui/material/styles'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import pubsub from 'pubsub-js'
 import WindowsLayOut from './layouts/windowsLayOut'
-import MobileLayOut from './layouts/MobileLayOut'
+import MobileLayOut from './layouts/MaterialLayOut'
 import getPlatform from './utils/getPlatform'
 
 
