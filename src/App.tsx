@@ -1,15 +1,18 @@
 import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
-import WindowsLayOut from './layouts/windowsLayOut'
-import MobileLayOut from './layouts/MobileLayOut'
+import { ThemeProvider, createTheme, useColorScheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
-
 import pubsub from 'pubsub-js'
+import WindowsLayOut from './layouts/windowsLayOut'
+import MobileLayOut from './layouts/MobileLayOut'
 import getPlatform from './utils/getPlatform'
 
 
 export default () => {
   const [theme, setTheme] = useState(webLightTheme)
+  // MUI主题
+  const [muiTheme, setMuiTheme] = useState(createTheme())
+  // MUI的夜间模式配置
   const [isDark, setIsDark] = useState(false)
   const [currentTab, setCurrentTab] = useState('settings')
   const [platform, setPlatform] = useState('')
@@ -21,6 +24,11 @@ export default () => {
       try {
         setIsDark(systemTheme === 'dark')
         setTheme(systemTheme === 'dark' ? webDarkTheme : webLightTheme)
+        setMuiTheme(createTheme({
+          palette: {
+            mode: systemTheme === 'dark' ? 'dark' : 'light'
+          }
+        }))
       } catch (e) {
         console.error('Failed to get system theme:', e)
       }
@@ -29,6 +37,11 @@ export default () => {
         await getCurrentWindow().onThemeChanged(({ payload: theme }) => {
           setIsDark(theme === 'dark')
           setTheme(theme === 'dark' ? webDarkTheme : webLightTheme)
+          setMuiTheme(createTheme({
+            palette: {
+              mode: theme === 'dark' ? 'dark' : 'light'
+            }
+          }))
         })
       }
     }
@@ -70,13 +83,22 @@ export default () => {
   }, [])
 
   return (
-    <FluentProvider 
-      theme={theme} 
-      aria-label={isDark ? "dark" : "light"}
-    >
-      { platform === 'android' ? 
-        <MobileLayOut /> : 
-        <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />}
-    </FluentProvider>
+    <div id="global-entry-hooks-provider" 
+      className="w-full h-full"
+      aria-label={isDark ? "dark" : "light"}>
+      {
+        platform === 'windows' ?
+        // Windows特供，原生Fluent UI
+        <FluentProvider 
+          theme={theme}
+          aria-label={isDark ? "dark" : "light"}
+        >
+            <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />
+        </FluentProvider> :
+        <ThemeProvider theme={muiTheme}>
+          <MobileLayOut />
+        </ThemeProvider>
+      }
+    </div>
   )
 }
