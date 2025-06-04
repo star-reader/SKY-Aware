@@ -3,6 +3,8 @@ import WindowsLayOut from './layouts/windowsLayOut'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 
+import pubsub from 'pubsub-js'
+
 
 export default () => {
   const [theme, setTheme] = useState(webLightTheme)
@@ -29,8 +31,22 @@ export default () => {
     initTheme()
   }, [])
 
+  useEffect(() => {
+    pubsub.subscribe('theme-mode', onThemeModeChange)
+  }, [])
+
   const onNavTabSelect = (to: string) => {
     setCurrentTab(to)
+  }
+
+  const onThemeModeChange = (_: string, data: string) => {
+    if (data === '亮色') {
+      setTheme(webLightTheme)
+      setIsDark(false)
+    } else if (data === '暗色') {
+      setTheme(webDarkTheme)
+      setIsDark(true)
+    }
   }
 
   return (

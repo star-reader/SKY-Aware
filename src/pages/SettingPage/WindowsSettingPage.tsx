@@ -1,5 +1,8 @@
 import { makeStyles, Title2, Subtitle2, 
-    Dropdown, Option, useId, Field} from "@fluentui/react-components"
+    Dropdown, Option, useId, Field,
+    OptionOnSelectData} from "@fluentui/react-components"
+
+import pubsub from 'pubsub-js'
 
 
 const useStyles = makeStyles({
@@ -26,7 +29,11 @@ export default () => {
         '自动',
         '亮色',
         '暗色'
-    ];
+    ]
+
+    const onOptionSelect = (data: OptionOnSelectData) => {
+        pubsub.publish('theme-mode', data.optionValue)
+    }
 
     return (
         <div className={styles.root}>
@@ -34,11 +41,12 @@ export default () => {
             <Subtitle2>主题设置</Subtitle2>
             <Field hint={'选择系统主题模式，默认为自动'} className={styles.dropArea}>
                 <label htmlFor={dropdownId}>系统主题模式</label>
-                <Dropdown id={dropdownId} placeholder="选择主题模式" defaultValue={'自动'} >
+                <Dropdown id={dropdownId} placeholder="选择主题模式" 
+                    defaultValue={'自动'} onOptionSelect={(_, data) => onOptionSelect(data)} >
                     {options.map((option) => (
-                <Option key={option}>
-                    {option}
-                </Option>
+                        <Option key={option}>
+                            {option}
+                        </Option>
                     ))}
                 </Dropdown>
             </Field>

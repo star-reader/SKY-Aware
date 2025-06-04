@@ -7,6 +7,7 @@ import {
   NavDrawerBody,
   NavDrawerHeader,
   NavItem,
+  OnNavItemSelectData,
 } from "@fluentui/react-nav-preview";
 
 import {
@@ -94,23 +95,8 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
   }, [isCollapsed])
 
   // 处理导航选择变化
-  const onNavItemSelect = (e: Event | React.SyntheticEvent<Element, Event>) => {
-    // @ts-ignore
-    const selectedValue = e.target.textContent
-    switch (selectedValue) {
-      case '地图':
-        onNavTabSelect('map')
-        break
-      case '列表':
-        onNavTabSelect('list')
-        break
-      case '设置':
-        onNavTabSelect('settings')
-        break
-      case '关于':
-        onNavTabSelect('about')
-        break
-    }
+  const onNavItemSelect = ( data: OnNavItemSelectData) => {
+    onNavTabSelect(data.value)
   }
 
   return (
@@ -121,7 +107,7 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
         open={true}
         type="inline"
         className={isCollapsed ? styles.navCollapsed : styles.nav}
-        onNavItemSelect={e => onNavItemSelect(e)}
+        onNavItemSelect={(_, data) => onNavItemSelect(data)}
       >
         <NavDrawerHeader>
           <Tooltip content={isCollapsed ? "展开导航" : "收起导航"} relationship="label">
