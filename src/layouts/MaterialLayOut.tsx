@@ -23,14 +23,19 @@ import { useState } from "react"
 import RestoreIcon from '@mui/icons-material/Restore'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
+// 继续导入图标
+import Map from '@mui/icons-material/Map'
+import ListIcon from '@mui/icons-material/Article'
+import Dashboard from '@mui/icons-material/Dashboard'
+import SettingsIcon from '@mui/icons-material/Settings'
+import InfoIcon from '@mui/icons-material/Info'
+
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
 import useWindowWidth from "../hooks/common/useWindowWidth"
 import constants from "../configs/constants"
 
-const drawerWidth = 240;
+const drawerWidth = 175;
 
 const openedMixin = (theme: any) => ({
   width: drawerWidth,
@@ -75,8 +80,7 @@ export default () => {
 
     // 导航项数据
     const menuItems = [
-        ['收件箱', '已加星标', '发送邮件', '草稿箱'],
-        ['所有邮件', '垃圾箱', '垃圾邮件']
+        ['地图', '列表', '统计', '设置', '关于']
     ];
 
     return (
@@ -91,9 +95,10 @@ export default () => {
                             setNavValue(newValue);
                         }}
                     >
-                        <BottomNavigationAction label="最近" icon={<RestoreIcon />} />
-                        <BottomNavigationAction label="收藏" icon={<FavoriteIcon />} />
-                        <BottomNavigationAction label="位置" icon={<LocationOnIcon />} />
+                        <BottomNavigationAction label="地图" icon={<Map />} />
+                        <BottomNavigationAction label="列表" icon={<ListIcon />} />
+                        <BottomNavigationAction label="统计" icon={<Dashboard />} />
+                        <BottomNavigationAction label="设置" icon={<SettingsIcon />} />
                     </BottomNavigation>
                 </div>
             )}
@@ -153,7 +158,13 @@ export default () => {
                                                         justifyContent: 'center',
                                                     }}
                                                 >
-                                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                                   {
+                                                    text === '地图' ? <Map /> :
+                                                    text === '列表' ? <ListIcon /> :
+                                                    text === '统计' ? <Dashboard /> :
+                                                    text === '设置' ? <SettingsIcon /> :
+                                                    text === '关于' && <InfoIcon />
+                                                   }
                                                 </ListItemIcon>
                                                 <ListItemText 
                                                     primary={text} 
