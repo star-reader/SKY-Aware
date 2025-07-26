@@ -67,9 +67,9 @@ const WindowsButton: React.FC<ButtonProps> = ({
   }
 
   return (
-    <FluentButton {...fluentProps}>
-      {loading && <Spinner size="extra-small" style={{ marginRight: children ? '8px' : '0' }} />}
-      {!loading && icon && <span style={{ marginRight: children ? '8px' : '0' }}>{icon}</span>}
+    <FluentButton {...fluentProps as any}>
+      {loading && <Spinner size="extra-small" style={{ marginRight: children ? '8px' : '0' }} /> as any}
+      {!loading && icon && <span style={{ marginRight: children ? '8px' : '0' }}>{icon}</span> as any}
       {children}
     </FluentButton>
   )
