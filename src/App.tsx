@@ -1,10 +1,12 @@
 import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { PrimeReactProvider } from 'primereact/api'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import pubsub from 'pubsub-js'
 import WindowsLayOut from './layouts/WindowsLayOut'
 import MobileLayOut from './layouts/MaterialLayOut'
+import TestPage from './testComponents/TestPage'
 import getPlatform from './utils/getPlatform'
 
 
@@ -24,6 +26,7 @@ export default () => {
       try {
         setIsDark(systemTheme === 'dark')
         setTheme(systemTheme === 'dark' ? webDarkTheme : webLightTheme)
+        document.documentElement.setAttribute('aria-label', systemTheme === 'dark' ? 'dark' : 'light')
         setMuiTheme(createTheme({
           palette: {
             mode: systemTheme === 'dark' ? 'dark' : 'light'
@@ -53,11 +56,14 @@ export default () => {
       if (data === '亮色') {
         setTheme(webLightTheme)
         setIsDark(false)
+        document.documentElement.setAttribute('aria-label', 'light')
       } else if (data === '暗色') {
         setTheme(webDarkTheme)
         setIsDark(true)
+        document.documentElement.setAttribute('aria-label', 'dark')
       }else{
         initTheme(false)
+        document.documentElement.setAttribute('aria-label', 'auto')
       }
     }
 
@@ -94,7 +100,9 @@ export default () => {
           theme={theme}
           aria-label={isDark ? "dark" : "light"}
         >
+          <PrimeReactProvider>
             <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />
+          </PrimeReactProvider>
         </FluentProvider> :
         <ThemeProvider theme={muiTheme}>
           <MobileLayOut />

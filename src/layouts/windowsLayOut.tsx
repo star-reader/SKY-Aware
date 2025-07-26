@@ -31,8 +31,11 @@ import {
   Settings20Filled,
   Settings20Regular,
   Info20Regular,
-  Info20Filled
+  Info20Filled,
+  Code20Regular,
+  Code20Filled
 } from "@fluentui/react-icons";
+import TestPage from "../testComponents/TestPage";
 
 const useStyles = makeStyles({
   root: {
@@ -73,6 +76,7 @@ const MapIcon = bundleIcon(Map20Filled, Map20Regular)
 const ListIcon = bundleIcon(AppsList20Filled, AppsList20Regular)
 const SettingsIcon = bundleIcon(Settings20Filled, Settings20Regular)
 const InfoIcon = bundleIcon(Info20Filled, Info20Regular)
+const TestIcon = bundleIcon(Code20Filled, Code20Regular)
 
 interface WindowsLayOutProps {
   onNavTabSelect: (to: string) => void
@@ -129,6 +133,9 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
           <NavItem icon={<Dashboard />} value="statistic">
             {isShowText && "统计"}
           </NavItem>
+          <NavItem icon={<TestIcon />} value="test">
+            {isShowText && "组件测试"}
+          </NavItem>
           <NavItem icon={<SettingsIcon />} value="settings">
             {isShowText && "设置"}
           </NavItem>
@@ -141,6 +148,7 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
         {currentTab === 'settings' && <WindowsSettingPage />}
         {/* 主要显示区域 */}
         {/* <Button>MicroSoft, HugeHard</Button> */}
+        {currentTab === 'test' && <TestPage />}
 
       </div>
     </div>
