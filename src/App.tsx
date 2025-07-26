@@ -90,7 +90,7 @@ export default () => {
       {
         platform === 'windows' ?
         // Windows特供，原生Fluent UI
-        <FluentProvider 
+        <FluentProvider
           theme={theme}
           aria-label={isDark ? "dark" : "light"}
         >
