@@ -29,7 +29,6 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
   className = '',
   style,
 }) => {
-  const theme = useTheme();
   const [selectedValue, setSelectedValue] = React.useState(activeItem || '');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isShowText, setIsShowText] = useState(true);

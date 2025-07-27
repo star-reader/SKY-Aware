@@ -7,7 +7,10 @@ import MaterialButton from '../components/common/Button/styled/MaterialButton';
 import IOSCommonNavbar from '../components/common/Navbar/styled/IOSCommonNavbar';
 import WindowsNavbar from '../components/common/Navbar/styled/WindowsNavbar';
 import MaterialNavbar from '../components/common/Navbar/styled/MaterialNavbar';
-import { ButtonProps, NavbarProps } from '../components/common/types';
+import IOSCommonAlert from '../components/common/Alert/styled/IOSCommonAlert';
+import WindowsAlert from '../components/common/Alert/styled/WindowsAlert';
+import MaterialAlert from '../components/common/Alert/styled/MaterialAlert';
+import { ButtonProps, NavbarProps, AlertProps } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -51,10 +54,15 @@ interface TestNavbarProps extends NavbarProps {
   style?: React.CSSProperties;
 }
 
+interface TestAlertProps extends AlertProps {
+  style?: React.CSSProperties;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
   const [detectedPlatform, setDetectedPlatform] = useState<string>('loading...');
+  const [visibleAlerts, setVisibleAlerts] = useState<{[key: string]: boolean}>({});
 
   useEffect(() => {
     getPlatform().then(platform => {
@@ -104,6 +112,36 @@ const TestPage: React.FC = () => {
       default:
         return <IOSCommonNavbar {...navbarProps} {...navbarStyle} />;
     }
+  };
+
+  // 根据选中的tab渲染对应的Alert组件
+  const renderAlert = (props: TestAlertProps) => {
+    const { style, ...alertProps } = props;
+    const alertStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonAlert {...alertProps} {...alertStyle} />;
+      case 'windows':
+        return <WindowsAlert {...alertProps} {...alertStyle} />;
+      case 'material':
+        return <MaterialAlert {...alertProps} {...alertStyle} />;
+      default:
+        return <IOSCommonAlert {...alertProps} {...alertStyle} />;
+    }
+  };
+
+  const showAlert = (alertId: string) => {
+    setVisibleAlerts(prev => ({ ...prev, [alertId]: true }));
+    // Auto dismiss after 3 seconds for non-dismissible alerts
+    setTimeout(() => {
+      setVisibleAlerts(prev => ({ ...prev, [alertId]: false }));
+    }, 3000);
+  };
+
+  const dismissAlert = (alertId: string) => {
+    setVisibleAlerts(prev => ({ ...prev, [alertId]: false }));
   };
 
   const renderPlatformTabs = () => {
@@ -318,6 +356,121 @@ const TestPage: React.FC = () => {
     );
   };
 
+  const renderAlertSection = () => {
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">Alert 组件测试</h2>
+        
+        {/* Alert 类型测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">Alert 类型</h3>
+          <div className="test-group__content">
+            {renderButton({ 
+              onClick: () => showAlert('success'), 
+              children: "Show Success Alert",
+              variant: "contained"
+            })}
+            {renderButton({ 
+              onClick: () => showAlert('error'), 
+              children: "Show Error Alert",
+              variant: "contained"
+            })}
+            {renderButton({ 
+              onClick: () => showAlert('warning'), 
+              children: "Show Warning Alert",
+              variant: "contained"
+            })}
+            {renderButton({ 
+              onClick: () => showAlert('info'), 
+              children: "Show Info Alert",
+              variant: "contained"
+            })}
+          </div>
+        </div>
+
+        {/* Dismissible Alert 测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">可关闭的 Alert</h3>
+          <div className="test-group__content">
+            {renderButton({ 
+              onClick: () => showAlert('dismissible-success'), 
+              children: "Show Dismissible Success",
+              variant: "outlined"
+            })}
+            {renderButton({ 
+              onClick: () => showAlert('dismissible-error'), 
+              children: "Show Dismissible Error",
+              variant: "outlined"
+            })}
+          </div>
+        </div>
+
+        {/* 自定义图标 Alert 测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">自定义图标 Alert</h3>
+          <div className="test-group__content">
+            {renderButton({ 
+              onClick: () => showAlert('custom-icon'), 
+              children: "Show Custom Icon Alert",
+              variant: "text"
+            })}
+          </div>
+        </div>
+
+        {/* 渲染实际的 Alert 组件 */}
+        {visibleAlerts['success'] && renderAlert({
+          type: 'success',
+          message: '操作成功完成！这是一个成功提示。',
+          position: 'top',
+        })}
+
+        {visibleAlerts['error'] && renderAlert({
+          type: 'error',
+          message: '发生错误！请检查您的输入并重试。',
+          position: 'top',
+        })}
+
+        {visibleAlerts['warning'] && renderAlert({
+          type: 'warning',
+          message: '注意：这是一个警告信息，请谨慎操作。',
+          position: 'top',
+        })}
+
+        {visibleAlerts['info'] && renderAlert({
+          type: 'info',
+          message: '这是一条信息提示，为您提供相关信息。',
+          position: 'top',
+        })}
+
+        {visibleAlerts['dismissible-success'] && renderAlert({
+          type: 'success',
+          message: '可关闭的成功提示，点击X按钮关闭。',
+          position: 'top',
+          dismissible: true,
+          onDismiss: () => dismissAlert('dismissible-success'),
+        })}
+
+        {visibleAlerts['dismissible-error'] && renderAlert({
+          type: 'error',
+          message: '可关闭的错误提示，点击X按钮关闭。',
+          position: 'top',
+          dismissible: true,
+          onDismiss: () => dismissAlert('dismissible-error'),
+        })}
+
+        {visibleAlerts['custom-icon'] && renderAlert({
+          type: 'info',
+          message: '这是一个带有自定义图标的Alert。',
+          position: 'top',
+          dismissible: true,
+          onDismiss: () => dismissAlert('custom-icon'),
+          icon: <SettingsIcon />,
+        })}
+
+      </section>
+    );
+  };
+
   return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -333,18 +486,7 @@ const TestPage: React.FC = () => {
         {renderButtonSection()}
         {renderNavbarSection()}
         
-        {/* 占位符，为将来的其他组件测试 */}
-        <section className="test-section">
-          <h2 className="test-section__title">其他组件</h2>
-          <div className="test-group">
-            <h3 className="test-group__title">即将到来</h3>
-            <div className="test-group__content">
-              <p className="test-placeholder">
-                更多组件测试将在这里显示...
-              </p>
-            </div>
-          </div>
-        </section>
+        {renderAlertSection()}
       </div>
     </div>
   );
