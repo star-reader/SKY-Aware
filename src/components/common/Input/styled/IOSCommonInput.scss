@@ -1,0 +1,280 @@
+// iOS Input 样式
+.ios-input {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
+  width: 100%;
+  margin-bottom: 12px;
+
+  &__label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: #3C3C43;
+    margin-bottom: 4px;
+    transition: color 0.15s ease;
+    letter-spacing: -0.08px;
+  }
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 0.5px solid #C7C7CC;
+    border-radius: 8px;
+    padding: 0 10px;
+    min-height: 36px;
+    transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+    color: #8E8E93;
+    transition: color 0.15s ease;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__field {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    padding: 8px 0;
+    min-height: 20px;
+    line-height: 1.2;
+
+    &::placeholder {
+      color: #C7C7CC;
+      font-weight: 400;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  // 聚焦状态
+  &--focused {
+    .ios-input__wrapper {
+      background: #FFFFFF;
+      border-color: #007AFF;
+      border-width: 1px;
+      box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.15);
+    }
+
+    .ios-input__label {
+      color: #007AFF;
+    }
+
+    .ios-input__icon {
+      color: #007AFF;
+    }
+  }
+
+  // 错误状态
+  &--error {
+    .ios-input__wrapper {
+      border-color: #FF3B30;
+      border-width: 1px;
+      background: #FFFFFF;
+    }
+
+    .ios-input__label {
+      color: #FF3B30;
+    }
+
+    .ios-input__icon {
+      color: #FF3B30;
+    }
+
+    &.ios-input--focused {
+      .ios-input__wrapper {
+        box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.15);
+      }
+    }
+  }
+
+  // 禁用状态
+  &--disabled {
+    .ios-input__wrapper {
+      background: #F9F9F9;
+      border-color: #E5E5EA;
+      opacity: 0.7;
+    }
+
+    .ios-input__label {
+      color: #8E8E93;
+    }
+
+    .ios-input__field {
+      color: #8E8E93;
+      cursor: not-allowed;
+    }
+
+    .ios-input__icon {
+      color: #C7C7CC;
+    }
+  }
+
+  // 有值状态
+  &--has-value {
+    .ios-input__wrapper {
+      background: #FFFFFF;
+      border-color: #A8A8AA;
+    }
+  }
+
+  // 带图标的输入框
+  &--with-icon {
+    .ios-input__field {
+      padding-left: 0;
+    }
+  }
+
+  // 悬停效果（仅桌面端）
+  @media (hover: hover) {
+    &:not(.ios-input--disabled):not(.ios-input--focused) {
+      .ios-input__wrapper:hover {
+        border-color: #A8A8AA;
+        background: #FFFFFF;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+    }
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .ios-input {
+    &__label {
+      color: #EBEBF599; // 60% opacity
+    }
+
+    &__wrapper {
+      background: #1C1C1E;
+      border-color: #38383A;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    &__field {
+      color: #FFFFFF;
+
+      &::placeholder {
+        color: #636366;
+      }
+    }
+
+    &__icon {
+      color: #8E8E93;
+    }
+
+    // 聚焦状态
+    &--focused {
+      .ios-input__wrapper {
+        background: #1C1C1E;
+        border-color: #0A84FF;
+        border-width: 1px;
+        box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.2);
+      }
+
+      .ios-input__label {
+        color: #0A84FF;
+      }
+
+      .ios-input__icon {
+        color: #0A84FF;
+      }
+    }
+
+    // 错误状态
+    &--error {
+      .ios-input__wrapper {
+        border-color: #FF453A;
+        background: #2C1818;
+      }
+
+      .ios-input__label {
+        color: #FF453A;
+      }
+
+      .ios-input__icon {
+        color: #FF453A;
+      }
+
+      &.ios-input--focused {
+        .ios-input__wrapper {
+          box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.1);
+        }
+      }
+    }
+
+    // 禁用状态
+    &--disabled {
+      .ios-input__wrapper {
+        background: #1C1C1E;
+        border-color: #2C2C2E;
+        opacity: 0.6;
+      }
+
+      .ios-input__label {
+        color: #636366;
+      }
+
+      .ios-input__field {
+        color: #636366;
+      }
+
+      .ios-input__icon {
+        color: #48484A;
+      }
+    }
+
+    // 有值状态
+    &--has-value {
+      .ios-input__wrapper {
+        background: #1C1C1E;
+        border-color: #48484A;
+      }
+    }
+
+    // 悬停效果
+    @media (hover: hover) {
+      &:not(.ios-input--disabled):not(.ios-input--focused) {
+        .ios-input__wrapper:hover {
+          border-color: #0A84FF;
+          background: #1C1C1E;
+        }
+      }
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .ios-input {
+    &__wrapper {
+      min-height: 38px; // iOS 推荐的最小触摸目标
+      padding: 0 12px;
+    }
+
+    &__field {
+      font-size: 16px; // 防止iOS缩放
+    }
+  }
+} 
