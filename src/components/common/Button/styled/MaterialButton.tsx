@@ -46,7 +46,7 @@ const MaterialButton: React.FC<ButtonProps> = ({
     }
   };
 
-  const spinnerSize = size === 'small' ? 14 : size === 'large' ? 18 : 16;
+  const spinnerSize = size === 'small' ? 12 : size === 'large' ? 16 : 14;
 
   return (
     <MuiButton

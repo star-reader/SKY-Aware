@@ -43,7 +43,7 @@
   padding: 8px 16px;
   border: 1px solid #d1d1d6;
   border-radius: 8px;
-  background: white;
+  // background: white;
   color: #1d1d1f;
   font-size: 14px;
   font-weight: 500;
@@ -51,7 +51,7 @@
   transition: all 0.2s ease;
 
   &:hover {
-    background: #f5f5f7;
+    // background: #f5f5f7;
   }
 
   &--active {
@@ -63,7 +63,7 @@
 
 // Sections
 .test-section {
-  background: white;
+  // background: white;
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -109,7 +109,7 @@
 // Platform-specific styling
 .test-page--ios-common {
   .test-tabs {
-    background: white;
+    // background: white;
     border-radius: 10px;
     padding: 4px;
     border: 1px solid #e5e5ea;
@@ -139,7 +139,7 @@
 .test-page--ios-liquid {
   // Same as iOS Common for now since we're using the same components
   .test-tabs {
-    background: rgba(255, 255, 255, 0.8);
+    // background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
     border-radius: 10px;
     padding: 4px;
@@ -163,7 +163,7 @@
   }
 
   .test-section {
-    background: rgba(255, 255, 255, 0.8);
+    //  background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(229, 229, 234, 0.5);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -175,7 +175,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .test-tabs {
-    background: white;
+    // background: white;
     border: 1px solid #e1dfdd;
     border-radius: 4px;
     padding: 0;
@@ -203,7 +203,7 @@
   }
 
   .test-section {
-    background: white;
+    //  background: white;
     border: 1px solid #e1dfdd;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -233,7 +233,7 @@
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 
   .test-tabs {
-    background: white;
+    //  background: white;
     border-radius: 8px;
     padding: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -243,7 +243,7 @@
   .test-tab {
     border: none;
     border-radius: 0;
-    background: white;
+    // background: white;
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 0.5px;

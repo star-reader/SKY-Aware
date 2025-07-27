@@ -42,11 +42,11 @@
 
 
 // 夜间模式或日间模式的导航栏侧边背景色
-div[aria-label="light"]{
+html[aria-label="light"]{
   .fui-InlineDrawer{
-    background-color: #EFF4F9;
+    background-color: #F0F4F8;
     button{
-      background-color: #EFF4F9;
+      background-color: #F0F4F8;
       &:hover{
         background-color: #eaf0f5;
       }
@@ -55,13 +55,18 @@ div[aria-label="light"]{
       }
     }
   }
+
+  // Material UI Drawer 背景色
+  .MuiDrawer-paper {
+    background-color: #F0F4F8 !important;
+  }
 }
 
-div[aria-label="dark"]{
+html[aria-label="dark"]{
   .fui-InlineDrawer{
-    background-color: #1A2229;
+    background-color: #1C2228;
     button{
-      background-color: #1A2229;
+      background-color: #1C2228;
       &:hover{
         background-color: #232B30;
       }
@@ -69,5 +74,10 @@ div[aria-label="dark"]{
         background-color: #272F34;
       }
     }
+  }
+
+  // Material UI Drawer 背景色
+  .MuiDrawer-paper {
+    background-color: #1C2228 !important;
   }
 }

@@ -59,6 +59,7 @@ const useStyles = makeStyles({
     display: "grid",
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    overflow: "auto",
     backgroundColor: tokens.colorNeutralBackground1
   },
   field: {

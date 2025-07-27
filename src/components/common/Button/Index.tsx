@@ -2,11 +2,21 @@ import React from 'react';
 import { ButtonProps } from '../types';
 import { getPlatform } from '../../../utils/getPlatform';
 import IOSCommonButton from './styled/IOSCommonButton';
+import IOSLiquidGlassButton from './styled/IOSLiquidGlassButton';
 import WindowsButton from './styled/WindowsButton';
 import MaterialButton from './styled/MaterialButton';
 
-const Button: React.FC<ButtonProps> = (props) => {
+interface ExtendedButtonProps extends ButtonProps {
+  liquidGlass?: boolean; // 新增属性来强制使用 Liquid Glass
+}
+
+const Button: React.FC<ExtendedButtonProps> = (props) => {
   const platform = getPlatform();
+
+  // 如果明确指定使用 liquidGlass，优先使用 Liquid Glass Button
+  if (props.liquidGlass && (platform === 'ios' || platform === 'macos')) {
+    return <IOSLiquidGlassButton {...props} />;
+  }
 
   switch (platform) {
     case 'ios':
