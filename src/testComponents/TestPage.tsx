@@ -25,7 +25,10 @@ import MaterialSpinner from '../components/common/Spinner/styled/MaterialSpinner
 import IOSCommonCard from '../components/common/Card/styled/IOSCommonCard';
 import WindowsCard from '../components/common/Card/styled/WindowsCard';
 import MaterialCard from '../components/common/Card/styled/MaterialCard';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps } from '../components/common/types';
+import IOSCommonDropdown from '../components/common/Dropdown/styled/IOSCommonDropdown';
+import WindowsDropdown from '../components/common/Dropdown/styled/WindowsDropdown';
+import MaterialDropdown from '../components/common/Dropdown/styled/MaterialDropdown';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -149,6 +152,10 @@ interface TestCardProps extends CardProps {
   style?: React.CSSProperties;
 }
 
+interface TestDropdownProps extends DropdownProps {
+  style?: React.CSSProperties;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
@@ -157,6 +164,9 @@ const TestPage: React.FC = () => {
   const [visiblePanels, setVisiblePanels] = useState<{[key: string]: boolean}>({});
   const [inputValues, setInputValues] = useState<{[key: string]: string}>({});
   const [selectedListItem, setSelectedListItem] = useState<string>('item1');
+  const [dropdownValues, setDropdownValues] = useState<{[key: string]: string | string[]}>({});
+  
+
 
   useEffect(() => {
     getPlatform().then(platform => {
@@ -315,6 +325,26 @@ const TestPage: React.FC = () => {
         return <IOSCommonCard {...cardProps} {...cardStyle} />;
     }
   };
+
+  // 根据选中的tab渲染对应的Dropdown组件
+  const renderDropdown = (props: TestDropdownProps) => {
+    const { style, ...dropdownProps } = props;
+    const dropdownStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonDropdown {...dropdownProps} {...dropdownStyle} />;
+      case 'windows':
+        return <WindowsDropdown {...dropdownProps} {...dropdownStyle} />;
+      case 'material':
+        return <MaterialDropdown {...dropdownProps} {...dropdownStyle} />;
+      default:
+        return <IOSCommonDropdown {...dropdownProps} {...dropdownStyle} />;
+    }
+  };
+
+
 
   const showAlert = (alertId: string) => {
     setVisibleAlerts(prev => ({ ...prev, [alertId]: true }));
@@ -1518,6 +1548,218 @@ const TestPage: React.FC = () => {
     );
   };
 
+  // Dropdown 测试部分
+  const renderDropdownSection = () => {
+    // 测试选项数据
+    const basicOptions = [
+      { key: 'option1', text: 'Option 1', value: 'opt1' },
+      { key: 'option2', text: 'Option 2', value: 'opt2' },
+      { key: 'option3', text: 'Option 3', value: 'opt3' },
+      { key: 'option4', text: 'Disabled Option', value: 'opt4', disabled: true },
+    ];
+
+    const countryOptions = [
+      { key: 'cn', text: '中国', value: 'china' },
+      { key: 'us', text: '美国', value: 'usa' },
+      { key: 'jp', text: '日本', value: 'japan' },
+      { key: 'kr', text: '韩国', value: 'korea' },
+      { key: 'gb', text: '英国', value: 'uk' },
+      { key: 'fr', text: '法国', value: 'france' },
+      { key: 'de', text: '德国', value: 'germany' },
+      { key: 'it', text: '意大利', value: 'italy' },
+      { key: 'ca', text: '加拿大', value: 'canada' },
+      { key: 'au', text: '澳大利亚', value: 'australia' },
+    ];
+
+    const skillOptions = [
+      { key: 'react', text: 'React', value: 'react' },
+      { key: 'vue', text: 'Vue.js', value: 'vue' },
+      { key: 'angular', text: 'Angular', value: 'angular' },
+      { key: 'nodejs', text: 'Node.js', value: 'nodejs' },
+      { key: 'python', text: 'Python', value: 'python' },
+      { key: 'java', text: 'Java', value: 'java' },
+      { key: 'swift', text: 'Swift', value: 'swift' },
+      { key: 'kotlin', text: 'Kotlin', value: 'kotlin' },
+    ];
+
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">Dropdown 组件测试</h2>
+
+        {/* 基础 Dropdown 测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">基础 Dropdown</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'start' }}>
+              {renderDropdown({
+                label: '选择选项',
+                options: basicOptions,
+                placeholder: '请选择一个选项',
+                value: dropdownValues.basic as string,
+                onSelectionChange: (option: DropdownOption | DropdownOption[] | undefined, value?: string | string[]) => {
+                  setDropdownValues(prev => ({ ...prev, basic: value as string }));
+                },
+              })}
+
+              {renderDropdown({
+                label: '带默认值',
+                options: basicOptions,
+                defaultValue: 'option2',
+                onSelectionChange: (option: DropdownOption | DropdownOption[] | undefined, value?: string | string[]) => {
+                  console.log('Selection changed:', option, value);
+                },
+              })}
+
+              {renderDropdown({
+                label: '禁用状态',
+                options: basicOptions,
+                defaultValue: 'option1',
+                disabled: true,
+                onSelectionChange: (option: DropdownOption | DropdownOption[] | undefined, value?: string | string[]) => {
+                  console.log('Selection changed:', option, value);
+                },
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 多选 Dropdown 测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">多选 Dropdown</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'start' }}>
+              {renderDropdown({
+                label: '选择技能 (多选)',
+                options: skillOptions,
+                placeholder: '请选择技能...',
+                multiSelect: true,
+                value: dropdownValues.multiSelect as string[],
+                onSelectionChange: (options: DropdownOption | DropdownOption[] | undefined, values?: string | string[]) => {
+                  setDropdownValues(prev => ({ ...prev, multiSelect: values as string[] }));
+                },
+              })}
+
+              {renderDropdown({
+                label: '多选带清除',
+                options: skillOptions,
+                placeholder: '请选择技能...',
+                multiSelect: true,
+                clearable: true,
+                defaultValue: ['react', 'vue'],
+                onSelectionChange: (options: DropdownOption | DropdownOption[] | undefined, values?: string | string[]) => {
+                  console.log('Multi-selection changed:', options, values);
+                },
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 可搜索 Dropdown 测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">可搜索 Dropdown</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'start' }}>
+              {renderDropdown({
+                label: '选择国家 (可搜索)',
+                options: countryOptions,
+                placeholder: '搜索并选择国家...',
+                searchable: true,
+                clearable: true,
+                value: dropdownValues.withSearch as string,
+                onSelectionChange: (option, value) => {
+                  setDropdownValues(prev => ({ ...prev, withSearch: value as string }));
+                },
+              })}
+
+              {renderDropdown({
+                label: '多选可搜索',
+                options: countryOptions,
+                placeholder: '搜索并选择多个国家...',
+                multiSelect: true,
+                searchable: true,
+                clearable: true,
+                onSelectionChange: (options, values) => {
+                  console.log('Searchable multi-selection:', options, values);
+                },
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 错误状态和必填 */}
+        <div className="test-group">
+          <h3 className="test-group__title">错误状态和验证</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'start' }}>
+              {renderDropdown({
+                label: '必填选项',
+                options: basicOptions,
+                placeholder: '此字段为必填项',
+                required: true,
+                error: !dropdownValues.withError,
+                errorMessage: '请选择一个选项',
+                value: dropdownValues.withError as string,
+                onSelectionChange: (option, value) => {
+                  setDropdownValues(prev => ({ ...prev, withError: value as string }));
+                },
+              })}
+
+              {renderDropdown({
+                label: '带错误消息',
+                options: basicOptions,
+                placeholder: '选择时会显示错误',
+                error: true,
+                errorMessage: '这是一个错误提示消息',
+                onSelectionChange: (option, value) => {
+                  console.log('Error state selection:', option, value);
+                },
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 无标签和样式变体 */}
+        <div className="test-group">
+          <h3 className="test-group__title">样式变体</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', alignItems: 'start' }}>
+              {renderDropdown({
+                options: basicOptions,
+                placeholder: '无标签 Dropdown',
+                onSelectionChange: (option, value) => {
+                  console.log('No label selection:', option, value);
+                },
+              })}
+
+              {renderDropdown({
+                options: countryOptions.slice(0, 3),
+                placeholder: '简短列表',
+                clearable: true,
+                onSelectionChange: (option, value) => {
+                  console.log('Short list selection:', option, value);
+                },
+              })}
+
+              {renderDropdown({
+                options: [...Array(15)].map((_, i) => ({
+                  key: `long-option-${i}`,
+                  text: `很长的选项名称 ${i + 1} - 这是一个很长的文本用来测试文本截断效果`,
+                  value: `long-${i}`,
+                })),
+                placeholder: '长文本选项测试',
+                searchable: true,
+                onSelectionChange: (option, value) => {
+                  console.log('Long text selection:', option, value);
+                },
+              })}
+            </div>
+          </div>
+        </div>
+
+      </section>
+    );
+  };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -1538,6 +1780,7 @@ const TestPage: React.FC = () => {
          {renderListSection()}
          {renderSpinnerSection()}
          {renderCardSection()}
+         {renderDropdownSection()}
        </div>
     </div>
   );

@@ -152,21 +152,30 @@ export interface CardProps {
   className?: string;
 }
 
-// Dropdown types
 export interface DropdownOption {
-  value: string;
-  label: string;
+  key: string;
+  text: string;
+  value?: any;
+  disabled?: boolean;
+  selected?: boolean;
 }
 
 export interface DropdownProps {
   options: DropdownOption[];
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: string | string[];
+  defaultValue?: string | string[];
   placeholder?: string;
   disabled?: boolean;
-  multiple?: boolean;
+  multiSelect?: boolean;
+  searchable?: boolean;
+  clearable?: boolean;
   label?: string;
+  error?: boolean;
+  errorMessage?: string;
+  required?: boolean;
+  onSelectionChange?: (option: DropdownOption | DropdownOption[] | undefined, value?: string | string[]) => void;
   className?: string;
+  'aria-label'?: string;
 }
 
 // ActionSheet types
@@ -263,4 +272,24 @@ export interface NavigationTitleBarProps {
   safeArea?: boolean;
   onBack?: () => void;
   className?: string;
+}
+
+// SegmentControl 组件
+export interface SegmentOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+}
+
+export interface SegmentControlProps {
+  options: SegmentOption[];
+  value: string;
+  onChange: (value: string) => void;
+  variant?: 'tabs' | 'segmented';
+  fullWidth?: boolean;
+  disabled?: boolean;
+  size?: Size;
+  className?: string;
+  'aria-label'?: string;
 } 

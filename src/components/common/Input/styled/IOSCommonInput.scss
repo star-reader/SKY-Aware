@@ -6,10 +6,10 @@
 
   &__label {
     display: block;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     color: #3C3C43;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     transition: color 0.15s ease;
     letter-spacing: -0.08px;
   }
@@ -20,9 +20,9 @@
     align-items: center;
     background: #FFFFFF;
     border: 0.5px solid #C7C7CC;
-    border-radius: 8px;
-    padding: 0 10px;
-    min-height: 36px;
+    border-radius: 6px;
+    padding: 0 8px;
+    min-height: 28px;
     transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   }
@@ -31,13 +31,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 6px;
+    margin-right: 4px;
     color: #8E8E93;
     transition: color 0.15s ease;
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
   }
 
@@ -46,11 +46,11 @@
     border: none;
     background: transparent;
     outline: none;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     color: #000000;
-    padding: 8px 0;
-    min-height: 20px;
+    padding: 6px 0;
+    min-height: 16px;
     line-height: 1.2;
 
     &::placeholder {
@@ -66,6 +66,7 @@
 
     &[type="number"] {
       -moz-appearance: textfield;
+      appearance: textfield;
     }
   }
 
@@ -269,8 +270,8 @@ html[aria-label="dark"] {
 @media (max-width: 480px) {
   .ios-input {
     &__wrapper {
-      min-height: 38px; // iOS 推荐的最小触摸目标
-      padding: 0 12px;
+      min-height: 32px; // iOS 推荐的最小触摸目标
+      padding: 0 10px;
     }
 
     &__field {
