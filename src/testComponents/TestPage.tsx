@@ -22,7 +22,10 @@ import MaterialList from '../components/common/List/styled/MaterialList';
 import IOSCommonSpinner from '../components/common/Spinner/styled/IOSCommonSpinner';
 import WindowsSpinner from '../components/common/Spinner/styled/WindowsSpinner';
 import MaterialSpinner from '../components/common/Spinner/styled/MaterialSpinner';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps } from '../components/common/types';
+import IOSCommonCard from '../components/common/Card/styled/IOSCommonCard';
+import WindowsCard from '../components/common/Card/styled/WindowsCard';
+import MaterialCard from '../components/common/Card/styled/MaterialCard';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -139,6 +142,10 @@ interface TestListProps extends ListProps {
 }
 
 interface TestSpinnerProps extends SpinnerProps {
+  style?: React.CSSProperties;
+}
+
+interface TestCardProps extends CardProps {
   style?: React.CSSProperties;
 }
 
@@ -288,6 +295,24 @@ const TestPage: React.FC = () => {
         return <MaterialSpinner {...spinnerProps} {...spinnerStyle} />;
       default:
         return <IOSCommonSpinner {...spinnerProps} {...spinnerStyle} />;
+    }
+  };
+
+  // 根据选中的tab渲染对应的Card组件
+  const renderCard = (props: TestCardProps) => {
+    const { style, ...cardProps } = props;
+    const cardStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonCard {...cardProps} {...cardStyle} />;
+      case 'windows':
+        return <WindowsCard {...cardProps} {...cardStyle} />;
+      case 'material':
+        return <MaterialCard {...cardProps} {...cardStyle} />;
+      default:
+        return <IOSCommonCard {...cardProps} {...cardStyle} />;
     }
   };
 
@@ -1322,6 +1347,177 @@ const TestPage: React.FC = () => {
      );
    };
 
+  const renderCardSection = () => {
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">Card 组件测试</h2>
+
+        {/* 基础Card测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">基础 Card</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {renderCard({ 
+                title: 'Simple Card',
+                subtitle: 'Basic card without image',
+                children: (
+                  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
+                    This is a simple card component that displays basic content without any advanced features.
+                  </p>
+                ),
+              })}
+              
+              {renderCard({ 
+                title: 'Card with Image',
+                subtitle: 'Beautiful landscape photo',
+                image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop',
+                children: (
+                  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
+                    This card includes a header image that makes it more visually appealing.
+                  </p>
+                ),
+              })}
+              
+              {renderCard({ 
+                title: 'Content Only',
+                children: (
+                  <div>
+                    <p style={{ margin: '0 0 12px 0', fontSize: '14px', lineHeight: '1.5' }}>
+                      This card focuses purely on content without a subtitle.
+                    </p>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>
+                      Additional details can be provided here.
+                    </p>
+                  </div>
+                ),
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 可点击Card测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">可点击 Card</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {renderCard({ 
+                title: 'Clickable Card',
+                subtitle: 'Click me to see action!',
+                image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop',
+                onClick: () => alert('Card clicked!'),
+                children: (
+                  <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
+                    This card responds to click events and shows hover effects.
+                  </p>
+                ),
+              })}
+              
+              {renderCard({ 
+                title: 'Action Card',
+                subtitle: 'Interactive content',
+                onClick: () => alert('Action executed!'),
+                children: (
+                  <div style={{ textAlign: 'center' }}>
+                    <SearchIcon />
+                    <p style={{ margin: '8px 0 0 0', fontSize: '14px', lineHeight: '1.5' }}>
+                      Click anywhere on this card to trigger an action.
+                    </p>
+                  </div>
+                ),
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 不同高度Card测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">不同高度 (Elevation)</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                             {[1, 2, 3, 4].map(elevation => (
+                 <div key={elevation}>
+                   {renderCard({ 
+                     title: `Elevation ${elevation}`,
+                     subtitle: `Shadow level: ${elevation}`,
+                     elevation: elevation,
+                     children: (
+                       <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
+                         This card has elevation level {elevation}, creating different shadow depths.
+                       </p>
+                     ),
+                   })}
+                 </div>
+               ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 产品展示Card测试 */}
+        <div className="test-group">
+          <h3 className="test-group__title">产品展示 Cards</h3>
+          <div className="test-group__content">
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {renderCard({ 
+                title: 'Wireless Headphones',
+                subtitle: '$299.99',
+                image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop',
+                onClick: () => alert('Product selected: Wireless Headphones'),
+                elevation: 2,
+                children: (
+                  <div>
+                    <p style={{ margin: '0 0 8px 0', fontSize: '14px', lineHeight: '1.5' }}>
+                      Premium noise-cancelling wireless headphones with 30-hour battery life.
+                    </p>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>
+                      ⭐ 4.8/5 stars · Free shipping
+                    </p>
+                  </div>
+                ),
+              })}
+              
+              {renderCard({ 
+                title: 'Smartphone',
+                subtitle: '$899.99',
+                image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=250&fit=crop',
+                onClick: () => alert('Product selected: Smartphone'),
+                elevation: 2,
+                children: (
+                  <div>
+                    <p style={{ margin: '0 0 8px 0', fontSize: '14px', lineHeight: '1.5' }}>
+                      Latest flagship smartphone with advanced AI camera system.
+                    </p>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>
+                      ⭐ 4.9/5 stars · 2-year warranty
+                    </p>
+                  </div>
+                ),
+              })}
+              
+              {renderCard({ 
+                title: 'Laptop',
+                subtitle: '$1,299.99',
+                image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=250&fit=crop',
+                onClick: () => alert('Product selected: Laptop'),
+                elevation: 2,
+                children: (
+                  <div>
+                    <p style={{ margin: '0 0 8px 0', fontSize: '14px', lineHeight: '1.5' }}>
+                      High-performance laptop perfect for work and entertainment.
+                    </p>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>
+                      ⭐ 4.7/5 stars · Student discount available
+                    </p>
+                  </div>
+                ),
+              })}
+            </div>
+          </div>
+        </div>
+
+      </section>
+    );
+  };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -1341,6 +1537,7 @@ const TestPage: React.FC = () => {
          {renderInputSection()}
          {renderListSection()}
          {renderSpinnerSection()}
+         {renderCardSection()}
        </div>
     </div>
   );
