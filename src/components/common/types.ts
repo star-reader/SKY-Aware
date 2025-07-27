@@ -1,298 +1,252 @@
-import { ReactNode, CSSProperties } from 'react'
-import { PlatformType } from '../../utils/getPlatform'
+import { ReactNode, MouseEvent, FormEvent, ChangeEvent } from 'react';
 
-// 通用平台样式类型
-export type PlatformStyle = 'ios-common' | 'ios-liquid-glass' | 'windows' | 'web-android'
+// Common types
+export type Platform = 'ios' | 'macos' | 'windows' | 'android' | 'web';
+export type Size = 'small' | 'medium' | 'large';
+export type Variant = 'contained' | 'outlined' | 'text' | 'primary' | 'destructive';
+export type Position = 'top' | 'bottom' | 'sidebar';
+export type AlertType = 'success' | 'error' | 'warning' | 'info';
+export type InputType = 'text' | 'password' | 'email' | 'number';
+export type PanelVariant = 'modal' | 'card' | 'sidebar';
+export type SegmentVariant = 'tabs' | 'segmented';
 
-// 通用组件大小
-export type ComponentSize = 'small' | 'medium' | 'large'
-
-// 通用颜色变体
-export type ColorVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
-
-// 按钮组件属性
+// Button types
 export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'destructive'
-  size?: ComponentSize
-  disabled?: boolean
-  loading?: boolean
-  onClick?: () => void
-  icon?: ReactNode
-  children?: ReactNode
-  'aria-label'?: string
-  style?: CSSProperties
-  className?: string
+  variant?: Variant;
+  size?: Size;
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  icon?: ReactNode;
+  children?: ReactNode;
+  'aria-label'?: string;
+  className?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-// 导航栏项目
-export interface NavItem {
-  label: string
-  icon?: ReactNode
-  route: string
-  badge?: string | number
+// Navbar types
+export interface NavbarItem {
+  label: string;
+  icon?: ReactNode;
+  route?: string;
+  badge?: string | number;
 }
 
-// 导航栏组件属性
 export interface NavbarProps {
-  items: NavItem[]
-  position?: 'top' | 'bottom' | 'sidebar'
-  activeItem?: string
-  onItemClick?: (item: NavItem) => void
-  showLabels?: boolean
-  safeArea?: boolean
-  style?: CSSProperties
-  className?: string
+  items: NavbarItem[];
+  position?: Position;
+  activeItem?: string;
+  onItemClick?: (item: NavbarItem) => void;
+  showLabels?: boolean;
+  safeArea?: boolean;
+  className?: string;
 }
 
-// 警告组件属性
+// Alert types
 export interface AlertProps {
-  type: 'success' | 'error' | 'warning' | 'info'
-  message: string
-  dismissible?: boolean
-  autoDismiss?: boolean | number
-  onDismiss?: () => void
-  icon?: ReactNode
-  position?: 'top' | 'bottom' | 'center'
-  style?: CSSProperties
-  className?: string
+  type: AlertType;
+  message: string;
+  dismissible?: boolean;
+  autoDismiss?: boolean;
+  onDismiss?: () => void;
+  icon?: ReactNode;
+  position?: 'top' | 'bottom' | 'center';
+  className?: string;
 }
 
-// 面板组件属性
+// Panel types
 export interface PanelProps {
-  children: ReactNode
-  variant?: 'modal' | 'card' | 'sidebar'
-  scrollable?: boolean
-  onClose?: () => void
-  padding?: boolean
-  backdrop?: boolean
-  style?: CSSProperties
-  className?: string
+  children: ReactNode;
+  variant?: PanelVariant;
+  scrollable?: boolean;
+  onClose?: () => void;
+  padding?: boolean;
+  backdrop?: boolean;
+  className?: string;
 }
 
-// 输入框组件属性
+// Input types
 export interface InputProps {
-  type?: 'text' | 'password' | 'email' | 'number'
-  value?: string
-  onChange?: (value: string) => void
-  placeholder?: string
-  disabled?: boolean
-  error?: string | boolean
-  label?: string
-  icon?: ReactNode
-  style?: CSSProperties
-  className?: string
-  'aria-label'?: string
+  type?: InputType;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  error?: boolean;
+  label?: string;
+  icon?: ReactNode;
+  className?: string;
+  'aria-label'?: string;
 }
 
-// 列表项目
+// List types
 export interface ListItem {
-  id: string
-  label: string
-  sublabel?: string
-  icon?: ReactNode
-  disabled?: boolean
+  id: string;
+  label: string;
+  sublabel?: string;
+  icon?: ReactNode;
 }
 
-// 列表组件属性
 export interface ListProps {
-  items: ListItem[]
-  onSelect?: (item: ListItem) => void
-  selected?: string | string[]
-  divider?: boolean
-  header?: string
-  scrollable?: boolean
-  style?: CSSProperties
-  className?: string
+  items: ListItem[];
+  onSelect?: (item: ListItem) => void;
+  selected?: string;
+  divider?: boolean;
+  header?: string;
+  scrollable?: boolean;
+  className?: string;
 }
 
-// 模态框组件属性
+// Modal types
 export interface ModalProps {
-  open: boolean
-  onClose?: () => void
-  children: ReactNode
-  title?: string
-  backdropDismiss?: boolean
-  size?: ComponentSize
-  style?: CSSProperties
-  className?: string
+  open: boolean;
+  onClose?: () => void;
+  children: ReactNode;
+  title?: string;
+  backdropDismiss?: boolean;
+  size?: Size;
+  className?: string;
 }
 
-// 图标组件属性
+// Icon types
 export interface IconProps {
-  name: string
-  size?: ComponentSize
-  color?: string
-  'aria-label'?: string
-  onClick?: () => void
-  style?: CSSProperties
-  className?: string
+  name: string;
+  size?: Size;
+  color?: string;
+  'aria-label'?: string;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
+  className?: string;
 }
 
-// 加载指示器组件属性
+// Spinner types
 export interface SpinnerProps {
-  size?: ComponentSize
-  color?: string
-  visible?: boolean
-  'aria-label'?: string
-  style?: CSSProperties
-  className?: string
+  size?: Size;
+  color?: string;
+  visible?: boolean;
+  'aria-label'?: string;
+  className?: string;
 }
 
-// 卡片组件属性
+// Card types
 export interface CardProps {
-  children?: ReactNode
-  image?: string
-  title?: string
-  subtitle?: string
-  onClick?: () => void
-  elevation?: number
-  style?: CSSProperties
-  className?: string
+  children?: ReactNode;
+  image?: string;
+  title?: string;
+  subtitle?: string;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
+  elevation?: number;
+  className?: string;
 }
 
-// 下拉选项
+// Dropdown types
 export interface DropdownOption {
-  value: string | number
-  label: string
-  disabled?: boolean
+  value: string;
+  label: string;
 }
 
-// 下拉组件属性
 export interface DropdownProps {
-  options: DropdownOption[]
-  value?: string | number | (string | number)[]
-  onChange?: (value: string | number | (string | number)[]) => void
-  placeholder?: string
-  disabled?: boolean
-  multiple?: boolean
-  label?: string
-  style?: CSSProperties
-  className?: string
+  options: DropdownOption[];
+  value?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  multiple?: boolean;
+  label?: string;
+  className?: string;
 }
 
-// 动作表单动作
+// ActionSheet types
 export interface ActionSheetAction {
-  label: string
-  onClick: () => void
-  destructive?: boolean
-  disabled?: boolean
+  label: string;
+  onClick: () => void;
+  destructive?: boolean;
 }
 
-// 动作表单组件属性
 export interface ActionSheetProps {
-  open: boolean
-  actions: ActionSheetAction[]
-  onClose?: () => void
-  title?: string
-  cancelButton?: boolean
-  backdropDismiss?: boolean
-  style?: CSSProperties
-  className?: string
+  open: boolean;
+  actions: ActionSheetAction[];
+  onClose?: () => void;
+  title?: string;
+  cancelButton?: boolean;
+  backdropDismiss?: boolean;
+  className?: string;
 }
 
-// 警告对话框动作
+// AlertDialog types
 export interface AlertDialogAction {
-  label: string
-  onClick: () => void
-  variant?: 'primary' | 'secondary' | 'destructive'
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary' | 'destructive';
 }
 
-// 警告对话框组件属性
 export interface AlertDialogProps {
-  open: boolean
-  title?: string
-  message: string
-  actions: AlertDialogAction[]
-  onClose?: () => void
-  backdropDismiss?: boolean
-  style?: CSSProperties
-  className?: string
+  open: boolean;
+  title?: string;
+  message: string;
+  actions: AlertDialogAction[];
+  onClose?: () => void;
+  backdropDismiss?: boolean;
+  className?: string;
 }
 
-// 复选框组件属性
+// Checkbox types
 export interface CheckboxProps {
-  checked?: boolean
-  onChange?: (checked: boolean) => void
-  disabled?: boolean
-  label?: string
-  'aria-label'?: string
-  style?: CSSProperties
-  className?: string
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+  disabled?: boolean;
+  label?: string;
+  'aria-label'?: string;
+  className?: string;
 }
 
-// 表单组件属性
+// Form types
 export interface FormProps {
-  onSubmit?: (event: React.FormEvent) => void
-  children: ReactNode
-  disabled?: boolean
-  error?: string
-  layout?: 'vertical' | 'horizontal'
-  style?: CSSProperties
-  className?: string
+  onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
+  children: ReactNode;
+  disabled?: boolean;
+  error?: boolean;
+  layout?: 'vertical' | 'horizontal';
+  className?: string;
 }
 
-// 表单段落组件属性
+// FormSection types
 export interface FormSectionProps {
-  children: ReactNode
-  title?: string
-  description?: string
-  divider?: boolean
-  padding?: boolean
-  style?: CSSProperties
-  className?: string
+  children: ReactNode;
+  title?: string;
+  description?: string;
+  divider?: boolean;
+  padding?: boolean;
+  className?: string;
 }
 
-// 分段控制选项
+// SegmentControl types
 export interface SegmentOption {
-  value: string
-  label: string
-  disabled?: boolean
+  value: string;
+  label: string;
 }
 
-// 分段控制组件属性
 export interface SegmentControlProps {
-  options: SegmentOption[]
-  value?: string
-  onChange?: (value: string) => void
-  variant?: 'tabs' | 'segmented'
-  fullWidth?: boolean
-  style?: CSSProperties
-  className?: string
+  options: SegmentOption[];
+  value?: string;
+  onChange?: (value: string) => void;
+  variant?: SegmentVariant;
+  fullWidth?: boolean;
+  className?: string;
 }
 
-// 导航标题栏动作
+// NavigationTitleBar types
 export interface NavigationAction {
-  icon: ReactNode
-  onClick: () => void
-  label?: string
-  disabled?: boolean
+  icon: ReactNode;
+  onClick: () => void;
+  label: string;
 }
 
-// 导航标题栏组件属性
 export interface NavigationTitleBarProps {
-  title?: string
-  actions?: NavigationAction[]
-  backButton?: boolean
-  onBackClick?: () => void
-  centerTitle?: boolean
-  safeArea?: boolean
-  style?: CSSProperties
-  className?: string
-}
-
-// 平台样式钩子
-export interface UsePlatformStyleResult {
-  platform: PlatformType
-  style: PlatformStyle
-  isIOS: boolean
-  isWindows: boolean
-  isWebAndroid: boolean
-  isLiquidGlass: boolean
-}
-
-// 平台样式配置
-export interface PlatformStyleConfig {
-  forcePlatform?: PlatformType
-  forceStyle?: PlatformStyle
-  enableLiquidGlass?: boolean
+  title: string;
+  actions?: NavigationAction[];
+  backButton?: boolean;
+  centerTitle?: boolean;
+  safeArea?: boolean;
+  onBack?: () => void;
+  className?: string;
 } 

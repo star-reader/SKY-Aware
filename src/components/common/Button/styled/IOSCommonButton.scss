@@ -1,237 +1,321 @@
-// iOS Common Button 样式 - 准确还原苹果设计风格
-.ios-common-button {
+.ios-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  padding: 8px 16px;
   border: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 590; // SF Pro 的 Semibold
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
   text-align: center;
   cursor: pointer;
-  transition: all 0.15s ease-out;
-  position: relative;
-  outline: none;
-  
-  // 防止文本选择
+  transition: background-color 0.2s ease, opacity 0.2s ease;
   user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-  
-  // 触摸优化
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  position: relative;
+  overflow: hidden;
+  min-height: 36px;
 
-  // 大小变体 - 按照苹果 HIG 标准
-  &--small {
-    padding: 6px 12px;
-    font-size: 13px;
-    line-height: 1.23;
-    min-height: 28px;
-    border-radius: 6px;
-    letter-spacing: -0.08px;
-  }
-
-  &--medium {
-    padding: 10px 16px;
-    font-size: 15px;
-    line-height: 1.20;
-    min-height: 36px;
-    border-radius: 8px;
-    letter-spacing: -0.24px;
-  }
-
-  &--large {
-    padding: 14px 20px;
-    font-size: 17px;
-    line-height: 1.18;
-    min-height: 44px; // 苹果推荐的最小触摸目标
-    border-radius: 10px;
-    letter-spacing: -0.41px;
-  }
-
-  // 颜色变体 - 准确的苹果系统颜色
-  &--primary {
-    background: #007AFF;
+  // Base styles for light mode
+  &--contained {
+    background-color: #007AFF;
     color: #FFFFFF;
 
-    &:hover:not(:disabled) {
-      background: #0056CC;
-      transform: translateY(-0.5px);
+    &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: #0056CC;
     }
 
-    &:active:not(:disabled) {
-      background: #004999;
-      transform: translateY(0);
+    &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: #004499;
     }
   }
 
-  &--secondary {
-    background: rgba(120, 120, 128, 0.20);
+  &--outlined {
+    background-color: transparent;
     color: #007AFF;
+    border: 1px solid #007AFF;
 
-    &:hover:not(:disabled) {
-      background: rgba(120, 120, 128, 0.32);
-      transform: translateY(-0.5px);
+    &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: rgba(0, 122, 255, 0.1);
     }
 
-    &:active:not(:disabled) {
-      background: rgba(120, 120, 128, 0.44);
-      transform: translateY(0);
+    &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: rgba(0, 122, 255, 0.2);
+    }
+  }
+
+  &--text {
+    background-color: transparent;
+    color: #007AFF;
+
+    &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: rgba(0, 122, 255, 0.1);
+    }
+
+    &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: rgba(0, 122, 255, 0.2);
+    }
+  }
+
+  &--primary {
+    background-color: #007AFF;
+    color: #FFFFFF;
+
+    &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: #0056CC;
+    }
+
+    &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: #004499;
     }
   }
 
   &--destructive {
-    background: #FF3B30;
+    background-color: #FF3B30;
     color: #FFFFFF;
 
-    &:hover:not(:disabled) {
-      background: #D70015;
-      transform: translateY(-0.5px);
+    &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: #D70015;
     }
 
-    &:active:not(:disabled) {
-      background: #B50000;
-      transform: translateY(0);
+    &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+      background-color: #B80010;
+    }
+
+    &.ios-button--outlined {
+      background-color: transparent;
+      color: #FF3B30;
+      border-color: #FF3B30;
+
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(255, 59, 48, 0.1);
+      }
+
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(255, 59, 48, 0.2);
+      }
+    }
+
+    &.ios-button--text {
+      background-color: transparent;
+      color: #FF3B30;
+
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(255, 59, 48, 0.1);
+      }
+
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(255, 59, 48, 0.2);
+      }
     }
   }
 
-  // 禁用状态
+  // Size variants - 保持与其他平台一致的尺寸
+  &--small {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    min-height: 32px;
+  }
+
+  &--medium {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    min-height: 36px;
+  }
+
+  &--large {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    min-height: 44px;
+  }
+
+  // States
   &--disabled {
-    opacity: 0.32; // 苹果标准的禁用透明度
+    opacity: 0.5;
     cursor: not-allowed;
-    transform: none !important;
-    
-    &:hover {
-      transform: none !important;
+
+    &:hover,
+    &:active {
+      background-color: inherit !important;
     }
   }
 
-  // 加载状态
   &--loading {
     cursor: not-allowed;
-    
-    .ios-common-button__text {
-      opacity: 0.6;
+
+    .ios-button__text {
+      opacity: 0.7;
     }
   }
 
-  // 图标样式
+  // Elements
   &__icon {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
-    
-    svg {
-      width: 100%;
-      height: 100%;
-    }
+    font-size: 1.1em;
+    width: 1.1em;
+    height: 1.1em;
   }
 
-  // 文本样式
   &__text {
-    transition: opacity 0.15s ease-out;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  // 加载动画
   &__spinner {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   &__spinner-icon {
     width: 100%;
     height: 100%;
-    animation: ios-button-spin 0.8s ease-in-out infinite;
+    animation: ios-button-spin 1s linear infinite;
+
+    circle {
+      animation: ios-button-dash 1.5s ease-in-out infinite;
+    }
   }
 
-  // 焦点状态 (键盘导航) - 苹果风格的焦点环
+  // Focus states
   &:focus-visible {
-    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.25);
+    outline: 2px solid #007AFF;
+    outline-offset: 2px;
   }
 }
 
-// 深色模式样式 - 使用系统的 aria-label="dark" 判断
-:global(html[aria-label="dark"]) .ios-common-button {
-  &--primary {
-    background: #0A84FF;
-    
-    &:hover:not(:disabled) {
-      background: #3D9CFF;
+// Dark mode styles
+html[aria-label="dark"] {
+  .ios-button {
+    &--contained {
+      background-color: #0A84FF;
+      color: #FFFFFF;
+
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: #0070F3;
+      }
+
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: #005CE6;
+      }
     }
 
-    &:active:not(:disabled) {
-      background: #0A5FCC;
-    }
-  }
+    &--outlined {
+      color: #0A84FF;
+      border-color: #0A84FF;
 
-  &--secondary {
-    background: rgba(120, 120, 128, 0.32);
-    color: #0A84FF;
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(10, 132, 255, 0.15);
+      }
 
-    &:hover:not(:disabled) {
-      background: rgba(120, 120, 128, 0.44);
-    }
-
-    &:active:not(:disabled) {
-      background: rgba(120, 120, 128, 0.56);
-    }
-  }
-
-  &--destructive {
-    background: #FF453A;
-    
-    &:hover:not(:disabled) {
-      background: #FF6961;
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(10, 132, 255, 0.25);
+      }
     }
 
-    &:active:not(:disabled) {
-      background: #D70015;
+    &--text {
+      color: #0A84FF;
+
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(10, 132, 255, 0.15);
+      }
+
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: rgba(10, 132, 255, 0.25);
+      }
+    }
+
+    &--primary {
+      background-color: #0A84FF;
+      color: #FFFFFF;
+
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: #0070F3;
+      }
+
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: #005CE6;
+      }
+    }
+
+    &--destructive {
+      background-color: #FF453A;
+      color: #FFFFFF;
+
+      &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: #FF2D1A;
+      }
+
+      &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+        background-color: #E6190A;
+      }
+
+      &.ios-button--outlined {
+        background-color: transparent;
+        color: #FF453A;
+        border-color: #FF453A;
+
+        &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+          background-color: rgba(255, 69, 58, 0.15);
+        }
+
+        &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+          background-color: rgba(255, 69, 58, 0.25);
+        }
+      }
+
+      &.ios-button--text {
+        background-color: transparent;
+        color: #FF453A;
+
+        &:hover:not(.ios-button--disabled):not(.ios-button--loading) {
+          background-color: rgba(255, 69, 58, 0.15);
+        }
+
+        &:active:not(.ios-button--disabled):not(.ios-button--loading) {
+          background-color: rgba(255, 69, 58, 0.25);
+        }
+      }
+    }
+
+    &:focus-visible {
+      outline-color: #0A84FF;
     }
   }
 }
 
-// 加载动画 - 更流畅的苹果风格
+// Animations
 @keyframes ios-button-spin {
   0% {
-    stroke-dashoffset: 31.416;
     transform: rotate(0deg);
   }
   100% {
-    stroke-dashoffset: 0;
     transform: rotate(360deg);
   }
 }
 
-// 适配 iPad 和大屏设备 - 增加悬停效果
-@media (min-width: 768px) {
-  .ios-common-button {
-    &:hover:not(:disabled) {
-      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    }
+@keyframes ios-button-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
   }
-}
-
-// 减弱动画效果（用户偏好）
-@media (prefers-reduced-motion: reduce) {
-  .ios-common-button {
-    transition: none;
-    
-    &:hover:not(:disabled) {
-      transform: none;
-    }
-    
-    &:active:not(:disabled) {
-      transform: none;
-    }
-    
-    &__spinner-icon {
-      animation: none;
-    }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
   }
 } 

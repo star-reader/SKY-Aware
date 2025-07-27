@@ -31,106 +31,17 @@ export default async (): Promise<PlatformType> => {
             }
         }
         
-        // 如果不在 Tauri 环境中，使用浏览器 API 检测
+        // 如果不在 Tauri 环境中，返回Web
         if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
-            const userAgent = navigator.userAgent.toLowerCase()
-            
-            // 检测移动设备
-            if (/android/.test(userAgent)) {
-                return 'android'
-            }
-            
-            if (/iphone|ipad|ipod/.test(userAgent) || 
-                ('ontouchend' in document)) {
-                return 'ios'
-            }
-            
-            if (userAgent.includes('windows')) {
-                return 'windows'
-            }
-            
-            if (userAgent.includes('macintosh')) {
-                return 'macos'
-            }
-            
-            if (userAgent.includes('linux')) {
-                return 'linux'
-            }
-            
             return 'web'
         }
         
         return 'web'
         
     } catch (error) {
-        console.error('Error detecting platform:', error)
-        if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
-            const userAgent = navigator.userAgent.toLowerCase()
-            
-            if (/android/.test(userAgent)) return 'android'
-            if (/iphone|ipad|ipod/.test(userAgent)) return 'ios'
-            if (/windows/.test(userAgent)) return 'windows'
-            if (/macintosh/.test(userAgent)) return 'macos'
-            if (/linux/.test(userAgent)) return 'linux'
-        }
-        
+        console.error('Error detecting platform:', error)        
         return 'web'
     }
-}
-
-/**
- * 同步版本的平台检测（仅适用于浏览器环境）
- * @returns {PlatformType} 返回检测到的平台类型
- */
-export const getPlatformSync = (): PlatformType => {
-    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-        return 'web'
-    }
-    
-    const userAgent = navigator.userAgent.toLowerCase()
-    
-    // 检测移动设备
-    if (/android/.test(userAgent)) {
-        return 'android'
-    }
-    
-    if (/iphone|ipad|ipod/.test(userAgent) || 
-        ('ontouchend' in document)) {
-        return 'ios'
-    }
-    
-    // 检测桌面操作系统
-    if (userAgent.includes('windows')) {
-        return 'windows'
-    }
-    
-    if (userAgent.includes('macintosh')) {
-        return 'macos'
-    }
-    
-    if (userAgent.includes('linux')) {
-        return 'linux'
-    }
-    
-    return 'web'
-}
-
-/**
- * 检查是否为移动设备
- * @returns {boolean} 是否为移动设备
- */
-export const isMobile = (): boolean => {
-    const platform = getPlatformSync()
-    return platform === 'android' || platform === 'ios'
-}
-
-/**
- * 检查是否为桌面设备
- * @returns {boolean} 是否为桌面设备
- */
-export const isDesktop = (): boolean => {
-    const platform = getPlatformSync()
-    return platform === 'windows' || platform === 'macos' || platform === 'linux'
 }
 
 /**

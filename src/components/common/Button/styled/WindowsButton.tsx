@@ -1,9 +1,9 @@
-import React from 'react'
-import { Button as FluentButton, Spinner } from '@fluentui/react-components'
-import { ButtonProps } from '../../types'
+import React from 'react';
+import { Button as FluentButton, Spinner } from '@fluentui/react-components';
+import { ButtonProps } from '../../types';
 
 const WindowsButton: React.FC<ButtonProps> = ({
-  variant = 'primary',
+  variant = 'contained',
   size = 'medium',
   disabled = false,
   loading = false,
@@ -11,68 +11,65 @@ const WindowsButton: React.FC<ButtonProps> = ({
   icon,
   children,
   'aria-label': ariaLabel,
-  style,
-  className = ''
+  className = '',
 }) => {
-  const handleClick = () => {
-    if (!disabled && !loading && onClick) {
-      onClick()
-    }
-  }
-
-  // 根据 Fluent UI 文档映射 appearance
+  // Map variant to Fluent UI appearance
   const getAppearance = () => {
     switch (variant) {
+      case 'contained':
       case 'primary':
-        return 'primary'
-      case 'secondary':
-        return 'secondary'
+        return 'primary';
+      case 'outlined':
+        return 'outline';
+      case 'text':
+        return 'subtle';
       case 'destructive':
-        return 'primary' // 使用 primary 样式但后面会覆盖颜色
+        return 'primary';
       default:
-        return 'secondary'
+        return 'primary';
     }
-  }
+  };
 
-  // 根据 Fluent UI 文档映射 size
+  // Map size to Fluent UI size
   const getSize = () => {
     switch (size) {
       case 'small':
-        return 'small'
-      case 'large':
-        return 'large'
+        return 'small';
       case 'medium':
+        return 'medium';
+      case 'large':
+        return 'large';
       default:
-        return 'medium'
+        return 'medium';
     }
-  }
+  };
 
-  // 构建 Fluent UI Button 的 props
-  const fluentProps = {
-    appearance: getAppearance(),
-    size: getSize(),
-    disabled: disabled || loading,
-    onClick: handleClick,
-    'aria-label': ariaLabel,
-    className: className,
-    style: {
-      ...style,
-      // 为 destructive 变体自定义颜色
-      ...(variant === 'destructive' && {
-        backgroundColor: '#d13438',
-        borderColor: '#d13438',
-        color: '#ffffff'
-      })
+  const buttonStyle = variant === 'destructive' ? {
+    backgroundColor: '#C42B1C',
+    borderColor: '#C42B1C',
+    color: '#FFFFFF',
+  } : undefined;
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled && !loading && onClick) {
+      onClick(event);
     }
-  }
+  };
 
   return (
-    <FluentButton {...fluentProps as any}>
-      {loading && <Spinner size="extra-small" style={{ marginRight: children ? '8px' : '0' }} /> as any}
-      {!loading && icon && <span style={{ marginRight: children ? '8px' : '0' }}>{icon}</span> as any}
+    <FluentButton
+      appearance={getAppearance()}
+      size={getSize()}
+      disabled={disabled || loading}
+      onClick={handleClick}
+      aria-label={ariaLabel}
+      className={className}
+      style={buttonStyle}
+      icon={loading ? <Spinner size="tiny" /> as any : icon}
+    >
       {children}
     </FluentButton>
-  )
-}
+  );
+};
 
-export default WindowsButton 
+export default WindowsButton; 

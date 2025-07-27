@@ -1,6 +1,5 @@
 import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { PrimeReactProvider } from 'primereact/api'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import pubsub from 'pubsub-js'
@@ -18,6 +17,7 @@ export default () => {
   const [isDark, setIsDark] = useState(false)
   const [currentTab, setCurrentTab] = useState('settings')
   const [platform, setPlatform] = useState('')
+  const [showTestPage, setShowTestPage] = useState(false)
 
   useEffect(() => {
     // 初始化检测系统主题
@@ -93,21 +93,41 @@ export default () => {
     <div id="global-entry-hooks-provider" 
       className="w-full h-full"
       aria-label={isDark ? "dark" : "light"}>
-      {
-        platform === 'windows' ?
-        // Windows特供，原生Fluent UI
         <FluentProvider
           theme={theme}
           aria-label={isDark ? "dark" : "light"}
         >
-          <PrimeReactProvider>
-            <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />
-          </PrimeReactProvider>
-        </FluentProvider> :
         <ThemeProvider theme={muiTheme}>
-          <MobileLayOut />
+          {/* 添加测试页面切换按钮 */}
+          <div style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 1000 }}>
+            <button
+              onClick={() => setShowTestPage(!showTestPage)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '6px',
+                border: '1px solid #007AFF',
+                background: showTestPage ? '#007AFF' : 'white',
+                color: showTestPage ? 'white' : '#007AFF',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500'
+              }}
+            >
+              {showTestPage ? '返回应用' : '组件测试'}
+            </button>
+          </div>
+          
+          {/* 渲染内容 */}
+          {showTestPage ? (
+            <TestPage />
+          ) : (
+            /* 同时初始化MUI和Fluent UI */
+            platform === 'windows' ?
+            <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} /> :
+            <MobileLayOut />
+          )}
         </ThemeProvider>
-      }
+        </FluentProvider>
     </div>
   )
 }

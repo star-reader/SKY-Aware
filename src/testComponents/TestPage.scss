@@ -1,332 +1,466 @@
-// 测试页面样式
 .test-page {
   min-height: 100vh;
-  width: calc(100vw - 200px);
+  background-color: #F5F5F5;
   padding: 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  transition: all 0.3s ease;
-}
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
 
-// 深色模式背景 - 根据系统 aria-label="dark" 切换
-:global(html[aria-label="dark"]) .test-page {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  color: #ffffff;
-}
-
-.test-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: all 0.3s ease;
-
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+  &__header {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .header-info {
+  &__title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1d1d1f;
+  }
+
+  &__description {
+    margin: 0 0 20px 0;
+    color: #6e6e73;
+    font-size: 16px;
+  }
+
+  &__content {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  h1 {
-    margin: 0;
-    color: #2c3e50;
-    font-size: 2.5rem;
-    font-weight: 700;
-  }
-
-  p {
-    margin: 0;
-    color: #7f8c8d;
-    font-size: 1.1rem;
+    gap: 24px;
   }
 }
 
-// 深色模式下的 header 样式
-:global(html[aria-label="dark"]) .test-header {
-  background: rgba(30, 30, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  h1 {
-    color: #ffffff;
-  }
-  
-  p {
-    color: #b0b0b0;
-  }
-}
-
-// 主题切换器样式
-.theme-switcher {
-  display: flex;
-  align-items: center;
-}
-
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(0, 122, 255, 0.3);
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #007AFF;
-  font-weight: 500;
-  font-size: 14px;
-
-  &:hover {
-    background: rgba(0, 122, 255, 0.1);
-    border-color: rgba(0, 122, 255, 0.5);
-    transform: translateY(-1px);
-  }
-
-  &.dark {
-    color: #ffd700;
-    border-color: rgba(255, 215, 0, 0.3);
-
-    &:hover {
-      background: rgba(255, 215, 0, 0.1);
-      border-color: rgba(255, 215, 0, 0.5);
-    }
-  }
-
-  .theme-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover .theme-icon {
-    transform: rotate(15deg);
-  }
-
-  .theme-text {
-    white-space: nowrap;
-  }
-}
-
-.platform-selector {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-
-  h3 {
-    margin: 0 0 1rem 0;
-    color: #2c3e50;
-    font-size: 1.2rem;
-  }
-}
-
-// 深色模式下的平台选择器样式
-:global(html[aria-label="dark"]) .platform-selector {
-  background: rgba(30, 30, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  h3 {
-    color: #ffffff;
-  }
-}
-
-.platform-tabs {
+// Tab system
+.test-tabs {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.platform-tab {
+.test-tab {
   padding: 8px 16px;
-  border: 2px solid #e0e6ed;
-  background: white;
+  border: 1px solid #d1d1d6;
   border-radius: 8px;
+  background: white;
+  color: #1d1d1f;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-weight: 500;
-  color: #495057;
 
   &:hover {
-    background: #f8f9fa;
-    border-color: #007bff;
-    transform: translateY(-1px);
+    background: #f5f5f7;
   }
 
-  &.active {
-    background: #007bff;
-    border-color: #007bff;
+  &--active {
+    background: #007AFF;
     color: white;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    border-color: #007AFF;
   }
 }
 
-// 深色模式下的平台选择按钮样式
-:global(html[aria-label="dark"]) .platform-tab {
-  background: #2d2d2d;
-  border-color: #404040;
-  color: #ffffff;
-
-  &:hover {
-    background: #3d3d3d;
-    border-color: #007bff;
-  }
-
-  &.active {
-    background: #007bff;
-    border-color: #007bff;
-    color: white;
-  }
-}
-
-.test-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
+// Sections
 .test-section {
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: all 0.3s ease;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  h2 {
-    margin: 0 0 1.5rem 0;
-    color: #2c3e50;
-    font-size: 1.8rem;
+  &__title {
+    margin: 0 0 20px 0;
+    font-size: 22px;
     font-weight: 600;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 0.5rem;
-  }
-}
-
-// 深色模式下的测试区域样式
-:global(html[aria-label="dark"]) .test-section {
-  background: rgba(30, 30, 30, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  h2 {
-    color: #ffffff;
-    border-bottom-color: #404040;
+    color: #1d1d1f;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 12px;
   }
 }
 
 .test-group {
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
 
   &:last-child {
     margin-bottom: 0;
   }
 
-  h3 {
-    margin: 0 0 1rem 0;
-    color: #34495e;
-    font-size: 1.3rem;
+  &__title {
+    margin: 0 0 16px 0;
+    font-size: 18px;
     font-weight: 500;
+    color: #424245;
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
   }
 }
 
-// 深色模式下的测试组标题样式
-:global(html[aria-label="dark"]) .test-group h3 {
-  color: #ffffff;
+.test-placeholder {
+  color: #8e8e93;
+  font-style: italic;
+  padding: 20px 0;
 }
 
-.button-row {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: 1rem;
-  background: rgba(248, 249, 250, 0.8);
-  border-radius: 8px;
-  border: 1px dashed #dee2e6;
-  transition: all 0.3s ease;
-}
-
-// 深色模式下的按钮行样式
-:global(html[aria-label="dark"]) .button-row {
-  background: rgba(40, 40, 40, 0.5);
-  border-color: #404040;
-}
-
-// 响应式设计
-@media (max-width: 768px) {
-  .test-page {
-    padding: 1rem;
+// Platform-specific styling
+.test-page--ios-common {
+  .test-tabs {
+    background: white;
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid #e5e5ea;
   }
 
-  .test-header {
-    padding: 1.5rem;
-    
-    .header-top {
-      flex-direction: column;
-      gap: 1rem;
-      align-items: center;
+  .test-tab {
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+
+    &:hover {
+      background: rgba(0, 122, 255, 0.1);
     }
-    
-    h1 {
-      font-size: 2rem;
+
+    &--active {
+      background: #007AFF;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
   }
 
   .test-section {
-    padding: 1.5rem;
+    border: 1px solid #e5e5ea;
+    box-shadow: none;
+  }
+}
+
+.test-page--ios-liquid {
+  // Same as iOS Common for now since we're using the same components
+  .test-tabs {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    padding: 4px;
+    border: 1px solid rgba(229, 229, 234, 0.5);
   }
 
-  .platform-tabs {
-    flex-direction: column;
+  .test-tab {
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+
+    &:hover {
+      background: rgba(0, 122, 255, 0.15);
+    }
+
+    &--active {
+      background: rgba(0, 122, 255, 0.9);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
   }
 
-  .platform-tab {
-    text-align: center;
+  .test-section {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(229, 229, 234, 0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.test-page--windows {
+  background-color: #faf9f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .test-tabs {
+    background: white;
+    border: 1px solid #e1dfdd;
+    border-radius: 4px;
+    padding: 0;
+    overflow: hidden;
   }
 
-  .button-row {
-    flex-direction: column;
-    align-items: stretch;
+  .test-tab {
+    border: none;
+    border-radius: 0;
+    border-right: 1px solid #e1dfdd;
+    background: #faf9f8;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &:hover {
+      background: #f3f2f1;
+    }
+
+    &--active {
+      background: #0078d4;
+      color: white;
+    }
   }
 
-  .theme-toggle {
-    padding: 6px 12px;
-    font-size: 13px;
-    
-    .theme-text {
-      display: none; // 在小屏幕上隐藏文字，只显示图标
+  .test-section {
+    background: white;
+    border: 1px solid #e1dfdd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .test-page__header {
+    border: 1px solid #e1dfdd;
+    border-radius: 4px;
+  }
+
+  .test-page__title {
+    color: #323130;
+  }
+
+  .test-section__title {
+    color: #323130;
+    border-bottom-color: #e1dfdd;
+  }
+
+  .test-group__title {
+    color: #605e5c;
+  }
+}
+
+.test-page--material {
+  background-color: #fafafa;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+  .test-tabs {
+    background: white;
+    border-radius: 8px;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .test-tab {
+    border: none;
+    border-radius: 0;
+    background: white;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    &--active {
+      background: #1976d2;
+      color: white;
+      box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+    }
+  }
+
+  .test-section {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+
+  .test-page__header {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .test-page__title {
+    color: #212121;
+  }
+
+  .test-section__title {
+    color: #212121;
+    border-bottom-color: #e0e0e0;
+  }
+
+  .test-group__title {
+    color: #757575;
+  }
+}
+
+// Dark mode support
+html[aria-label="dark"] {
+  .test-page {
+    background-color: #1c1c1e;
+    color: #ffffff;
+
+    &__header {
+      background: #2c2c2e;
+      border: 1px solid #38383a;
+    }
+
+    &__title {
+      color: #ffffff;
+    }
+
+    &__description {
+      color: #aeaeb2;
+    }
+  }
+
+  .test-tab {
+    background: #2c2c2e;
+    border-color: #38383a;
+    color: #ffffff;
+
+    &:hover {
+      background: #3a3a3c;
+    }
+
+    &--active {
+      background: #0a84ff;
+      border-color: #0a84ff;
+    }
+  }
+
+  .test-section {
+    background: #2c2c2e;
+    border: 1px solid #38383a;
+
+    &__title {
+      color: #ffffff;
+      border-bottom-color: #38383a;
+    }
+  }
+
+  .test-group {
+    &__title {
+      color: #aeaeb2;
+    }
+  }
+
+  .test-placeholder {
+    color: #636366;
+  }
+
+  // Platform-specific dark mode adjustments
+  .test-page--ios-liquid {
+    .test-tabs {
+      background: rgba(44, 44, 46, 0.8);
+      border-color: rgba(56, 56, 58, 0.5);
+    }
+
+    .test-section {
+      background: rgba(44, 44, 46, 0.8);
+      border-color: rgba(56, 56, 58, 0.5);
+    }
+  }
+
+  .test-page--windows {
+    background-color: #1f1f1f;
+
+    .test-page__title,
+    .test-section__title {
+      color: #ffffff;
+    }
+
+    .test-group__title {
+      color: #c8c6c4;
+    }
+
+    .test-tab {
+      background: #2d2d30;
+      border-color: #3f3f46;
+
+      &:hover {
+        background: #37373d;
+      }
+
+      &--active {
+        background: #106ebe;
+      }
+    }
+  }
+
+  .test-page--material {
+    background-color: #121212;
+
+    .test-page__title,
+    .test-section__title {
+      color: #ffffff;
+    }
+
+    .test-group__title {
+      color: #aaaaaa;
+    }
+
+    .test-tab {
+      background: #1e1e1e;
+
+      &:hover {
+        background: #2c2c2c;
+      }
+
+      &--active {
+        background: #1976d2;
+      }
     }
   }
 }
 
+// Responsive design
+@media (max-width: 768px) {
+  .test-page {
+    padding: 16px;
+
+    &__header {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    &__title {
+      font-size: 24px;
+    }
+  }
+
+  .test-section {
+    padding: 20px;
+  }
+
+  .test-group {
+    margin-bottom: 24px;
+
+    &__content {
+      gap: 8px;
+    }
+  }
+
+  .test-tabs {
+    gap: 4px;
+  }
+
+  .test-tab {
+    padding: 6px 12px;
+    font-size: 13px;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+}
+
 @media (max-width: 480px) {
-  .test-header h1 {
-    font-size: 1.5rem;
+  .test-page {
+    padding: 12px;
   }
 
-  .test-section h2 {
-    font-size: 1.4rem;
+  .test-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
   }
 
-  .test-group h3 {
-    font-size: 1.1rem;
-  }
+  .test-group__content {
+    flex-direction: column;
+    align-items: stretch;
 
-  .header-info {
-    font-size: 0.9rem;
+    > * {
+      width: 100%;
+    }
   }
 } 

@@ -1,5 +1,5 @@
 ---
-description: Configuration for a multi-platform React app with Tauri, defining common components with platform-specific styles for iOS (Common and Liquid Glass), Windows (Fluent UI React v9), and Web/Android (PrimeReact). Includes a test page to showcase components across platforms.
+description: Configuration for a multi-platform React app with Tauri, defining common components with platform-specific styles for iOS (Common and Liquid Glass), Windows (Fluent UI React v9), and Web/Android (Material UI). Includes a test page to showcase components across platforms.
 globs:
 alwaysApply: false
 ---
@@ -10,7 +10,7 @@ This is a multi-platform React app built with Tauri, targeting Windows, iOS, iPa
   - **Common**: Standard iOS styling following Human Interface Guidelines.
   - **Liquid Glass**: Apple’s WWDC 2024 Liquid Glass effect, using the `liquid-glass-react` library (https://github.com/rdev/liquid-glass-react).
 - **Windows**: Uses Fluent UI React v9 (https://react.fluentui.dev).
-- **Web/Android**: Uses PrimeReact (https://primereact.org), ensuring responsive design.
+- **Web/Android**: Uses React Material Ui(MUI) (https://mui.com/material-ui/), ensuring responsive design.
 A `testComponents` folder includes a test page with tabs to display all components for each platform’s style, using test data.
 
 ## Component Structure
@@ -26,126 +26,126 @@ components/
         IOSCommonButton.tsx
         IOSLiquidGlassButton.tsx
         WindowsButton.tsx
-        PrimeReactButton.tsx
+        MaterialButton.tsx
     Navbar/
       Index.tsx
       styled/
         IOSCommonNavbar.tsx
         IOSLiquidGlassNavbar.tsx
         WindowsNavbar.tsx
-        PrimeReactNavbar.tsx
+        MaterialNavbar.tsx
     Alert/
       Index.tsx
       styled/
         IOSCommonAlert.tsx
         IOSLiquidGlassAlert.tsx
         WindowsAlert.tsx
-        PrimeReactAlert.tsx
+        MaterialAlert.tsx
     Panel/
       Index.tsx
       styled/
         IOSCommonPanel.tsx
         IOSLiquidGlassPanel.tsx
         WindowsPanel.tsx
-        PrimeReactPanel.tsx
+        MaterialPanel.tsx
     Input/
       Index.tsx
       styled/
         IOSCommonInput.tsx
         IOSLiquidGlassInput.tsx
         WindowsInput.tsx
-        PrimeReactInput.tsx
+        MaterialInput.tsx
     List/
       Index.tsx
       styled/
         IOSCommonList.tsx
         IOSLiquidGlassList.tsx
         WindowsList.tsx
-        PrimeReactList.tsx
+        MaterialList.tsx
     Modal/
       Index.tsx
       styled/
         IOSCommonModal.tsx
         IOSLiquidGlassModal.tsx
         WindowsModal.tsx
-        PrimeReactModal.tsx
+        MaterialModal.tsx
     Icon/
       Index.tsx
       styled/
         IOSCommonIcon.tsx
         IOSLiquidGlassIcon.tsx
         WindowsIcon.tsx
-        PrimeReactIcon.tsx
+        MaterialIcon.tsx
     Spinner/
       Index.tsx
       styled/
         IOSCommonSpinner.tsx
         IOSLiquidGlassSpinner.tsx
         WindowsSpinner.tsx
-        PrimeReactSpinner.tsx
+        MaterialSpinner.tsx
     Card/
       Index.tsx
       styled/
         IOSCommonCard.tsx
         IOSLiquidGlassCard.tsx
         WindowsCard.tsx
-        PrimeReactCard.tsx
+        MaterialCard.tsx
     Dropdown/
       Index.tsx
       styled/
         IOSCommonDropdown.tsx
         IOSLiquidGlassDropdown.tsx
         WindowsDropdown.tsx
-        PrimeReactDropdown.tsx
+        MaterialDropdown.tsx
     ActionSheet/
       Index.tsx
       styled/
         IOSCommonActionSheet.tsx
         IOSLiquidGlassActionSheet.tsx
         WindowsActionSheet.tsx
-        PrimeReactActionSheet.tsx
+        MaterialActionSheet.tsx
     AlertDialog/
       Index.tsx
       styled/
         IOSCommonAlertDialog.tsx
         IOSLiquidGlassAlertDialog.tsx
         WindowsAlertDialog.tsx
-        PrimeReactAlertDialog.tsx
+        MaterialAlertDialog.tsx
     Checkbox/
       Index.tsx
       styled/
         IOSCommonCheckbox.tsx
         IOSLiquidGlassCheckbox.tsx
         WindowsCheckbox.tsx
-        PrimeReactCheckbox.tsx
+        MaterialCheckbox.tsx
     Form/
       Index.tsx
       styled/
         IOSCommonForm.tsx
         IOSLiquidGlassForm.tsx
         WindowsForm.tsx
-        PrimeReactForm.tsx
+        MaterialForm.tsx
     FormSection/
       Index.tsx
       styled/
         IOSCommonFormSection.tsx
         IOSLiquidGlassFormSection.tsx
         WindowsFormSection.tsx
-        PrimeReactFormSection.tsx
+        MaterialFormSection.tsx
     SegmentControl/
       Index.tsx
       styled/
         IOSCommonSegmentControl.tsx
         IOSLiquidGlassSegmentControl.tsx
         WindowsSegmentControl.tsx
-        PrimeReactSegmentControl.tsx
+        MaterialSegmentControl.tsx
     NavigationTitleBar/
       Index.tsx
       styled/
         IOSCommonNavigationTitleBar.tsx
         IOSLiquidGlassNavigationTitleBar.tsx
         WindowsNavigationTitleBar.tsx
-        PrimeReactNavigationTitleBar.tsx
+        MaterialNavigationTitleBar.tsx
 testComponents/
   TestPage.tsx
 ```
@@ -154,133 +154,154 @@ testComponents/
 Each component in `components/common/[Component]/Index.tsx` uses a `getPlatform()` function (provided by Tauri, in `utils/getPlatform.ts`) to detect the platform and render the appropriate styled component:
 - **iOS/iPadOS/macOS**: 
   - **Common**: Follows Apple’s Human Interface Guidelines (e.g., rounded corners, SF Symbols, safe area insets).
-  - **Liquid Glass**: Uses `liquid-glass-react` (https://github.com/rdev/liquid-glass-react) with props like `displacementScale`, `blurAmount`, `saturation`, `aberrationIntensity`, `elasticity`, `cornerRadius`, and `mouseContainer` for interactive effects. Ensure compatibility with iOS 26+ and graceful degradation on older versions.
+  - **Liquid Glass**: Uses `liquid-glass-react` (https://github.com/rdev/liquid-glass-react) with props like `displacementScale`, `blurAmount`, `saturation`, `aberrationIntensity`, `elasticity`, `cornerRadius`, and `mouseContainer` for interactive effects. Some components not need Liquid Glass style.
 - **Windows**: Uses Fluent UI React v9 (https://react.fluentui.dev) with components like `Button`, `Nav`, `MessageBar`, etc., following Fluent Design (acrylic blur, rectangular shapes, hover states).
-- **Web/Android**: Uses PrimeReact (https://primereact.org) with responsive components (e.g., `Button`, `Menubar`, `Toast`, `Card`) styled with TailwindCSS for adaptability across screen sizes.
+- **Web/Android**: Uses React Material Ui(MUI) (https://mui.com/material-ui/) with responsive components (e.g., `Button`, `Menubar`, `Toast`, `Card`) styled with custom style for adaptability across screen sizes.
+
+For Material UI and Fluent UI, we already config the night-day mode switch, you should not write night-day mode style by your self, and shouldn't override it. For iOS style, we have `document.documentElement.setAttribute('aria-label', systemTheme === 'dark' ? 'dark' : 'light')` attribute, write css to fit day and night mode by this document attribute, do not add other theme schema.
 
 #### Common Components and Props
 1. **Button**
-   - Props: `variant` (primary, secondary, destructive), `size`, `disabled`, `loading`, `onClick`, `icon`, `children`, `aria-label`.
-   - iOS Liquid Glass: Apply `liquid-glass-react` with `displacementScale=64`, `blurAmount=0.1`, `elasticity=0.35`.
-   - Windows: Use Fluent UI’s `Button` with `appearance` (primary, subtle).
-   - PrimeReact: Use `Button` with `severity`, `rounded`, responsive classes.
+   - Props: `variant` (contained, primary, text, destructive), `size`, `disabled`, `loading`, `onClick`, `icon`, `children`, `aria-label`.
+   - iOS Common: CSS with rounded corners, SF Symbols for icons, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: Not needed.
+   - Windows: Fluent UI `Button` with `appearance` (primary, subtle).
+   - Material: MUI `Button` with `variant`, `size`, responsive `sx`.
 
 2. **Navbar**
    - Props: `items` (array of `{ label, icon, route, badge }`), `position` (top, bottom, sidebar), `activeItem`, `onItemClick`, `showLabels`, `safeArea`.
-   - iOS Liquid Glass: Use `liquid-glass-react` with translucent background, safe area support.
-   - Windows: Use Fluent UI’s `Nav` with `groups` for navigation.
-   - PrimeReact: Use `Menubar` with responsive `model`.
+   - iOS Common: CSS with safe area insets, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: `liquid-glass-react` with translucent background, `elasticity=0.3`.
+   - Windows: Fluent UI `Nav` with `groups`.
+   - Material: MUI `AppBar` with `Tabs` or `BottomNavigation`, responsive `sx`.
 
 3. **Alert**
    - Props: `type` (success, error, warning, info), `message`, `dismissible`, `autoDismiss`, `onDismiss`, `icon`, `position`.
-   - iOS Liquid Glass: Use `liquid-glass-react` for frosted banner.
-   - Windows: Use Fluent UI’s `MessageBar` with `intent`.
-   - PrimeReact: Use `Toast` with `severity`, responsive positioning.
+   - iOS Common: CSS with banner style, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: `liquid-glass-react` with `blurAmount=0.1` for frosted banner.
+   - Windows: Fluent UI `MessageBar` with `intent`.
+   - Material: MUI `Alert` with `severity`, responsive `sx`.
 
 4. **Panel**
    - Props: `children`, `variant` (modal, card, sidebar), `scrollable`, `onClose`, `padding`, `backdrop`.
-   - iOS Liquid Glass: Use `liquid-glass-react` with `blurAmount=0.0625`, `cornerRadius=999`.
-   - Windows: Use Fluent UI’s `Panel` with `type` (small, large).
-   - PrimeReact: Use `Panel` with `header`, responsive layout.
+   - iOS Common: CSS with rounded corners, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: `liquid-glass-react` with `blurAmount=0.0625`, `cornerRadius=999`.
+   - Windows: Fluent UI `Panel` with `type` (small, large).
+   - Material: MUI `Paper` with `elevation`, responsive `sx`.
 
 5. **Input**
    - Props: `type` (text, password, email, number), `value`, `onChange`, `placeholder`, `disabled`, `error`, `label`, `icon`.
-   - iOS Liquid Glass: Use `liquid-glass-react` for translucent input background.
-   - Windows: Use Fluent UI’s `TextField` with `validationState`.
-   - PrimeReact: Use `InputText` with `invalid`, responsive sizing.
+   - iOS Common: CSS with rounded fields, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: not needed
+   - Windows: Fluent UI `TextField` with `validationState`.
+   - Material: MUI `TextField` with `variant`, `error`, responsive `sx`.
 
 6. **List**
    - Props: `items` (array of `{ id, label, sublabel, icon }`), `onSelect`, `selected`, `divider`, `header`, `scrollable`.
-   - iOS Liquid Glass: Use `liquid-glass-react` for grouped list style.
-   - Windows: Use Fluent UI’s `List` with `items`.
-   - PrimeReact: Use `DataView` or `ListBox` with responsive `layout`.
+   - iOS Common: CSS with grouped list style, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: `liquid-glass-react` for grouped list style.
+   - Windows: Fluent UI `List` with `items`.
+   - Material: MUI `List` with `ListItem`, responsive `sx`.
 
 7. **Modal**
    - Props: `open`, `onClose`, `children`, `title`, `backdropDismiss`, `size`.
-   - iOS Liquid Glass: Use `liquid-glass-react` with `backdrop`, `elasticity=0.3`.
-   - Windows: Use Fluent UI’s `Dialog` with `modalProps`.
-   - PrimeReact: Use `Dialog` with `responsive`, `header`.
+   - iOS Common: CSS with slide-up animation, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: `liquid-glass-react` with `backdrop`, `elasticity=0.3`.
+   - Windows: Fluent UI `Dialog` with `modalProps`.
+   - Material: MUI `Dialog` with `fullScreen` for mobile, responsive `sx`.
 
 8. **Icon**
    - Props: `name`, `size`, `color`, `aria-label`, `onClick`.
-   - iOS Liquid Glass: Use `liquid-glass-react` with SF Symbols, `saturation=140`.
-   - Windows: Use Fluent UI’s `Icon` with `iconName`.
-   - PrimeReact: Use `IconField` or custom icons with TailwindCSS.
+   - iOS Common: CSS with SF Symbols, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: not needed.
+   - Windows: Fluent UI `Icon` with `iconName`.
+   - Material: MUI `Icon` or `@mui/icons-material` icons, responsive `sx`.
 
 9. **Spinner**
    - Props: `size`, `color`, `visible`, `aria-label`.
-   - iOS Liquid Glass: Use `liquid-glass-react` with `blurAmount=0.1`.
-   - Windows: Use Fluent UI’s `Spinner` with `size`.
-   - PrimeReact: Use `ProgressSpinner` with responsive `style`.
+   - iOS Common: CSS with spinner animation, `[aria-label="dark"]` for theme.
+   - iOS Liquid Glass: not needed
+   - Windows: Fluent UI `Spinner` with `size`.
+   - Material: MUI `CircularProgress` with `size`, responsive `sx`.
 
 10. **Card**
     - Props: `children`, `image`, `title`, `subtitle`, `onClick`, `elevation`.
-    - iOS Liquid Glass: Use `liquid-glass-react` with `cornerRadius=100`.
-    - Windows: Use Fluent UI’s `Card` with `appearance`.
-    - PrimeReact: Use `Card` with `header`, `subTitle`, responsive classes.
+    - iOS Common: CSS with rounded corners, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` with `cornerRadius=100`.
+    - Windows: Fluent UI `Card` with `appearance`.
+    - Material: MUI `Card` with `CardHeader`, `CardContent`, responsive `sx`.
 
 11. **Dropdown**
     - Props: `options` (array of `{ value, label }`), `value`, `onChange`, `placeholder`, `disabled`, `multiple`, `label`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for picker-style dropdown.
-    - Windows: Use Fluent UI’s `Dropdown` with `options`.
-    - PrimeReact: Use `Dropdown` with `options`, responsive `panelStyle`.
+    - iOS Common: CSS with picker-style dropdown, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` for picker-style dropdown.
+    - Windows: Fluent UI `Dropdown` with `options`.
+    - Material: MUI `Select` with `MenuItem`, responsive `sx`.
 
 12. **ActionSheet**
     - Props: `open`, `actions` (array of `{ label, onClick, destructive }`), `onClose`, `title`, `cancelButton`, `backdropDismiss`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for bottom sheet with `elasticity=0.35`.
-    - Windows: Use Fluent UI’s `ContextualMenu` with `items`.
-    - PrimeReact: Use `Menu` with `model`, responsive positioning.
+    - iOS Common: CSS with bottom sheet style, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` with `elasticity=0.35` for bottom sheet.
+    - Windows: Fluent UI `ContextualMenu` with `items`.
+    - Material: MUI `Menu` with `MenuItem`, responsive `sx`.
 
 13. **AlertDialog**
     - Props: `open`, `title`, `message`, `actions`, `onClose`, `backdropDismiss`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for translucent dialog.
-    - Windows: Use Fluent UI’s `Dialog` with `dialogContentProps`.
-    - PrimeReact: Use `ConfirmDialog` with `header`, responsive `style`.
+    - iOS Common: CSS with dialog style, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` for translucent dialog.
+    - Windows: Fluent UI `Dialog` with `dialogContentProps`.
+    - Material: MUI `Dialog` with `DialogTitle`, `DialogActions`, responsive `sx`.
 
 14. **Checkbox**
     - Props: `checked`, `onChange`, `disabled`, `label`, `aria-label`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for toggle-like appearance.
-    - Windows: Use Fluent UI’s `Checkbox` with `label`.
-    - PrimeReact: Use `Checkbox` with `inputId`, responsive classes.
+    - iOS Common: CSS with toggle-like appearance, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` for toggle-like appearance.
+    - Windows: Fluent UI `Checkbox` with `label`.
+    - Material: MUI `Checkbox` with `FormControlLabel`, responsive `sx`.
 
 15. **Form**
     - Props: `onSubmit`, `children`, `disabled`, `error`, `layout`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for translucent form background.
-    - Windows: Use Fluent UI’s `Form` with `onSubmit`.
-    - PrimeReact: Use `Fieldset` or custom form with TailwindCSS, responsive layout.
+    - iOS Common: CSS with form layout, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` for translucent form background.
+    - Windows: Fluent UI `Form` with `onSubmit`.
+    - Material: MUI `Box` with `component="form"`, responsive `sx`.
 
 16. **FormSection**
     - Props: `children`, `title`, `description`, `divider`, `padding`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for grouped section.
-    - Windows: Use Fluent UI’s `Stack` with `tokens` for spacing.
-    - PrimeReact: Use `Fieldset` with `legend`, responsive styling.
+    - iOS Common: CSS with grouped section style, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` for grouped section.
+    - Windows: Fluent UI `Stack` with `tokens` for spacing.
+    - Material: MUI `FormGroup` or `Box` with `Typography`, responsive `sx`.
 
 17. **SegmentControl**
     - Props: `options` (array of `{ value, label }`), `value`, `onChange`, `variant` (tabs, segmented), `fullWidth`.
-    - iOS Liquid Glass: Use `liquid-glass-react` for segmented buttons.
-    - Windows: Use Fluent UI’s `TabList` with `tabs`.
-    - PrimeReact: Use `TabView` with `panels`, responsive `style`.
+    - iOS Common: CSS with segmented buttons, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` for segmented buttons.
+    - Windows: Fluent UI `TabList` with `tabs`.
+    - Material: MUI `Tabs` with `Tab`, responsive `sx`.
 
 18. **NavigationTitleBar**
     - Props: `title`, `actions` (array of `{ icon, onClick, label }`), `backButton`, `centerTitle`, `safeArea`.
-    - iOS Liquid Glass: Use `liquid-glass-react` with `blurAmount=0.0625`, safe area support.
-    - Windows: Use Fluent UI’s `CommandBar` with `items`.
-    - PrimeReact: Use `Toolbar` with `start`, `end`, responsive classes.
+    - iOS Common: CSS with title bar style, `[aria-label="dark"]` for theme.
+    - iOS Liquid Glass: `liquid-glass-react` with `blurAmount=0.0625`, safe area support.
+    - Windows: Fluent UI `CommandBar` with `items`.
+    - Material: MUI `AppBar` with `Toolbar`, responsive `sx`.
 
 ### Test Page Requirements
-Create a `testComponents/TestPage.tsx` file to showcase all components across each platform’s style (iOS Common, iOS Liquid Glass, Windows, PrimeReact). The test page uses tabs to switch between platform styles, displaying components with test data.
+Create a `testComponents/TestPage.tsx` file to showcase all components across each platform’s style (iOS Common, iOS Liquid Glass, Windows, Material). The test page uses tabs to switch between platform styles, displaying components with test data.
 
 #### Test Page Structure
-- **Tabs**: Use PrimeReact’s `TabView` for Web/Android, Fluent UI’s `TabList` for Windows, and a custom segmented control for iOS (Common and Liquid Glass). Tabs include:
-  - iOS Common
-  - iOS Liquid Glass
-  - Windows
-  - Web/Android
+- **Tabs**:
+  - iOS Common: Custom segmented control with CSS, `[aria-label="dark"]` for theme.
+  - iOS Liquid Glass: Custom segmented control with `liquid-glass-react`.
+  - Windows: Fluent UI `TabList` with `tabs`.
+  - Web/Android: MUI `Tabs` with `Tab`, responsive `sx`.
+- **Tabs List**: iOS Common, iOS Liquid Glass, Windows, Web/Android.
 - **Content**: Each tab renders all components with test data, styled according to the platform.
 - **Test Data**:
-  - **Button**: Variants (primary, secondary), disabled, loading states.
+  - **Button**: Variants (contained, outlined, text), disabled, loading states.
   - **Navbar**: 4 items with icons, labels, and badges.
-  - **Alert**: Success, error, and warning types, dismissible.
+  - **Alert**: Success, error, warning types, dismissible.
   - **Panel**: Card and modal variants with sample content.
   - **Input**: Text and password inputs with error states.
   - **List**: 5 items with labels and sublabels, selectable.
@@ -296,31 +317,30 @@ Create a `testComponents/TestPage.tsx` file to showcase all components across ea
   - **FormSection**: 2 sections with titles and inputs.
   - **SegmentControl**: 3 options, with active selection.
   - **NavigationTitleBar**: Title, back button, and 2 action buttons.
-- **Layout**: Responsive grid layout using TailwindCSS for Web/Android, Fluent UI’s `Stack` for Windows, and CSS with safe area insets for iOS.
+- **Layout**:
+  - iOS: CSS with safe area insets, `[aria-label="dark"]` for theme.
+  - Windows: Fluent UI `Stack` for layout.
+  - Web/Android: MUI `Box` with responsive `sx` (e.g., `display: { xs: 'block', md: 'grid' }`).
 - **Platform Detection**: Use `getPlatform()` to conditionally apply styles or components if needed.
-- **Accessibility**: Ensure ARIA attributes and keyboard navigation support.
+- **Accessibility**: Ensure ARIA attributes (`aria-label`, `aria-disabled`) and keyboard navigation (Tab, Enter, Space).
+
 
 #### Test Page Implementation Notes
-- **iOS Common**: Use standard CSS or a library like TailwindCSS, following Human Interface Guidelines (e.g., SF Symbols, rounded corners).
+- **iOS Common**: Use standard SCSS, following Human Interface Guidelines (e.g., SF Symbols, rounded corners). Write iOS-style like components. Try to imitate as much as possible, the more like the better, including colors, effects, borders, rounded corners, animations, backgrounds
 - **iOS Liquid Glass**: Wrap components in `LiquidGlass` from `liquid-glass-react` with props like `displacementScale=70`, `blurAmount=0.0625`, `elasticity=0.15`, `cornerRadius=999` for frosted effects.[](https://github.com/rdev/liquid-glass-react)
 - **Windows**: Use Fluent UI React v9 components with Fluent Design styling (acrylic blur, rectangular shapes).
-- **Web/Android**: Use PrimeReact components with TailwindCSS for responsiveness, ensuring mobile-friendly layouts.[](https://github.com/ahmedawaad1804/rn-liquid-glass-view)
+- **Web/Android**: Use Material components with TailwindCSS for responsiveness, ensuring mobile-friendly layouts.[](https://github.com/ahmedawaad1804/rn-liquid-glass-view)
 - **Tab Switching**: Store the active tab in state and conditionally render components based on the selected platform style.
 - **Test Data Rendering**: Use mock data (e.g., arrays for lists, strings for titles) to populate components, ensuring visual consistency.
 
 ### Additional Instructions
-- **Dependencies**:
-  - Install `liquid-glass-react` for iOS Liquid Glass (`npm install liquid-glass-react`).[](https://github.com/rdev/liquid-glass-react)
-  - Install `@fluentui/react-components` for Windows (`npm install @fluentui/react-components`).[](https://github.com/ahmedawaad1804/rn-liquid-glass-view)
-  - Install `primereact` and `primeicons` for Web/Android (`npm install primereact primeicons`).[](https://github.com/rdev/liquid-glass-react/activity)
-  - Use TailwindCSS for responsive styling (`npm install tailwindcss`).
-- **Platform Detection**: Implement a `getPlatform()` utility using Tauri’s `tauri::api::os` to return `ios`, `windows`, `android`, or `web`. Cache the result to avoid performance issues.
+- **Platform Detection**: Implement a `getPlatform()` utility using `/utils/getPlatform.ts`. Cache the result to avoid performance issues.
 - **Accessibility**: Add ARIA attributes (`aria-label`, `aria-disabled`) and ensure keyboard navigation (Tab, Enter, Space).
 - **Performance**:
   - Use React’s `memo` for components to prevent unnecessary re-renders.
   - Optimize Liquid Glass effects by memoizing props (e.g., `useMemo` for `glassStyle`).[](https://www.npmjs.com/package/%40specy/liquid-glass-react)
   - Minimize re-renders in the test page by using `useCallback` for event handlers.
 - **Responsive Design**:
-  - For Web/Android, use PrimeReact’s responsive features and TailwindCSS classes (e.g., `sm:`, `md:`).
+  - For Web/Android, use Material’s responsive features and TailwindCSS classes (e.g., `sm:`, `md:`).
   - For iOS, respect safe area insets and adapt to iPadOS multitasking.
   - For Windows, support scaling (e.g., 125%, 150%) and hover states.

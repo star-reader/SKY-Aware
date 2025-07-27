@@ -1,9 +1,9 @@
-import React from 'react'
-import { ButtonProps } from '../../types'
-import './IOSCommonButton.scss'
+import React from 'react';
+import { ButtonProps } from '../../types';
+import './IOSCommonButton.scss';
 
 const IOSCommonButton: React.FC<ButtonProps> = ({
-  variant = 'primary',
+  variant = 'contained',
   size = 'medium',
   disabled = false,
   loading = false,
@@ -11,58 +11,64 @@ const IOSCommonButton: React.FC<ButtonProps> = ({
   icon,
   children,
   'aria-label': ariaLabel,
-  style,
-  className = ''
+  className = '',
+  type = 'button',
 }) => {
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled && !loading && onClick) {
-      onClick()
+      onClick(event);
     }
-  }
+  };
 
-  const buttonClass = [
-    'ios-common-button',
-    `ios-common-button--${variant}`,
-    `ios-common-button--${size}`,
-    disabled && 'ios-common-button--disabled',
-    loading && 'ios-common-button--loading',
-    className
-  ].filter(Boolean).join(' ')
+  const buttonClasses = [
+    'ios-button',
+    `ios-button--${variant}`,
+    `ios-button--${size}`,
+    disabled && 'ios-button--disabled',
+    loading && 'ios-button--loading',
+    className,
+  ].filter(Boolean).join(' ');
 
   return (
     <button
-      type="button"
-      className={buttonClass}
+      type={type}
+      className={buttonClasses}
       onClick={handleClick}
-      disabled={disabled}
+      disabled={disabled || loading}
       aria-label={ariaLabel}
-      style={style}
     >
       {loading && (
-        <span className="ios-common-button__spinner">
-          <svg className="ios-common-button__spinner-icon" viewBox="0 0 24 24">
+        <span className="ios-button__spinner" aria-hidden="true">
+          <svg
+            className="ios-button__spinner-icon"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
             <circle
-              cx="12"
-              cy="12"
-              r="10"
+              cx="10"
+              cy="10"
+              r="7"
               stroke="currentColor"
               strokeWidth="2"
-              fill="none"
               strokeLinecap="round"
-              strokeDasharray="31.416"
-              strokeDashoffset="31.416"
+              strokeDasharray="43.98"
+              strokeDashoffset="43.98"
             />
           </svg>
         </span>
       )}
       {icon && !loading && (
-        <span className="ios-common-button__icon">{icon}</span>
+        <span className="ios-button__icon" aria-hidden="true">
+          {icon}
+        </span>
       )}
       {children && (
-        <span className="ios-common-button__text">{children}</span>
+        <span className="ios-button__text">
+          {children}
+        </span>
       )}
     </button>
-  )
-}
+  );
+};
 
-export default IOSCommonButton 
+export default IOSCommonButton; 
