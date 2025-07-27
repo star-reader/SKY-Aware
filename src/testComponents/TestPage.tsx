@@ -16,7 +16,13 @@ import MaterialPanel from '../components/common/Panel/styled/MaterialPanel';
 import IOSCommonInput from '../components/common/Input/styled/IOSCommonInput';
 import WindowsInput from '../components/common/Input/styled/WindowsInput';
 import MaterialInput from '../components/common/Input/styled/MaterialInput';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps } from '../components/common/types';
+import IOSCommonList from '../components/common/List/styled/IOSCommonList';
+import WindowsList from '../components/common/List/styled/WindowsList';
+import MaterialList from '../components/common/List/styled/MaterialList';
+import IOSCommonSpinner from '../components/common/Spinner/styled/IOSCommonSpinner';
+import WindowsSpinner from '../components/common/Spinner/styled/WindowsSpinner';
+import MaterialSpinner from '../components/common/Spinner/styled/MaterialSpinner';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -86,6 +92,24 @@ const PersonIcon = () => (
   </svg>
 );
 
+const FolderIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M10 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2h-8l-2-2z"/>
+  </svg>
+);
+
+const FileIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+  </svg>
+);
+
+const NotificationIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+  </svg>
+);
+
 type PlatformStyle = 'ios-common' | 'ios-liquid' | 'windows' | 'material';
 
 interface TestButtonProps extends ButtonProps {
@@ -110,6 +134,14 @@ interface TestInputProps extends InputProps {
   style?: React.CSSProperties;
 }
 
+interface TestListProps extends ListProps {
+  style?: React.CSSProperties;
+}
+
+interface TestSpinnerProps extends SpinnerProps {
+  style?: React.CSSProperties;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
@@ -117,6 +149,7 @@ const TestPage: React.FC = () => {
   const [visibleAlerts, setVisibleAlerts] = useState<{[key: string]: boolean}>({});
   const [visiblePanels, setVisiblePanels] = useState<{[key: string]: boolean}>({});
   const [inputValues, setInputValues] = useState<{[key: string]: string}>({});
+  const [selectedListItem, setSelectedListItem] = useState<string>('item1');
 
   useEffect(() => {
     getPlatform().then(platform => {
@@ -219,6 +252,42 @@ const TestPage: React.FC = () => {
         return <MaterialInput {...inputProps} {...inputStyle} />;
       default:
         return <IOSCommonInput {...inputProps} {...inputStyle} />;
+    }
+  };
+
+  // 根据选中的tab渲染对应的List组件
+  const renderList = (props: TestListProps) => {
+    const { style, ...listProps } = props;
+    const listStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonList {...listProps} {...listStyle} />;
+      case 'windows':
+        return <WindowsList {...listProps} {...listStyle} />;
+      case 'material':
+        return <MaterialList {...listProps} {...listStyle} />;
+      default:
+        return <IOSCommonList {...listProps} {...listStyle} />;
+    }
+  };
+
+  // 根据选中的tab渲染对应的Spinner组件
+  const renderSpinner = (props: TestSpinnerProps) => {
+    const { style, ...spinnerProps } = props;
+    const spinnerStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonSpinner {...spinnerProps} {...spinnerStyle} />;
+      case 'windows':
+        return <WindowsSpinner {...spinnerProps} {...spinnerStyle} />;
+      case 'material':
+        return <MaterialSpinner {...spinnerProps} {...spinnerStyle} />;
+      default:
+        return <IOSCommonSpinner {...spinnerProps} {...spinnerStyle} />;
     }
   };
 
@@ -851,6 +920,408 @@ const TestPage: React.FC = () => {
      );
    };
 
+   const renderListSection = () => {
+     // 测试数据
+     const basicListItems = [
+       {
+         id: 'item1',
+         label: 'Inbox',
+         sublabel: '3 new messages',
+         icon: <NotificationIcon />,
+       },
+       {
+         id: 'item2',
+         label: 'Drafts',
+         sublabel: '2 saved drafts',
+         icon: <FileIcon />,
+       },
+       {
+         id: 'item3',
+         label: 'Sent',
+         sublabel: 'Recently sent items',
+         icon: <SearchIcon />,
+       },
+       {
+         id: 'item4',
+         label: 'Trash',
+         sublabel: '5 deleted items',
+         icon: <DeleteIcon />,
+         disabled: true,
+       },
+     ];
+
+     const avatarListItems = [
+       {
+         id: 'user1',
+         label: 'Alice Johnson',
+         sublabel: 'Online - Available for chat',
+         avatar: (
+           <img 
+             src="https://images.unsplash.com/photo-1494790108755-2616b612b734?w=40&h=40&fit=crop&crop=face" 
+             alt="Alice" 
+             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+           />
+         ),
+       },
+       {
+         id: 'user2',
+         label: 'Bob Smith',
+         sublabel: 'Away - Back in 30 minutes',
+         avatar: (
+           <img 
+             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+             alt="Bob" 
+             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+           />
+         ),
+       },
+       {
+         id: 'user3',
+         label: 'Carol Davis',
+         sublabel: 'Busy - Do not disturb',
+         avatar: (
+           <img 
+             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" 
+             alt="Carol" 
+             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+           />
+         ),
+       },
+     ];
+
+     const actionListItems = [
+       {
+         id: 'setting1',
+         label: 'Notifications',
+         sublabel: 'Manage your notification preferences',
+         icon: <NotificationIcon />,
+         action: (
+           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+             <span style={{ fontSize: '12px', color: '#666' }}>On</span>
+             {renderButton({
+               variant: 'text',
+               size: 'small',
+               children: 'Edit',
+               onClick: () => console.log('Edit notifications'),
+             })}
+           </div>
+         ),
+       },
+               {
+          id: 'setting2',
+          label: 'Privacy',
+          sublabel: 'Control your privacy settings',
+          icon: <SettingsIcon />,
+          action: (
+            renderButton({
+              variant: 'outlined',
+              size: 'small',
+              children: 'Configure',
+              onClick: () => console.log('Configure privacy'),
+            })
+          ),
+        },
+       {
+         id: 'setting3',
+         label: 'Storage',
+         sublabel: '12.5 GB of 15 GB used',
+         icon: <FolderIcon />,
+         action: (
+           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+             <div style={{ 
+               width: '60px', 
+               height: '4px', 
+               background: '#e0e0e0', 
+               borderRadius: '2px',
+               overflow: 'hidden'
+             }}>
+               <div style={{ 
+                 width: '83%', 
+                 height: '100%', 
+                 background: '#ff9800'
+               }} />
+             </div>
+           </div>
+         ),
+       },
+     ];
+
+     const fileListItems = [
+       {
+         id: 'file1',
+         label: 'Project Report.pdf',
+         sublabel: 'Modified 2 hours ago • 2.4 MB',
+         icon: <FileIcon />,
+         href: '#',
+       },
+       {
+         id: 'file2',
+         label: 'Meeting Notes',
+         sublabel: 'Created today • Shared with team',
+         icon: <FileIcon />,
+         href: '#',
+       },
+       {
+         id: 'file3',
+         label: 'Design Assets',
+         sublabel: 'Updated yesterday • 15 files',
+         icon: <FolderIcon />,
+         href: '#',
+       },
+     ];
+
+     return (
+       <section className="test-section">
+         <h2 className="test-section__title">List 组件测试</h2>
+         
+         {/* 基本List测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">基本列表</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'grid', gap: '24px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+               {renderList({
+                 items: basicListItems,
+                 selectedItem: selectedListItem,
+                 onItemClick: (item) => {
+                   setSelectedListItem(item.id);
+                   console.log('Selected item:', item.label);
+                 },
+               })}
+               {renderList({
+                 items: basicListItems,
+                 selectedItem: selectedListItem,
+                 onItemClick: (item) => {
+                   setSelectedListItem(item.id);
+                   console.log('Selected item:', item.label);
+                 },
+                 dense: true,
+                 subheader: 'Dense List',
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* 分隔线List测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">带分隔线的列表</h3>
+           <div className="test-group__content">
+             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+               {renderList({
+                 items: basicListItems,
+                 selectedItem: selectedListItem,
+                 onItemClick: (item) => {
+                   setSelectedListItem(item.id);
+                   console.log('Selected item:', item.label);
+                 },
+                 dividers: true,
+                 subheader: 'Mail Folders',
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* Avatar List测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">用户列表 - 头像</h3>
+           <div className="test-group__content">
+             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+               {renderList({
+                 items: avatarListItems,
+                 selectedItem: selectedListItem,
+                 onItemClick: (item) => {
+                   setSelectedListItem(item.id);
+                   console.log('Selected user:', item.label);
+                 },
+                 dividers: true,
+                 subheader: 'Team Members',
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* Action List测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">带操作的列表</h3>
+           <div className="test-group__content">
+             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+               {renderList({
+                 items: actionListItems,
+                 subheader: 'Settings',
+                 dividers: true,
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* 可滚动List测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">可滚动列表</h3>
+           <div className="test-group__content">
+             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+               {renderList({
+                 items: [...basicListItems, ...basicListItems, ...basicListItems],
+                 selectedItem: selectedListItem,
+                 onItemClick: (item) => {
+                   setSelectedListItem(item.id);
+                   console.log('Selected item:', item.label);
+                 },
+                 scrollable: true,
+                 maxHeight: '200px',
+                 subheader: 'Scrollable List',
+                 dividers: true,
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* 链接List测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">链接列表</h3>
+           <div className="test-group__content">
+             <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+               {renderList({
+                 items: fileListItems,
+                 subheader: 'Recent Files',
+                 dividers: true,
+               })}
+             </div>
+           </div>
+         </div>
+
+       </section>
+     );
+   };
+
+   const renderSpinnerSection = () => {
+     return (
+       <section className="test-section">
+         <h2 className="test-section__title">Spinner 测试</h2>
+
+         {/* 基础Spinner测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">基础加载器</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center' }}>
+               {renderSpinner({ size: 'small' })}
+               {renderSpinner({ size: 'medium' })}
+               {renderSpinner({ size: 'large' })}
+             </div>
+           </div>
+         </div>
+
+         {/* 带标签的Spinner测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">带标签的加载器</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'flex', alignItems: 'center', gap: '40px', justifyContent: 'center' }}>
+               {renderSpinner({ 
+                 size: 'small', 
+                 label: 'Loading...',
+               })}
+               {renderSpinner({ 
+                 size: 'medium', 
+                 label: 'Please wait',
+               })}
+               {renderSpinner({ 
+                 size: 'large', 
+                 label: 'Processing',
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* 自定义颜色的Spinner测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">自定义颜色</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center' }}>
+               {renderSpinner({ color: '#007AFF' })}
+               {renderSpinner({ color: '#FF3B30' })}
+               {renderSpinner({ color: '#34C759' })}
+               {renderSpinner({ color: '#FF9500' })}
+             </div>
+           </div>
+         </div>
+
+         {/* 确定进度的Spinner测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">确定进度</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center' }}>
+               {renderSpinner({ 
+                 variant: 'determinate', 
+                 value: 25,
+                 label: '25%',
+               })}
+               {renderSpinner({ 
+                 variant: 'determinate', 
+                 value: 50,
+                 label: '50%',
+               })}
+               {renderSpinner({ 
+                 variant: 'determinate', 
+                 value: 75,
+                 label: '75%',
+               })}
+               {renderSpinner({ 
+                 variant: 'determinate', 
+                 value: 100,
+                 label: '100%',
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* 粗细调整的Spinner测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">线条粗细</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center' }}>
+               {renderSpinner({ 
+                 size: 'large',
+                 thickness: 1,
+                 label: 'Thin',
+               })}
+               {renderSpinner({ 
+                 size: 'large',
+                 thickness: 3,
+                 label: 'Medium',
+               })}
+               {renderSpinner({ 
+                 size: 'large',
+                 thickness: 5,
+                 label: 'Thick',
+               })}
+             </div>
+           </div>
+         </div>
+
+         {/* 可见性控制测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">可见性控制</h3>
+           <div className="test-group__content">
+             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'center', flexDirection: 'column' }}>
+               <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                 {renderSpinner({ 
+                   visible: true,
+                   label: 'Visible',
+                 })}
+                 {renderSpinner({ 
+                   visible: false,
+                   label: 'Hidden',
+                 })}
+               </div>
+               <p style={{ fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                 左侧显示，右侧隐藏（应该看不到）
+               </p>
+             </div>
+           </div>
+         </div>
+
+       </section>
+     );
+   };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -868,6 +1339,8 @@ const TestPage: React.FC = () => {
          {renderAlertSection()}
          {renderPanelSection()}
          {renderInputSection()}
+         {renderListSection()}
+         {renderSpinnerSection()}
        </div>
     </div>
   );

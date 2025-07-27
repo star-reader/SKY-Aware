@@ -88,16 +88,23 @@ export interface ListItem {
   label: string;
   sublabel?: string;
   icon?: ReactNode;
+  avatar?: ReactNode;
+  disabled?: boolean;
+  action?: ReactNode;
+  href?: string;
 }
 
 export interface ListProps {
   items: ListItem[];
-  onSelect?: (item: ListItem) => void;
-  selected?: string;
-  divider?: boolean;
-  header?: string;
+  onItemClick?: (item: ListItem) => void;
+  selectedItem?: string;
+  dense?: boolean;
+  dividers?: boolean;
+  subheader?: string;
   scrollable?: boolean;
+  maxHeight?: string;
   className?: string;
+  'aria-label'?: string;
 }
 
 // Modal types
@@ -126,6 +133,10 @@ export interface SpinnerProps {
   size?: Size;
   color?: string;
   visible?: boolean;
+  label?: string;
+  variant?: 'indeterminate' | 'determinate';
+  value?: number; // for determinate variant (0-100)
+  thickness?: number; // for customizing circle thickness
   'aria-label'?: string;
   className?: string;
 }

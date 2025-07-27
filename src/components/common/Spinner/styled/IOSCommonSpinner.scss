@@ -1,0 +1,150 @@
+// iOS Spinner 样式
+.ios-spinner {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
+  display: inline-block;
+  position: relative;
+
+  &__svg {
+    display: block;
+    transform-origin: center;
+  }
+
+  &__track {
+    stroke: #E5E5EA;
+    opacity: 0.3;
+  }
+
+  &__progress {
+    stroke: #007AFF;
+    stroke-linecap: round;
+    transform-origin: center;
+    transform: rotate(-90deg);
+    transition: stroke-dasharray 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  // Indeterminate animation
+  &:not(.ios-spinner--determinate) {
+    .ios-spinner__svg {
+      animation: ios-spinner-rotate 1s linear infinite;
+    }
+
+    .ios-spinner__progress {
+      stroke-dasharray: 24 66;
+      animation: ios-spinner-dash 1.5s ease-in-out infinite;
+    }
+  }
+
+  // Size variants
+  &--small {
+    .ios-spinner__progress {
+      stroke-width: 1.5;
+    }
+  }
+
+  &--medium {
+    .ios-spinner__progress {
+      stroke-width: 2;
+    }
+  }
+
+  &--large {
+    .ios-spinner__progress {
+      stroke-width: 2.5;
+    }
+  }
+
+  // Determinate variant
+  &--determinate {
+    .ios-spinner__progress {
+      transition: stroke-dasharray 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+  }
+}
+
+// Container for spinner with label
+.ios-spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ios-spinner__label {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6D6D70;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: -0.08px;
+}
+
+// Animations
+@keyframes ios-spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ios-spinner-dash {
+  0% {
+    stroke-dasharray: 1 90;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 45 45;
+    stroke-dashoffset: -17.5;
+  }
+  100% {
+    stroke-dasharray: 45 45;
+    stroke-dashoffset: -62.5;
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .ios-spinner {
+    &__track {
+      stroke: #48484A;
+      opacity: 0.5;
+    }
+
+    &__progress {
+      stroke: #0A84FF;
+    }
+  }
+
+  .ios-spinner__label {
+    color: #8E8E93;
+  }
+}
+
+// 悬停效果（仅桌面端）
+@media (hover: hover) {
+  .ios-spinner:hover {
+    .ios-spinner__progress {
+      stroke: #0056CC;
+    }
+  }
+
+  html[aria-label="dark"] {
+    .ios-spinner:hover {
+      .ios-spinner__progress {
+        stroke: #409CFF;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 480px) {
+  .ios-spinner-container {
+    gap: 6px;
+  }
+
+  .ios-spinner__label {
+    font-size: 12px;
+  }
+} 
