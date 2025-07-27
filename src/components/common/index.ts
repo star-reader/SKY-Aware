@@ -8,6 +8,7 @@ export { default as List } from './List/Index';
 export { default as Spinner } from './Spinner/Index';
 export { default as Card } from './Card/Index';
 export { default as Dropdown } from './Dropdown/Index';
+export { default as SegmentControl } from './SegmentControl/Index';
 
 // Export types
 export * from './types'; 

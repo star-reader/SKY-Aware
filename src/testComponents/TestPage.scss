@@ -463,4 +463,32 @@ html[aria-label="dark"] {
       width: 100%;
     }
   }
+}
+
+// SegmentControl specific styles
+.test-segment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  margin: 8px 0;
+
+  label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+}
+
+html[aria-label="dark"] {
+  .test-segment-container {
+    background: rgba(255, 255, 255, 0.05);
+
+    label {
+      color: #999;
+    }
+  }
 } 

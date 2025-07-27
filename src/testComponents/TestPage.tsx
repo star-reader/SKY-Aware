@@ -28,7 +28,10 @@ import MaterialCard from '../components/common/Card/styled/MaterialCard';
 import IOSCommonDropdown from '../components/common/Dropdown/styled/IOSCommonDropdown';
 import WindowsDropdown from '../components/common/Dropdown/styled/WindowsDropdown';
 import MaterialDropdown from '../components/common/Dropdown/styled/MaterialDropdown';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption } from '../components/common/types';
+import IOSCommonSegmentControl from '../components/common/SegmentControl/styled/IOSCommonSegmentControl';
+import WindowsSegmentControl from '../components/common/SegmentControl/styled/WindowsSegmentControl';
+import MaterialSegmentControl from '../components/common/SegmentControl/styled/MaterialSegmentControl';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -156,6 +159,10 @@ interface TestDropdownProps extends DropdownProps {
   style?: React.CSSProperties;
 }
 
+interface TestSegmentControlProps extends SegmentControlProps {
+  style?: React.CSSProperties;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
@@ -165,6 +172,11 @@ const TestPage: React.FC = () => {
   const [inputValues, setInputValues] = useState<{[key: string]: string}>({});
   const [selectedListItem, setSelectedListItem] = useState<string>('item1');
   const [dropdownValues, setDropdownValues] = useState<{[key: string]: string | string[]}>({});
+  const [segmentValues, setSegmentValues] = useState<{[key: string]: string}>({
+    basic: 'option1',
+    withIcons: 'tab1',
+    tabs: 'tab1'
+  });
   
 
 
@@ -341,6 +353,24 @@ const TestPage: React.FC = () => {
         return <MaterialDropdown {...dropdownProps} {...dropdownStyle} />;
       default:
         return <IOSCommonDropdown {...dropdownProps} {...dropdownStyle} />;
+    }
+  };
+
+  // 根据选中的tab渲染对应的SegmentControl组件
+  const renderSegmentControl = (props: TestSegmentControlProps) => {
+    const { style, ...segmentProps } = props;
+    const segmentStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonSegmentControl {...segmentProps} {...segmentStyle} />;
+      case 'windows':
+        return <WindowsSegmentControl {...segmentProps} {...segmentStyle} />;
+      case 'material':
+        return <MaterialSegmentControl {...segmentProps} {...segmentStyle} />;
+      default:
+        return <IOSCommonSegmentControl {...segmentProps} {...segmentStyle} />;
     }
   };
 
@@ -1760,6 +1790,151 @@ const TestPage: React.FC = () => {
     );
   };
 
+  // SegmentControl 测试数据
+  const segmentOptions: SegmentOption[] = [
+    { value: 'option1', label: '选项 1' },
+    { value: 'option2', label: '选项 2' },
+    { value: 'option3', label: '选项 3' }
+  ];
+
+  const segmentOptionsWithIcons: SegmentOption[] = [
+    { 
+      value: 'tab1', 
+      label: '首页',
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    },
+    { 
+      value: 'tab2', 
+      label: '搜索',
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    },
+    { 
+      value: 'tab3', 
+      label: '设置',
+      icon: <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+    }
+  ];
+
+  const renderSegmentControlSection = () => {
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">SegmentControl 组件测试</h2>
+        
+        <div className="test-grid">
+          {/* 基础分段控制器 */}
+          <div className="test-item">
+            <h3>基础分段控制器</h3>
+            <div className="test-segment-container">
+              {renderSegmentControl({
+                options: segmentOptions,
+                value: segmentValues.basic,
+                onChange: (value) => setSegmentValues(prev => ({ ...prev, basic: value })),
+                'aria-label': '基础分段控制器'
+              })}
+            </div>
+            <p>当前选择: {segmentValues.basic}</p>
+          </div>
+
+          {/* 带图标的分段控制器 */}
+          <div className="test-item">
+            <h3>带图标的分段控制器</h3>
+            <div className="test-segment-container">
+              {renderSegmentControl({
+                options: segmentOptionsWithIcons,
+                value: segmentValues.withIcons,
+                onChange: (value) => setSegmentValues(prev => ({ ...prev, withIcons: value })),
+                size: 'large',
+                'aria-label': '带图标的分段控制器'
+              })}
+            </div>
+            <p>当前选择: {segmentValues.withIcons}</p>
+          </div>
+
+          {/* Tabs 样式 */}
+          <div className="test-item">
+            <h3>Tabs 样式</h3>
+            <div className="test-segment-container">
+              {renderSegmentControl({
+                options: segmentOptionsWithIcons,
+                value: segmentValues.tabs,
+                onChange: (value) => setSegmentValues(prev => ({ ...prev, tabs: value })),
+                variant: 'tabs',
+                fullWidth: true,
+                'aria-label': 'Tabs样式分段控制器'
+              })}
+            </div>
+            <p>当前选择: {segmentValues.tabs}</p>
+          </div>
+
+          {/* 不同尺寸 */}
+          <div className="test-item">
+            <h3>不同尺寸</h3>
+            <div className="test-segment-container" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <label>小尺寸:</label>
+                {renderSegmentControl({
+                  options: segmentOptions,
+                  value: segmentValues.basic,
+                  onChange: (value) => setSegmentValues(prev => ({ ...prev, basic: value })),
+                  size: 'small',
+                  'aria-label': '小尺寸分段控制器'
+                })}
+              </div>
+              <div>
+                <label>中等尺寸:</label>
+                {renderSegmentControl({
+                  options: segmentOptions,
+                  value: segmentValues.basic,
+                  onChange: (value) => setSegmentValues(prev => ({ ...prev, basic: value })),
+                  size: 'medium',
+                  'aria-label': '中等尺寸分段控制器'
+                })}
+              </div>
+              <div>
+                <label>大尺寸:</label>
+                {renderSegmentControl({
+                  options: segmentOptions,
+                  value: segmentValues.basic,
+                  onChange: (value) => setSegmentValues(prev => ({ ...prev, basic: value })),
+                  size: 'large',
+                  'aria-label': '大尺寸分段控制器'
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* 全宽模式 */}
+          <div className="test-item">
+            <h3>全宽模式</h3>
+            <div className="test-segment-container">
+              {renderSegmentControl({
+                options: segmentOptions,
+                value: segmentValues.basic,
+                onChange: (value) => setSegmentValues(prev => ({ ...prev, basic: value })),
+                fullWidth: true,
+                'aria-label': '全宽模式分段控制器'
+              })}
+            </div>
+          </div>
+
+          {/* 禁用状态 */}
+          <div className="test-item">
+            <h3>禁用状态</h3>
+            <div className="test-segment-container">
+              {renderSegmentControl({
+                options: segmentOptions,
+                value: segmentValues.basic,
+                onChange: (value) => setSegmentValues(prev => ({ ...prev, basic: value })),
+                disabled: true,
+                'aria-label': '禁用状态分段控制器'
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -1781,6 +1956,7 @@ const TestPage: React.FC = () => {
          {renderSpinnerSection()}
          {renderCardSection()}
          {renderDropdownSection()}
+         {renderSegmentControlSection()}
        </div>
     </div>
   );

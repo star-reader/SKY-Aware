@@ -246,15 +246,20 @@ export interface FormSectionProps {
 export interface SegmentOption {
   value: string;
   label: string;
+  disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export interface SegmentControlProps {
   options: SegmentOption[];
-  value?: string;
-  onChange?: (value: string) => void;
-  variant?: SegmentVariant;
+  value: string;
+  onChange: (value: string) => void;
+  variant?: 'tabs' | 'segmented';
   fullWidth?: boolean;
+  disabled?: boolean;
+  size?: Size;
   className?: string;
+  'aria-label'?: string;
 }
 
 // NavigationTitleBar types
@@ -272,24 +277,4 @@ export interface NavigationTitleBarProps {
   safeArea?: boolean;
   onBack?: () => void;
   className?: string;
-}
-
-// SegmentControl 组件
-export interface SegmentOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-}
-
-export interface SegmentControlProps {
-  options: SegmentOption[];
-  value: string;
-  onChange: (value: string) => void;
-  variant?: 'tabs' | 'segmented';
-  fullWidth?: boolean;
-  disabled?: boolean;
-  size?: Size;
-  className?: string;
-  'aria-label'?: string;
 } 

@@ -1,0 +1,283 @@
+// iOS SegmentControl 样式
+.ios-segment-control {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
+  display: inline-flex;
+  background-color: #F2F2F7;
+  border-radius: 8px;
+  padding: 2px;
+  position: relative;
+  overflow: hidden;
+
+  // 大小变体
+  &--small {
+    .ios-segment-control__segment {
+      min-height: 24px;
+      padding: 4px 12px;
+      font-size: 12px;
+    }
+  }
+
+  &--medium {
+    .ios-segment-control__segment {
+      min-height: 28px;
+      padding: 6px 16px;
+      font-size: 13px;
+    }
+  }
+
+  &--large {
+    .ios-segment-control__segment {
+      min-height: 36px;
+      padding: 8px 20px;
+      font-size: 15px;
+    }
+  }
+
+  // 全宽模式
+  &--full-width {
+    width: 100%;
+    display: flex;
+
+    .ios-segment-control__segment {
+      flex: 1;
+    }
+  }
+
+  // 分段按钮
+  &__segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+    background: transparent;
+    color: #1C1C1E;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    outline: none;
+    position: relative;
+    border-radius: 6px;
+    white-space: nowrap;
+    line-height: 1.2;
+    letter-spacing: -0.08px;
+
+    // 悬停效果
+    &:hover:not(&--disabled):not(&--selected) {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    // 按下效果
+    &:active:not(&--disabled) {
+      transform: scale(0.96);
+    }
+
+    // 聚焦效果
+    &:focus-visible {
+      box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+    }
+
+    // 选中状态
+    &--selected {
+      background-color: #FFFFFF;
+      color: #1C1C1E;
+      font-weight: 500;
+      box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.06);
+
+      &:hover {
+        background-color: #FFFFFF;
+        box-shadow: 
+          0 2px 4px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.08);
+      }
+    }
+
+    // 禁用状态
+    &--disabled {
+      color: #8E8E93;
+      cursor: not-allowed;
+      
+      &:hover {
+        background: transparent;
+      }
+
+      &:active {
+        transform: none;
+      }
+    }
+
+    // 第一个和最后一个的特殊处理
+    &--first {
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+
+    &--last {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+  }
+
+  // 图标样式
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  // 标签样式
+  &__label {
+    font-inherit: inherit;
+    line-height: inherit;
+  }
+
+  // Tabs 变体样式
+  &--tabs {
+    background: transparent;
+    padding: 0;
+    border-bottom: 1px solid #E5E5EA;
+    border-radius: 0;
+
+    .ios-segment-control__segment {
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 8px;
+      background: transparent !important;
+      box-shadow: none !important;
+
+      &:hover:not(&--disabled):not(&--selected) {
+        background: rgba(0, 0, 0, 0.04) !important;
+      }
+
+      &--selected {
+        color: #007AFF;
+        border-bottom-color: #007AFF;
+        font-weight: 600;
+      }
+
+      &--first,
+      &--last {
+        border-radius: 0;
+      }
+    }
+  }
+
+  // 禁用状态
+  &--disabled {
+    opacity: 0.6;
+
+    .ios-segment-control__segment {
+      cursor: not-allowed;
+      color: #8E8E93;
+
+      &:hover {
+        background: transparent !important;
+      }
+
+      &:active {
+        transform: none;
+      }
+    }
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .ios-segment-control {
+    background-color: #2C2C2E;
+
+    &__segment {
+      color: #F2F2F7;
+
+      &:hover:not(&--disabled):not(&--selected) {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &--selected {
+        background-color: #48484A;
+        color: #F2F2F7;
+        box-shadow: 
+          0 1px 3px rgba(0, 0, 0, 0.3),
+          0 1px 2px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+          background-color: #48484A;
+          box-shadow: 
+            0 2px 4px rgba(0, 0, 0, 0.4),
+            0 1px 2px rgba(0, 0, 0, 0.25);
+        }
+      }
+
+      &--disabled {
+        color: #8E8E93;
+      }
+    }
+
+    // Tabs 变体深色模式
+    &--tabs {
+      border-bottom-color: #48484A;
+
+      .ios-segment-control__segment {
+        &:hover:not(&--disabled):not(&--selected) {
+          background: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        &--selected {
+          color: #0A84FF;
+          border-bottom-color: #0A84FF;
+        }
+      }
+    }
+
+    &--disabled {
+      .ios-segment-control__segment {
+        color: #8E8E93;
+      }
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .ios-segment-control {
+    &--small {
+      .ios-segment-control__segment {
+        min-height: 28px;
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+    }
+
+    &--medium {
+      .ios-segment-control__segment {
+        min-height: 32px;
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+    }
+
+    &--large {
+      .ios-segment-control__segment {
+        min-height: 40px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+// 动画优化
+@media (prefers-reduced-motion: reduce) {
+  .ios-segment-control {
+    &__segment {
+      transition: none !important;
+    }
+  }
+} 
