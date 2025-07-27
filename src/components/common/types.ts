@@ -1,7 +1,7 @@
 import { ReactNode, MouseEvent, FormEvent, ChangeEvent } from 'react';
 
 // Common types
-export type Platform = 'ios' | 'macos' | 'windows' | 'android' | 'web';
+export type Platform = 'ios' | 'macos' | 'windows' | 'android' | 'web' | 'linux';
 export type Size = 'small' | 'medium' | 'large';
 export type Variant = 'contained' | 'outlined' | 'text' | 'primary' | 'destructive';
 export type Position = 'top' | 'bottom' | 'sidebar';

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AlertProps } from '../../types';
 import './IOSCommonAlert.scss';
 
-const IOSCommonAlert: React.FC<AlertProps> = ({
+interface IOSAlertProps extends AlertProps {
+  onAnimationEnd?: () => void;
+}
+
+const IOSCommonAlert: React.FC<IOSAlertProps> = ({
   type,
   message,
   dismissible = false,
@@ -10,7 +14,9 @@ const IOSCommonAlert: React.FC<AlertProps> = ({
   icon,
   position = 'top',
   className = '',
+  onAnimationEnd,
 }) => {
+  const [isExiting, setIsExiting] = useState(false);
   const getDefaultIcon = () => {
     switch (type) {
       case 'success':
@@ -60,10 +66,19 @@ const IOSCommonAlert: React.FC<AlertProps> = ({
     }
   };
 
+  const handleDismiss = () => {
+    setIsExiting(true);
+    // 等待退出动画完成后再调用onDismiss
+    setTimeout(() => {
+      onDismiss?.();
+      onAnimationEnd?.();
+    }, 400); // 动画持续时间
+  };
+
   const renderCloseButton = () => (
     <button
       className="ios-alert__close"
-      onClick={onDismiss}
+      onClick={handleDismiss}
       aria-label="Close alert"
     >
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +90,7 @@ const IOSCommonAlert: React.FC<AlertProps> = ({
 
   return (
     <div 
-      className={`ios-alert ios-alert--${type} ios-alert--${position} ${className}`}
+      className={`ios-alert ios-alert--${type} ios-alert--${position} ${isExiting ? 'ios-alert--exiting' : ''} ${className}`}
       role="alert"
       aria-live="polite"
     >

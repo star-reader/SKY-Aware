@@ -56,6 +56,7 @@ interface TestNavbarProps extends NavbarProps {
 
 interface TestAlertProps extends AlertProps {
   style?: React.CSSProperties;
+  onAnimationEnd?: () => void;
 }
 
 const TestPage: React.FC = () => {
@@ -134,13 +135,18 @@ const TestPage: React.FC = () => {
 
   const showAlert = (alertId: string) => {
     setVisibleAlerts(prev => ({ ...prev, [alertId]: true }));
-    // Auto dismiss after 3 seconds for non-dismissible alerts
+    // Auto dismiss after 5 seconds for non-dismissible alerts
     setTimeout(() => {
       setVisibleAlerts(prev => ({ ...prev, [alertId]: false }));
-    }, 3000);
+    }, 5000);
   };
 
   const dismissAlert = (alertId: string) => {
+    setVisibleAlerts(prev => ({ ...prev, [alertId]: false }));
+  };
+
+  const handleAlertAnimationEnd = (alertId: string) => {
+    // 动画结束后清理状态
     setVisibleAlerts(prev => ({ ...prev, [alertId]: false }));
   };
 
@@ -442,30 +448,33 @@ const TestPage: React.FC = () => {
           position: 'top',
         })}
 
-        {visibleAlerts['dismissible-success'] && renderAlert({
-          type: 'success',
-          message: '可关闭的成功提示，点击X按钮关闭。',
-          position: 'top',
-          dismissible: true,
-          onDismiss: () => dismissAlert('dismissible-success'),
-        })}
+                 {visibleAlerts['dismissible-success'] && renderAlert({
+           type: 'success',
+           message: '可关闭的成功提示，点击X按钮关闭。',
+           position: 'top',
+           dismissible: true,
+           onDismiss: () => dismissAlert('dismissible-success'),
+           onAnimationEnd: () => handleAlertAnimationEnd('dismissible-success'),
+         })}
 
-        {visibleAlerts['dismissible-error'] && renderAlert({
-          type: 'error',
-          message: '可关闭的错误提示，点击X按钮关闭。',
-          position: 'top',
-          dismissible: true,
-          onDismiss: () => dismissAlert('dismissible-error'),
-        })}
+         {visibleAlerts['dismissible-error'] && renderAlert({
+           type: 'error',
+           message: '可关闭的错误提示，点击X按钮关闭。',
+           position: 'top',
+           dismissible: true,
+           onDismiss: () => dismissAlert('dismissible-error'),
+           onAnimationEnd: () => handleAlertAnimationEnd('dismissible-error'),
+         })}
 
-        {visibleAlerts['custom-icon'] && renderAlert({
-          type: 'info',
-          message: '这是一个带有自定义图标的Alert。',
-          position: 'top',
-          dismissible: true,
-          onDismiss: () => dismissAlert('custom-icon'),
-          icon: <SettingsIcon />,
-        })}
+                 {visibleAlerts['custom-icon'] && renderAlert({
+           type: 'info',
+           message: '这是一个带有自定义图标的Alert。',
+           position: 'top',
+           dismissible: true,
+           onDismiss: () => dismissAlert('custom-icon'),
+           onAnimationEnd: () => handleAlertAnimationEnd('custom-icon'),
+           icon: <SettingsIcon />,
+         })}
 
       </section>
     );

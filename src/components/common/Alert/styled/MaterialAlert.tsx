@@ -1,9 +1,13 @@
-import React from 'react';
-import { Alert, AlertTitle, IconButton, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Alert, AlertTitle, IconButton, Box, Slide, Fade, Zoom } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { AlertProps } from '../../types';
 
-const MaterialAlert: React.FC<AlertProps> = ({
+interface MaterialAlertProps extends AlertProps {
+  onAnimationEnd?: () => void;
+}
+
+const MaterialAlert: React.FC<MaterialAlertProps> = ({
   type,
   message,
   dismissible = false,
@@ -11,7 +15,15 @@ const MaterialAlert: React.FC<AlertProps> = ({
   icon,
   position = 'top',
   className = '',
+  onAnimationEnd,
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
   // Map our AlertType to MUI Alert severity
   const getSeverity = () => {
     switch (type) {
@@ -25,6 +37,40 @@ const MaterialAlert: React.FC<AlertProps> = ({
         return 'info';
       default:
         return 'info';
+    }
+  };
+
+  const handleDismiss = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onDismiss?.();
+      onAnimationEnd?.();
+    }, 300);
+  };
+
+  const getAnimationComponent = () => {
+    switch (position) {
+      case 'top':
+        return Slide;
+      case 'bottom':
+        return Slide;
+      case 'center':
+        return Zoom;
+      default:
+        return Slide;
+    }
+  };
+
+  const getAnimationProps = () => {
+    switch (position) {
+      case 'top':
+        return { direction: 'down' as const };
+      case 'bottom':
+        return { direction: 'up' as const };
+      case 'center':
+        return {};
+      default:
+        return { direction: 'down' as const };
     }
   };
 
@@ -65,41 +111,50 @@ const MaterialAlert: React.FC<AlertProps> = ({
     }
   };
 
+  const AnimationComponent = getAnimationComponent();
+  const animationProps = getAnimationProps();
+
   return (
     <Box style={getPositionStyles()}>
-      <Alert
-        severity={getSeverity()}
-        icon={icon || undefined}
-        className={className}
-        sx={{
-          borderRadius: '8px',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-          '& .MuiAlert-message': {
-            fontSize: '14px',
-            lineHeight: '1.4',
-          },
-        }}
-        action={
-          dismissible && onDismiss ? (
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={onDismiss}
-              sx={{
-                padding: '4px',
-                '& svg': {
-                  fontSize: '16px',
-                },
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          ) : undefined
-        }
+      <AnimationComponent 
+        in={isVisible && !isExiting} 
+        timeout={300}
+        {...animationProps}
       >
-        {message}
-      </Alert>
+        <Alert
+          severity={getSeverity()}
+          icon={icon || undefined}
+          className={className}
+          sx={{
+            borderRadius: '8px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            '& .MuiAlert-message': {
+              fontSize: '14px',
+              lineHeight: '1.4',
+            },
+          }}
+          action={
+            dismissible && onDismiss ? (
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={handleDismiss}
+                sx={{
+                  padding: '4px',
+                  '& svg': {
+                    fontSize: '16px',
+                  },
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            ) : undefined
+          }
+        >
+          {message}
+        </Alert>
+      </AnimationComponent>
     </Box>
   );
 };

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageBar, MessageBarActions, Button } from '@fluentui/react-components';
 import { AlertProps } from '../../types';
 
-const WindowsAlert: React.FC<AlertProps> = ({
+interface WindowsAlertProps extends AlertProps {
+  onAnimationEnd?: () => void;
+}
+
+const WindowsAlert: React.FC<WindowsAlertProps> = ({
   type,
   message,
   dismissible = false,
@@ -10,7 +14,16 @@ const WindowsAlert: React.FC<AlertProps> = ({
   icon,
   position = 'top',
   className = '',
+  onAnimationEnd,
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    // 延迟显示以触发进入动画
+    const timer = setTimeout(() => setIsVisible(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
   // Map our AlertType to Fluent UI MessageBarType
   const getMessageBarType = (): any => {
     switch (type) {
@@ -25,6 +38,14 @@ const WindowsAlert: React.FC<AlertProps> = ({
       default:
         return 'info';
     }
+  };
+
+  const handleDismiss = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onDismiss?.();
+      onAnimationEnd?.();
+    }, 300);
   };
 
   // Get position styles
@@ -64,8 +85,46 @@ const WindowsAlert: React.FC<AlertProps> = ({
     }
   };
 
+  const getAnimationStyle = (): React.CSSProperties => {
+    const baseAnimation = {
+      transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    };
+
+    if (!isVisible && !isExiting) {
+      return {
+        ...baseAnimation,
+        opacity: 0,
+        transform: position === 'top' 
+          ? 'translateX(-50%) translateY(-20px) scale(0.95)' 
+          : position === 'bottom'
+          ? 'translateX(-50%) translateY(20px) scale(0.95)'
+          : 'translate(-50%, -50%) scale(0.95)',
+      };
+    }
+
+    if (isExiting) {
+      return {
+        ...baseAnimation,
+        opacity: 0,
+        transform: position === 'top' 
+          ? 'translateX(-50%) translateY(-20px) scale(0.95)' 
+          : position === 'bottom'
+          ? 'translateX(-50%) translateY(20px) scale(0.95)'
+          : 'translate(-50%, -50%) scale(0.95)',
+      };
+    }
+
+    return {
+      ...baseAnimation,
+      opacity: 1,
+      transform: position === 'center' 
+        ? 'translate(-50%, -50%) scale(1)' 
+        : 'translateX(-50%) translateY(0) scale(1)',
+    };
+  };
+
   return (
-    <div style={getPositionStyles()}>
+    <div style={{ ...getPositionStyles(), ...getAnimationStyle() }}>
       <MessageBar
         intent={getMessageBarType()}
         className={className}
@@ -93,11 +152,11 @@ const WindowsAlert: React.FC<AlertProps> = ({
         {dismissible && onDismiss && (
           <MessageBarActions
             containerAction={
-              <Button
-                appearance="transparent"
-                size="small"
-                onClick={onDismiss}
-                aria-label="Close alert"
+                             <Button
+                 appearance="transparent"
+                 size="small"
+                 onClick={handleDismiss}
+                 aria-label="Close alert"
                 icon={
                   <svg 
                     width="12" 

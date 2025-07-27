@@ -1,14 +1,20 @@
 .ios-alert {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 
+    0 0 0 0.5px rgba(255, 255, 255, 0.2),
+    0 4px 24px rgba(0, 0, 0, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 14px 16px;
   margin: 8px 16px;
   position: relative;
-  max-width: 400px;
-  animation: slideIn 0.3s ease-out;
+  max-width: 380px;
+  min-height: 48px;
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
 
   &__content {
     display: flex;
@@ -67,46 +73,56 @@
     }
   }
 
-  // Alert types
+  // Alert types - macOS style with better transparency
   &--success {
-    background-color: rgba(52, 199, 89, 0.15);
-    border: 1px solid rgba(52, 199, 89, 0.3);
-    color: #34C759;
+    background-color: rgba(52, 199, 89, 0.1);
+    border: 0.5px solid rgba(52, 199, 89, 0.25);
+    color: #28A745;
   }
 
   &--error {
-    background-color: rgba(255, 59, 48, 0.15);
-    border: 1px solid rgba(255, 59, 48, 0.3);
-    color: #FF3B30;
+    background-color: rgba(255, 59, 48, 0.1);
+    border: 0.5px solid rgba(255, 59, 48, 0.25);
+    color: #DC3545;
   }
 
   &--warning {
-    background-color: rgba(255, 149, 0, 0.15);
-    border: 1px solid rgba(255, 149, 0, 0.3);
+    background-color: rgba(255, 149, 0, 0.1);
+    border: 0.5px solid rgba(255, 149, 0, 0.25);
     color: #FF9500;
   }
 
   &--info {
-    background-color: rgba(0, 122, 255, 0.15);
-    border: 1px solid rgba(0, 122, 255, 0.3);
+    background-color: rgba(0, 122, 255, 0.1);
+    border: 0.5px solid rgba(0, 122, 255, 0.25);
     color: #007AFF;
   }
 
   // Positions
   &--top {
     position: fixed;
-    top: env(safe-area-inset-top, 44px);
+    top: env(safe-area-inset-top, 20px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
+    animation-name: slideInTop;
+    
+    &.ios-alert--exiting {
+      animation-name: slideOutTop;
+    }
   }
 
   &--bottom {
     position: fixed;
-    bottom: env(safe-area-inset-bottom, 34px);
+    bottom: env(safe-area-inset-bottom, 20px);
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
+    animation-name: slideInBottom;
+    
+    &.ios-alert--exiting {
+      animation-name: slideOutBottom;
+    }
   }
 
   &--center {
@@ -115,44 +131,90 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
+    animation-name: slideInCenter;
+    
+    &.ios-alert--exiting {
+      animation-name: slideOutCenter;
+    }
   }
 }
 
-// Animations
-@keyframes slideIn {
-  from {
+// Animations - macOS style smooth animations
+@keyframes slideInTop {
+  0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
+    transform: translateX(-50%) translateY(-30px) scale(0.98);
   }
-  to {
+  60% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(2px) scale(0.99);
+  }
+  100% {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
-.ios-alert--bottom {
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-50%) translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+@keyframes slideInBottom {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30px) scale(0.98);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(-2px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
-.ios-alert--center {
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
+@keyframes slideInCenter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes slideOutTop {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px) scale(0.98);
+  }
+}
+
+@keyframes slideOutBottom {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30px) scale(0.98);
+  }
+}
+
+@keyframes slideOutCenter {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
   }
 }
 
