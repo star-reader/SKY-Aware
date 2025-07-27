@@ -10,7 +10,10 @@ import MaterialNavbar from '../components/common/Navbar/styled/MaterialNavbar';
 import IOSCommonAlert from '../components/common/Alert/styled/IOSCommonAlert';
 import WindowsAlert from '../components/common/Alert/styled/WindowsAlert';
 import MaterialAlert from '../components/common/Alert/styled/MaterialAlert';
-import { ButtonProps, NavbarProps, AlertProps } from '../components/common/types';
+import IOSCommonPanel from '../components/common/Panel/styled/IOSCommonPanel';
+import WindowsPanel from '../components/common/Panel/styled/WindowsPanel';
+import MaterialPanel from '../components/common/Panel/styled/MaterialPanel';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -44,6 +47,24 @@ const ProfileIcon = () => (
   </svg>
 );
 
+const CheckIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+  </svg>
+);
+
+const InfoIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+  </svg>
+);
+
+const WarningIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+  </svg>
+);
+
 type PlatformStyle = 'ios-common' | 'ios-liquid' | 'windows' | 'material';
 
 interface TestButtonProps extends ButtonProps {
@@ -59,11 +80,17 @@ interface TestAlertProps extends AlertProps {
   onAnimationEnd?: () => void;
 }
 
+interface TestPanelProps extends PanelProps {
+  style?: React.CSSProperties;
+  onAnimationEnd?: () => void;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
   const [detectedPlatform, setDetectedPlatform] = useState<string>('loading...');
   const [visibleAlerts, setVisibleAlerts] = useState<{[key: string]: boolean}>({});
+  const [visiblePanels, setVisiblePanels] = useState<{[key: string]: boolean}>({});
 
   useEffect(() => {
     getPlatform().then(platform => {
@@ -133,6 +160,24 @@ const TestPage: React.FC = () => {
     }
   };
 
+  // 根据选中的tab渲染对应的Panel组件
+  const renderPanel = (props: TestPanelProps) => {
+    const { style, ...panelProps } = props;
+    const panelStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonPanel {...panelProps} {...panelStyle} />;
+      case 'windows':
+        return <WindowsPanel {...panelProps} {...panelStyle} />;
+      case 'material':
+        return <MaterialPanel {...panelProps} {...panelStyle} />;
+      default:
+        return <IOSCommonPanel {...panelProps} {...panelStyle} />;
+    }
+  };
+
   const showAlert = (alertId: string) => {
     setVisibleAlerts(prev => ({ ...prev, [alertId]: true }));
     // Auto dismiss after 5 seconds for non-dismissible alerts
@@ -148,6 +193,19 @@ const TestPage: React.FC = () => {
   const handleAlertAnimationEnd = (alertId: string) => {
     // 动画结束后清理状态
     setVisibleAlerts(prev => ({ ...prev, [alertId]: false }));
+  };
+
+  const showPanel = (panelId: string) => {
+    setVisiblePanels(prev => ({ ...prev, [panelId]: true }));
+  };
+
+  const dismissPanel = (panelId: string) => {
+    setVisiblePanels(prev => ({ ...prev, [panelId]: false }));
+  };
+
+  const handlePanelAnimationEnd = (panelId: string) => {
+    // 动画结束后清理状态
+    setVisiblePanels(prev => ({ ...prev, [panelId]: false }));
   };
 
   const renderPlatformTabs = () => {
@@ -476,11 +534,113 @@ const TestPage: React.FC = () => {
            icon: <SettingsIcon />,
          })}
 
-      </section>
-    );
-  };
+             </section>
+     );
+   };
 
-  return (
+   const renderPanelSection = () => {
+     return (
+       <section className="test-section">
+         <h2 className="test-section__title">Panel 组件测试</h2>
+         
+         {/* Panel 类型测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">Panel 类型</h3>
+           <div className="test-group__content">
+             {renderButton({ 
+               onClick: () => showPanel('success-panel'), 
+               children: "Show Success Panel",
+               variant: "contained"
+             })}
+             {renderButton({ 
+               onClick: () => showPanel('info-panel'), 
+               children: "Show Info Panel",
+               variant: "contained"
+             })}
+             {renderButton({ 
+               onClick: () => showPanel('warning-panel'), 
+               children: "Show Warning Panel",
+               variant: "contained"
+             })}
+           </div>
+         </div>
+
+         {/* 自定义Panel测试 */}
+         <div className="test-group">
+           <h3 className="test-group__title">自定义Panel</h3>
+           <div className="test-group__content">
+             {renderButton({ 
+               onClick: () => showPanel('custom-panel'), 
+               children: "Show Custom Panel",
+               variant: "outlined"
+             })}
+             {renderButton({ 
+               onClick: () => showPanel('no-action-panel'), 
+               children: "Panel without Action",
+               variant: "text"
+             })}
+           </div>
+         </div>
+
+         {/* 渲染实际的 Panel 组件 */}
+         {visiblePanels['success-panel'] && renderPanel({
+           open: true,
+           title: 'Operation Successful',
+           content: 'Your action has been completed successfully. Everything is working as expected.',
+           icon: <CheckIcon />,
+           actionText: 'Continue',
+           onAction: () => console.log('Success panel action clicked'),
+           onClose: () => dismissPanel('success-panel'),
+           onAnimationEnd: () => handlePanelAnimationEnd('success-panel'),
+         })}
+
+         {visiblePanels['info-panel'] && renderPanel({
+           open: true,
+           title: 'Information',
+           content: 'This is an informational panel with some useful details that you should know about.',
+           icon: <InfoIcon />,
+           actionText: 'Got it',
+           onAction: () => console.log('Info panel action clicked'),
+           onClose: () => dismissPanel('info-panel'),
+           onAnimationEnd: () => handlePanelAnimationEnd('info-panel'),
+         })}
+
+         {visiblePanels['warning-panel'] && renderPanel({
+           open: true,
+           title: 'Warning',
+           content: 'Please be careful with this action. It may have consequences that cannot be undone.',
+           icon: <WarningIcon />,
+           actionText: 'Proceed',
+           onAction: () => console.log('Warning panel action clicked'),
+           onClose: () => dismissPanel('warning-panel'),
+           onAnimationEnd: () => handlePanelAnimationEnd('warning-panel'),
+         })}
+
+         {visiblePanels['custom-panel'] && renderPanel({
+           open: true,
+           title: 'Custom Settings',
+           content: 'This panel demonstrates custom content and actions. You can configure various options here.',
+           icon: <SettingsIcon />,
+           actionText: 'Save Settings',
+           onAction: () => console.log('Custom panel action clicked'),
+           onClose: () => dismissPanel('custom-panel'),
+           onAnimationEnd: () => handlePanelAnimationEnd('custom-panel'),
+         })}
+
+         {visiblePanels['no-action-panel'] && renderPanel({
+           open: true,
+           title: 'Information Only',
+           content: 'This panel only displays information and has no action button.',
+           icon: <InfoIcon />,
+           onClose: () => dismissPanel('no-action-panel'),
+           onAnimationEnd: () => handlePanelAnimationEnd('no-action-panel'),
+         })}
+
+       </section>
+     );
+   };
+
+   return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
         <h1 className="test-page__title">组件测试页面</h1>
@@ -491,12 +651,12 @@ const TestPage: React.FC = () => {
         {renderPlatformTabs()}
       </div>
 
-      <div className="test-page__content">
-        {renderButtonSection()}
-        {renderNavbarSection()}
-        
-        {renderAlertSection()}
-      </div>
+             <div className="test-page__content">
+         {renderButtonSection()}
+         {renderNavbarSection()}
+         {renderAlertSection()}
+         {renderPanelSection()}
+       </div>
     </div>
   );
 };

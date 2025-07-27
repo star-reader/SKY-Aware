@@ -1,0 +1,305 @@
+// iOS Panel 样式
+.ios-panel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &--exiting {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.ios-panel {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 20px;
+  box-shadow: 
+    0 0 0 0.5px rgba(255, 255, 255, 0.3),
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 90%;
+  max-height: 80%;
+  overflow: hidden;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  // 移动端样式 - 从底部弹出
+  &--mobile {
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%) translateY(100%);
+    width: calc(100% - 40px);
+    max-width: 500px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &.ios-panel--visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    &.ios-panel--exiting {
+      transform: translateX(-50%) translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  // 桌面端样式 - 居中弹出
+  &--desktop {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 400px;
+    min-height: 300px;
+
+    &.ios-panel--visible {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    &.ios-panel--exiting {
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0;
+    }
+  }
+
+  // 关闭按钮
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(120, 120, 128, 0.16);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(60, 60, 67, 0.6);
+    transition: all 0.2s ease;
+    z-index: 1;
+
+    &:hover {
+      background: rgba(120, 120, 128, 0.24);
+      color: rgba(60, 60, 67, 0.8);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  // 内容区域
+  &__content {
+    padding: 40px 32px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  // 大图标区域
+  &__icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(0, 122, 255, 0.1);
+    color: #007AFF;
+    margin-bottom: 8px;
+
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  // 标题
+  &__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1D1D1F;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  // 内容文本
+  &__text {
+    font-size: 16px;
+    color: #86868B;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 320px;
+  }
+
+  // 操作按钮
+  &__action {
+    background: #007AFF;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+    margin-top: 8px;
+
+    &:hover {
+      background: #0056CC;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
+    }
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .ios-panel-backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .ios-panel {
+    background: rgba(44, 44, 46, 0.95);
+    box-shadow: 
+      0 0 0 0.5px rgba(255, 255, 255, 0.1),
+      0 20px 60px rgba(0, 0, 0, 0.4),
+      0 8px 25px rgba(0, 0, 0, 0.25);
+
+    &__close {
+      background: rgba(120, 120, 128, 0.24);
+      color: rgba(235, 235, 245, 0.6);
+
+      &:hover {
+        background: rgba(120, 120, 128, 0.32);
+        color: rgba(235, 235, 245, 0.8);
+      }
+    }
+
+    &__icon {
+      background: rgba(10, 132, 255, 0.2);
+      color: #0A84FF;
+    }
+
+    &__title {
+      color: #F2F2F7;
+    }
+
+    &__text {
+      color: #98989D;
+    }
+
+    &__action {
+      background: #0A84FF;
+
+      &:hover {
+        background: #0A74E6;
+      }
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .ios-panel {
+    &--mobile {
+      width: calc(100% - 20px);
+      bottom: 10px;
+    }
+
+    &__content {
+      padding: 32px 24px 24px;
+      gap: 12px;
+    }
+
+    &__icon {
+      width: 64px;
+      height: 64px;
+
+      svg {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+
+    &__text {
+      font-size: 15px;
+    }
+
+    &__action {
+      font-size: 15px;
+      padding: 12px 28px;
+    }
+  }
+}
+
+// 桌面端大屏幕调整
+@media (min-width: 1024px) {
+  .ios-panel {
+    &--desktop {
+      width: 450px;
+      min-height: 350px;
+    }
+
+    &__content {
+      padding: 48px 40px 40px;
+      gap: 20px;
+    }
+
+    &__icon {
+      width: 96px;
+      height: 96px;
+
+      svg {
+        width: 56px;
+        height: 56px;
+      }
+    }
+
+    &__title {
+      font-size: 22px;
+    }
+
+    &__text {
+      font-size: 17px;
+    }
+  }
+} 

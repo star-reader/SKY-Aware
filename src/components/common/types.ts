@@ -56,12 +56,15 @@ export interface AlertProps {
 
 // Panel types
 export interface PanelProps {
-  children: ReactNode;
-  variant?: PanelVariant;
-  scrollable?: boolean;
+  open: boolean;
   onClose?: () => void;
-  padding?: boolean;
-  backdrop?: boolean;
+  title?: string;
+  content?: ReactNode;
+  icon?: ReactNode; // 大图标/主要内容区域
+  actionText?: string; // 操作按钮文本
+  onAction?: () => void; // 操作按钮回调
+  variant?: PanelVariant;
+  backdropDismiss?: boolean;
   className?: string;
 }
 
