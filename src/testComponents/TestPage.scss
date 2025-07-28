@@ -483,12 +483,44 @@ html[aria-label="dark"] {
   }
 }
 
+// Dialog specific styles
+.test-button {
+  padding: 10px 20px;
+  border: 1px solid #007AFF;
+  border-radius: 8px;
+  background: #007AFF;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #0051D5;
+    border-color: #0051D5;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
 html[aria-label="dark"] {
   .test-segment-container {
     background: rgba(255, 255, 255, 0.05);
 
     label {
       color: #999;
+    }
+  }
+
+  .test-button {
+    background: #0A84FF;
+    border-color: #0A84FF;
+
+    &:hover {
+      background: #007AFF;
+      border-color: #007AFF;
     }
   }
 } 

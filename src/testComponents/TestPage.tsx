@@ -31,7 +31,10 @@ import MaterialDropdown from '../components/common/Dropdown/styled/MaterialDropd
 import IOSCommonSegmentControl from '../components/common/SegmentControl/styled/IOSCommonSegmentControl';
 import WindowsSegmentControl from '../components/common/SegmentControl/styled/WindowsSegmentControl';
 import MaterialSegmentControl from '../components/common/SegmentControl/styled/MaterialSegmentControl';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption } from '../components/common/types';
+import IOSCommonDialog from '../components/common/Dialog/styled/IOSCommonDialog';
+import WindowsDialog from '../components/common/Dialog/styled/WindowsDialog';
+import MaterialDialog from '../components/common/Dialog/styled/MaterialDialog';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption, DialogProps, DialogAction } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -163,6 +166,10 @@ interface TestSegmentControlProps extends SegmentControlProps {
   style?: React.CSSProperties;
 }
 
+interface TestDialogProps extends DialogProps {
+  style?: React.CSSProperties;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
@@ -176,6 +183,14 @@ const TestPage: React.FC = () => {
     basic: 'option1',
     withIcons: 'tab1',
     tabs: 'tab1'
+  });
+  const [dialogStates, setDialogStates] = useState<{[key: string]: boolean}>({
+    basic: false,
+    alert: false,
+    form: false,
+    fullscreen: false,
+    scrollable: false,
+    multiButton: false
   });
   
 
@@ -371,6 +386,24 @@ const TestPage: React.FC = () => {
         return <MaterialSegmentControl {...segmentProps} {...segmentStyle} />;
       default:
         return <IOSCommonSegmentControl {...segmentProps} {...segmentStyle} />;
+    }
+  };
+
+  // 根据选中的tab渲染对应的Dialog组件
+  const renderDialog = (props: TestDialogProps) => {
+    const { style, ...dialogProps } = props;
+    const dialogStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonDialog {...dialogProps} {...dialogStyle} />;
+      case 'windows':
+        return <WindowsDialog {...dialogProps} {...dialogStyle} />;
+      case 'material':
+        return <MaterialDialog {...dialogProps} {...dialogStyle} />;
+      default:
+        return <IOSCommonDialog {...dialogProps} {...dialogStyle} />;
     }
   };
 
@@ -1935,6 +1968,270 @@ const TestPage: React.FC = () => {
     );
   };
 
+  // Dialog 测试数据和函数
+  const openDialog = (dialogType: string) => {
+    setDialogStates(prev => ({ ...prev, [dialogType]: true }));
+  };
+
+  const closeDialog = (dialogType: string) => {
+    setDialogStates(prev => ({ ...prev, [dialogType]: false }));
+  };
+
+  const basicDialogActions: DialogAction[] = [
+    {
+      label: '取消',
+      onClick: () => closeDialog('basic'),
+      variant: 'secondary'
+    },
+    {
+      label: '确认',
+      onClick: () => {
+        console.log('确认操作');
+        closeDialog('basic');
+      },
+      variant: 'primary'
+    }
+  ];
+
+  const alertDialogActions: DialogAction[] = [
+    {
+      label: '删除',
+      onClick: () => {
+        console.log('删除文件');
+        closeDialog('alert');
+      },
+      variant: 'destructive'
+    },
+    {
+      label: '取消',
+      onClick: () => closeDialog('alert'),
+      variant: 'secondary'
+    }
+  ];
+
+  const renderDialogSection = () => {
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">Dialog 组件测试</h2>
+        
+        <div className="test-grid">
+          {/* 基础对话框 */}
+          <div className="test-item">
+            <h3>基础对话框</h3>
+            <button 
+              className="test-button"
+              onClick={() => openDialog('basic')}
+            >
+              打开基础对话框
+            </button>
+            {renderDialog({
+              open: dialogStates.basic,
+              onClose: () => closeDialog('basic'),
+              title: '确认操作',
+              content: '您确定要执行此操作吗？此操作不可撤销。',
+              actions: basicDialogActions,
+              size: 'medium'
+            })}
+          </div>
+
+          {/* 警告对话框 */}
+          <div className="test-item">
+            <h3>警告对话框</h3>
+            <button 
+              className="test-button"
+              onClick={() => openDialog('alert')}
+            >
+              打开警告对话框
+            </button>
+            {renderDialog({
+              open: dialogStates.alert,
+              onClose: () => closeDialog('alert'),
+              title: '删除文件',
+              content: '您确定要删除这个文件吗？删除后无法恢复。',
+              actions: alertDialogActions,
+              size: 'small',
+              icon: <svg viewBox="0 0 24 24" fill="currentColor" style={{color: '#FF3B30'}}><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            })}
+          </div>
+
+          {/* 表单对话框 */}
+          <div className="test-item">
+            <h3>表单对话框</h3>
+            <button 
+              className="test-button"
+              onClick={() => openDialog('form')}
+            >
+              打开表单对话框
+            </button>
+            {renderDialog({
+              open: dialogStates.form,
+              onClose: () => closeDialog('form'),
+              title: '用户信息',
+              content: (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label>姓名:</label>
+                    <input type="text" placeholder="请输入姓名" style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
+                  </div>
+                  <div>
+                    <label>邮箱:</label>
+                    <input type="email" placeholder="请输入邮箱" style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
+                  </div>
+                  <div>
+                    <label>备注:</label>
+                    <textarea placeholder="请输入备注" style={{ width: '100%', padding: '8px', marginTop: '4px', minHeight: '80px' }} />
+                  </div>
+                </div>
+              ),
+              actions: [
+                {
+                  label: '取消',
+                  onClick: () => closeDialog('form'),
+                  variant: 'secondary'
+                },
+                {
+                  label: '保存',
+                  onClick: () => {
+                    console.log('保存表单');
+                    closeDialog('form');
+                  },
+                  variant: 'primary'
+                }
+              ],
+              size: 'medium'
+            })}
+          </div>
+
+          {/* 全屏对话框 */}
+          <div className="test-item">
+            <h3>全屏对话框</h3>
+            <button 
+              className="test-button"
+              onClick={() => openDialog('fullscreen')}
+            >
+              打开全屏对话框
+            </button>
+            {renderDialog({
+              open: dialogStates.fullscreen,
+              onClose: () => closeDialog('fullscreen'),
+              title: '全屏内容',
+              content: (
+                <div style={{ padding: '20px 0' }}>
+                  <h3>这是一个全屏对话框</h3>
+                  <p>全屏对话框适用于需要更多空间的复杂交互场景。</p>
+                  <p>在移动设备上，大多数对话框会自动变为全屏显示以提供更好的用户体验。</p>
+                  <div style={{ marginTop: '20px' }}>
+                    <h4>功能特点：</h4>
+                    <ul>
+                      <li>响应式设计</li>
+                      <li>平台原生样式</li>
+                      <li>无障碍支持</li>
+                      <li>键盘导航</li>
+                    </ul>
+                  </div>
+                </div>
+              ),
+              actions: [
+                {
+                  label: '关闭',
+                  onClick: () => closeDialog('fullscreen'),
+                  variant: 'primary'
+                }
+              ],
+              size: 'fullscreen'
+            })}
+          </div>
+
+          {/* 可滚动对话框 */}
+          <div className="test-item">
+            <h3>可滚动对话框</h3>
+            <button 
+              className="test-button"
+              onClick={() => openDialog('scrollable')}
+            >
+              打开可滚动对话框
+            </button>
+            {renderDialog({
+              open: dialogStates.scrollable,
+              onClose: () => closeDialog('scrollable'),
+              title: '长内容对话框',
+              content: (
+                <div>
+                  <p>这是一个包含大量内容的对话框，当内容超出可视区域时会显示滚动条。</p>
+                  {Array.from({ length: 20 }, (_, i) => (
+                    <p key={i}>
+                      这是第 {i + 1} 段内容。Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                    </p>
+                  ))}
+                </div>
+              ),
+              actions: [
+                {
+                  label: '关闭',
+                  onClick: () => closeDialog('scrollable'),
+                  variant: 'primary'
+                }
+              ],
+              size: 'large',
+              scrollable: true
+            })}
+          </div>
+
+          {/* 不同按钮组合 */}
+          <div className="test-item">
+            <h3>多按钮对话框</h3>
+            <button 
+              className="test-button"
+              onClick={() => openDialog('multiButton')}
+            >
+              打开多按钮对话框
+            </button>
+            {renderDialog({
+              open: dialogStates.multiButton || false,
+              onClose: () => closeDialog('multiButton'),
+              title: '选择操作',
+              content: '请选择您要执行的操作：',
+              actions: [
+                {
+                  label: '保存',
+                  onClick: () => {
+                    console.log('保存');
+                    closeDialog('multiButton');
+                  },
+                  variant: 'primary'
+                },
+                {
+                  label: '另存为',
+                  onClick: () => {
+                    console.log('另存为');
+                    closeDialog('multiButton');
+                  },
+                  variant: 'secondary'
+                },
+                {
+                  label: '删除',
+                  onClick: () => {
+                    console.log('删除');
+                    closeDialog('multiButton');
+                  },
+                  variant: 'destructive'
+                },
+                {
+                  label: '取消',
+                  onClick: () => closeDialog('multiButton'),
+                  variant: 'secondary'
+                }
+              ],
+              size: 'medium'
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -1957,6 +2254,7 @@ const TestPage: React.FC = () => {
          {renderCardSection()}
          {renderDropdownSection()}
          {renderSegmentControlSection()}
+         {renderDialogSection()}
        </div>
     </div>
   );

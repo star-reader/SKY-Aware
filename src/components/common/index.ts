@@ -9,6 +9,7 @@ export { default as Spinner } from './Spinner/Index';
 export { default as Card } from './Card/Index';
 export { default as Dropdown } from './Dropdown/Index';
 export { default as SegmentControl } from './SegmentControl/Index';
+export { default as Dialog } from './Dialog/Index';
 
 // Export types
 export * from './types'; 

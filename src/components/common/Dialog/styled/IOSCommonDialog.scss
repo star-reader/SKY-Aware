@@ -1,0 +1,638 @@
+// iOS Dialog 样式
+.ios-dialog {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  max-height: 90vh;
+  position: relative;
+  animation: ios-dialog-enter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  // iOS 样式（移动端）
+  &--ios {
+    width: 90%;
+    max-width: 320px;
+    margin: 20px;
+
+    .ios-dialog__actions {
+      display: flex;
+      flex-direction: column;
+      // 移除难看的分界线
+      border-top: none;
+
+      .ios-dialog__action-button--ios {
+        // 移除按钮之间的分界线
+        border-bottom: none;
+        border-radius: 0;
+        border-top: 0.5px solid rgba(60, 60, 67, 0.29);
+
+        &:first-child {
+          border-top: 0.5px solid rgba(60, 60, 67, 0.29);
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        &:last-child {
+          border-bottom: none;
+          border-bottom-left-radius: 14px;
+          border-bottom-right-radius: 14px;
+        }
+
+        &:only-child {
+          border-top: 0.5px solid rgba(60, 60, 67, 0.29);
+          border-bottom-left-radius: 14px;
+          border-bottom-right-radius: 14px;
+        }
+      }
+    }
+  }
+
+  // macOS 样式（桌面端）- 完全重新设计以匹配参考图片
+  &--macos {
+    width: auto;
+    min-width: 300px;
+    max-width: 480px;
+    margin: 40px;
+    background: rgba(246, 246, 246, 0.94);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 2px 4px rgba(0, 0, 0, 0.08),
+      0 8px 16px rgba(0, 0, 0, 0.12),
+      0 16px 32px rgba(0, 0, 0, 0.08);
+
+    .ios-dialog__header {
+      justify-content: space-between;
+      padding: 20px 20px 12px;
+      border-bottom: none;
+    }
+
+    .ios-dialog__actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 20px 20px;
+      border-top: none;
+
+      .ios-dialog__action-button--macos {
+        min-width: 60px;
+        border-radius: 6px;
+        padding: 6px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        height: 24px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  // 大小变体
+  &--small {
+    &.ios-dialog--ios {
+      max-width: 280px;
+    }
+    &.ios-dialog--macos {
+      max-width: 400px;
+    }
+  }
+
+  &--medium {
+    &.ios-dialog--ios {
+      max-width: 320px;
+    }
+    &.ios-dialog--macos {
+      max-width: 480px;
+    }
+  }
+
+  &--large {
+    &.ios-dialog--ios {
+      max-width: 360px;
+    }
+    &.ios-dialog--macos {
+      max-width: 600px;
+    }
+  }
+
+  &--fullscreen {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  // 可滚动内容
+  &--scrollable {
+    .ios-dialog__content {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  }
+
+  // 关闭动画
+  &--closing {
+    animation: ios-dialog-exit 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+}
+
+// Dialog Header
+.ios-dialog__header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px 20px 16px;
+  position: relative;
+
+  .ios-dialog--macos & {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+  }
+}
+
+// Dialog Icon
+.ios-dialog__icon {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ios-dialog--macos & {
+    margin-bottom: 0;
+    margin-right: 12px;
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
+    color: #007AFF;
+
+    .ios-dialog--macos & {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+// Dialog Title
+.ios-dialog__title {
+  margin: 0;
+  font-size: 16px; // 减小字体大小
+  font-weight: 600;
+  color: #1C1C1E;
+  line-height: 1.3;
+
+  .ios-dialog--macos & {
+    font-size: 13px; // macOS 使用更小的字体
+    font-weight: 600;
+    flex: 1;
+    color: #1d1d1f;
+  }
+}
+
+// Close Button (macOS only)
+.ios-dialog__close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: rgba(0, 0, 0, 0.04);
+  color: #86868b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #1d1d1f;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .ios-dialog--ios & {
+    display: none;
+  }
+}
+
+// Dialog Content
+.ios-dialog__content {
+  padding: 0 20px 20px;
+  color: #3C3C43;
+  font-size: 13px; // 减小字体大小
+  line-height: 1.4;
+  text-align: center;
+
+  .ios-dialog--macos & {
+    padding: 0 20px 12px;
+    text-align: left;
+    font-size: 12px; // macOS 使用更小的字体
+    color: #86868b;
+    line-height: 1.5;
+  }
+
+  // 当有标题时减少上边距
+  .ios-dialog__header + & {
+    padding-top: 0;
+  }
+}
+
+// Dialog Actions
+.ios-dialog__actions {
+  // iOS 和 macOS 的具体样式在上面定义
+}
+
+// Action Button
+.ios-dialog__action-button {
+  font-family: inherit;
+  font-size: 15px; // 减小字体大小
+  font-weight: 400;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+
+  .ios-dialog--macos & {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.8);
+    color: #1d1d1f;
+    backdrop-filter: blur(10px);
+  }
+
+  .ios-dialog--ios & {
+    padding: 11px 20px; // 稍微减小内边距
+    width: 100%;
+    text-align: center;
+  }
+
+  // 按钮变体
+  &--primary {
+    color: #007AFF;
+    font-weight: 600;
+
+    .ios-dialog--macos & {
+      background: #007aff;
+      color: #ffffff;
+      border-color: #007aff;
+
+      &:hover {
+        background: #0051d5;
+        border-color: #0051d5;
+      }
+
+      &:active {
+        background: #004494;
+        border-color: #004494;
+      }
+    }
+
+    .ios-dialog--ios &:active {
+      background: rgba(0, 122, 255, 0.1);
+    }
+  }
+
+  &--secondary {
+    color: #007AFF;
+
+    .ios-dialog--macos & {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #1d1d1f;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(0, 0, 0, 0.15);
+      }
+
+      &:active {
+        background: rgba(255, 255, 255, 1);
+        border-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .ios-dialog--ios &:active {
+      background: rgba(0, 122, 255, 0.1);
+    }
+  }
+
+  &--destructive {
+    color: #FF3B30;
+    font-weight: 600;
+
+    .ios-dialog--macos & {
+      border-color: #ff3b30;
+      color: #ff3b30;
+      background: rgba(255, 255, 255, 0.8);
+
+      &:hover {
+        background: #ff3b30;
+        color: #ffffff;
+        border-color: #ff3b30;
+      }
+
+      &:active {
+        background: #d70015;
+        color: #ffffff;
+        border-color: #d70015;
+      }
+    }
+
+    .ios-dialog--ios &:active {
+      background: rgba(255, 59, 48, 0.1);
+    }
+  }
+
+  // 禁用状态
+  &--disabled {
+    color: #8E8E93;
+    cursor: not-allowed;
+
+    .ios-dialog--macos & {
+      border-color: rgba(0, 0, 0, 0.05);
+      background: rgba(0, 0, 0, 0.02);
+      color: #86868b;
+    }
+
+    &:hover,
+    &:active {
+      background: transparent !important;
+
+      .ios-dialog--macos & {
+        background: rgba(0, 0, 0, 0.02) !important;
+        border-color: rgba(0, 0, 0, 0.05) !important;
+      }
+    }
+  }
+
+  // 聚焦状态
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.3);
+  }
+}
+
+// Backdrop
+.ios-dialog__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ios-backdrop-enter 0.3s ease;
+
+  &--ios {
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  &--macos {
+    background: rgba(0, 0, 0, 0.25);
+  }
+}
+
+// 动画
+@keyframes ios-dialog-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes ios-dialog-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+}
+
+@keyframes ios-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .ios-dialog {
+    background: #2C2C2E;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+    &--macos {
+      background: rgba(40, 40, 40, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        0 16px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    &__title {
+      color: #FFFFFF;
+
+      .ios-dialog--macos & {
+        color: #f5f5f7;
+      }
+    }
+
+    &__content {
+      color: #AEAEB2;
+
+      .ios-dialog--macos & {
+        color: #a1a1a6;
+      }
+    }
+
+    &__close-button {
+      background: rgba(255, 255, 255, 0.08);
+      color: #a1a1a6;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #f5f5f7;
+      }
+
+      &:active {
+        background: rgba(255, 255, 255, 0.16);
+      }
+    }
+
+    &__actions {
+      .ios-dialog--ios & {
+        .ios-dialog__action-button--ios {
+          border-top-color: rgba(84, 84, 88, 0.6);
+        }
+      }
+    }
+
+    &__action-button {
+      &--ios {
+        &:active {
+          background: rgba(58, 58, 60, 0.5);
+        }
+      }
+
+      &--macos {
+        background: rgba(58, 58, 60, 0.8);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f5f5f7;
+
+        &:hover {
+          background: rgba(72, 72, 74, 0.8);
+          border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        &:active {
+          background: rgba(99, 99, 102, 0.8);
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+
+      &--primary {
+        .ios-dialog--macos & {
+          background: #0a84ff;
+          border-color: #0a84ff;
+
+          &:hover {
+            background: #007aff;
+            border-color: #007aff;
+          }
+
+          &:active {
+            background: #0051d5;
+            border-color: #0051d5;
+          }
+        }
+
+        .ios-dialog--ios &:active {
+          background: rgba(10, 132, 255, 0.15);
+        }
+      }
+
+      &--secondary {
+        .ios-dialog--ios &:active {
+          background: rgba(10, 132, 255, 0.15);
+        }
+      }
+
+      &--destructive {
+        .ios-dialog--macos & {
+          border-color: #ff453a;
+          color: #ff453a;
+
+          &:hover {
+            background: #ff453a;
+            color: #ffffff;
+          }
+
+          &:active {
+            background: #ff2d1a;
+            color: #ffffff;
+          }
+        }
+
+        .ios-dialog--ios &:active {
+          background: rgba(255, 69, 58, 0.15);
+        }
+      }
+
+      &--disabled {
+        color: #636366;
+
+        .ios-dialog--macos & {
+          background: rgba(58, 58, 60, 0.4);
+          border-color: rgba(255, 255, 255, 0.05);
+          color: #86868b;
+        }
+      }
+    }
+  }
+
+  .ios-dialog__backdrop {
+    &--ios {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    &--macos {
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .ios-dialog {
+    &--ios {
+      width: 95%;
+      margin: 16px;
+    }
+
+    &__header {
+      padding: 16px 16px 12px;
+    }
+
+    &__content {
+      padding: 0 16px 16px;
+      font-size: 12px; // 进一步减小移动端字体
+    }
+
+    &__action-button--ios {
+      padding: 10px 16px;
+      font-size: 14px; // 减小移动端按钮字体
+    }
+  }
+}
+
+// 动画优化
+@media (prefers-reduced-motion: reduce) {
+  .ios-dialog {
+    animation: none !important;
+
+    &--closing {
+      animation: none !important;
+    }
+  }
+
+  .ios-dialog__backdrop {
+    animation: none !important;
+  }
+} 

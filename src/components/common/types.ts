@@ -262,6 +262,31 @@ export interface SegmentControlProps {
   'aria-label'?: string;
 }
 
+// Dialog types
+export interface DialogAction {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary' | 'destructive';
+  disabled?: boolean;
+}
+
+export interface DialogProps {
+  open: boolean;
+  onClose?: () => void;
+  title?: string;
+  content?: ReactNode;
+  actions?: DialogAction[];
+  size?: 'small' | 'medium' | 'large' | 'fullscreen';
+  scrollable?: boolean;
+  backdrop?: boolean;
+  backdropDismiss?: boolean;
+  draggable?: boolean;
+  icon?: ReactNode;
+  className?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+}
+
 // NavigationTitleBar types
 export interface NavigationAction {
   icon: ReactNode;

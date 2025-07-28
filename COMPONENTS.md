@@ -25,6 +25,7 @@
 - [Card](#card) - 卡片组件
 - [Dropdown](#dropdown) - 下拉选择组件
 - [SegmentControl](#segmentcontrol) - 分段控制器组件
+- [Dialog](#dialog) - 对话框组件
 
 ---
 
@@ -740,6 +741,157 @@ function App() {
         value={viewMode}
         onChange={setViewMode}
         disabled
+      />
+    </div>
+  );
+}
+```
+
+---
+
+## Dialog
+
+多平台对话框组件，支持响应式设计和多种交互模式。
+
+### Props
+
+| 属性 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| open | `boolean` | - | 是否打开对话框 |
+| onClose | `() => void` | - | 关闭回调函数 |
+| title | `string` | - | 对话框标题 |
+| content | `ReactNode` | - | 对话框内容 |
+| actions | `DialogAction[]` | - | 操作按钮数组 |
+| size | `'small' \| 'medium' \| 'large' \| 'fullscreen'` | `'medium'` | 对话框尺寸 |
+| scrollable | `boolean` | `false` | 内容是否可滚动 |
+| backdrop | `boolean` | `true` | 是否显示背景遮罩 |
+| backdropDismiss | `boolean` | `true` | 点击背景是否关闭 |
+| draggable | `boolean` | `false` | 是否可拖拽（部分平台支持） |
+| icon | `ReactNode` | - | 标题图标 |
+| className | `string` | - | 自定义CSS类名 |
+| aria-label | `string` | - | 无障碍标签 |
+| aria-describedby | `string` | - | 无障碍描述 |
+
+### DialogAction
+
+| 属性 | 类型 | 描述 |
+|------|------|------|
+| label | `string` | 按钮文本 |
+| onClick | `() => void` | 点击回调 |
+| variant | `'primary' \| 'secondary' \| 'destructive'` | 按钮样式变体 |
+| disabled | `boolean` | 是否禁用 |
+
+### 响应式特性
+
+- **iOS**: 移动端使用底部弹出样式，桌面端使用居中模态框
+- **macOS**: 自动检测屏幕尺寸，768px以上使用macOS样式
+- **Windows**: 遵循Fluent Design规范
+- **Material**: 移动端自动全屏显示
+
+### 示例
+
+```tsx
+import { Dialog } from '@/components/common';
+
+function App() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const dialogActions = [
+    {
+      label: '取消',
+      onClick: () => setDialogOpen(false),
+      variant: 'secondary'
+    },
+    {
+      label: '确认',
+      onClick: () => {
+        console.log('确认操作');
+        setDialogOpen(false);
+      },
+      variant: 'primary'
+    }
+  ];
+
+  return (
+    <div>
+      <Button onClick={() => setDialogOpen(true)}>
+        打开对话框
+      </Button>
+
+      {/* 基础对话框 */}
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        title="确认操作"
+        content="您确定要执行此操作吗？此操作不可撤销。"
+        actions={dialogActions}
+      />
+
+      {/* 警告对话框 */}
+      <Dialog
+        open={false}
+        title="删除文件"
+        content="您确定要删除这个文件吗？删除后无法恢复。"
+        icon={<DeleteIcon />}
+        actions={[
+          {
+            label: '删除',
+            onClick: () => console.log('删除'),
+            variant: 'destructive'
+          },
+          {
+            label: '取消',
+            onClick: () => {},
+            variant: 'secondary'
+          }
+        ]}
+        size="small"
+      />
+
+      {/* 表单对话框 */}
+      <Dialog
+        open={false}
+        title="用户信息"
+        content={
+          <form>
+            <input type="text" placeholder="姓名" />
+            <input type="email" placeholder="邮箱" />
+            <textarea placeholder="备注" />
+          </form>
+        }
+        actions={[
+          { label: '取消', onClick: () => {}, variant: 'secondary' },
+          { label: '保存', onClick: () => {}, variant: 'primary' }
+        ]}
+        size="medium"
+      />
+
+      {/* 可滚动对话框 */}
+      <Dialog
+        open={false}
+        title="长内容"
+        content={
+          <div>
+            {/* 大量内容 */}
+            <p>这里是很多内容...</p>
+          </div>
+        }
+        scrollable
+        size="large"
+        actions={[
+          { label: '关闭', onClick: () => {}, variant: 'primary' }
+        ]}
+      />
+
+      {/* 全屏对话框 */}
+      <Dialog
+        open={false}
+        title="全屏内容"
+        content={<div>复杂的全屏内容</div>}
+        size="fullscreen"
+        actions={[
+          { label: '关闭', onClick: () => {}, variant: 'primary' }
+        ]}
       />
     </div>
   );
