@@ -31,17 +31,6 @@ const WindowsDialog: React.FC<DialogProps> = ({
     }
   };
 
-  // 映射尺寸
-  const getDialogSize = () => {
-    switch (size) {
-      case 'small': return 'small';
-      case 'large': return 'large';
-      case 'fullscreen': return 'large'; // Fluent UI doesn't have fullscreen, use large
-      case 'medium':
-      default: return 'medium';
-    }
-  };
-
   // 设置对话框样式
   const dialogSurfaceStyle: React.CSSProperties = {
     maxHeight: scrollable ? '80vh' : undefined,
@@ -108,7 +97,6 @@ const WindowsDialog: React.FC<DialogProps> = ({
                   onClick={action.onClick}
                   disabled={action.disabled}
                   style={{
-                    color: action.variant === 'destructive' ? '#D83B01' : undefined,
                     borderColor: action.variant === 'destructive' ? '#D83B01' : undefined,
                     backgroundColor: action.variant === 'destructive' && getButtonAppearance() === 'primary' ? '#D83B01' : undefined,
                   }}
