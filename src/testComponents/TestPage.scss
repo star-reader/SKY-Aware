@@ -483,44 +483,46 @@ html[aria-label="dark"] {
   }
 }
 
-// Dialog specific styles
+// Dialog测试相关样式
 .test-button {
-  padding: 10px 20px;
-  border: 1px solid #007AFF;
-  border-radius: 8px;
+  padding: 8px 16px;
   background: #007AFF;
   color: white;
-  font-size: 14px;
-  font-weight: 500;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
 
   &:hover {
     background: #0051D5;
-    border-color: #0051D5;
   }
 
   &:active {
-    transform: scale(0.98);
-  }
-}
-
-html[aria-label="dark"] {
-  .test-segment-container {
-    background: rgba(255, 255, 255, 0.05);
-
-    label {
-      color: #999;
-    }
+    background: #004494;
   }
 
-  .test-button {
+  // 深色模式
+  html[aria-label="dark"] & {
     background: #0A84FF;
-    border-color: #0A84FF;
 
     &:hover {
       background: #007AFF;
-      border-color: #007AFF;
     }
+
+    &:active {
+      background: #0051D5;
+    }
+  }
+}
+
+// Popover测试相关样式
+.test-popover-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+  .test-button {
+    align-self: flex-start;
   }
 } 

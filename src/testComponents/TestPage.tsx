@@ -34,7 +34,10 @@ import MaterialSegmentControl from '../components/common/SegmentControl/styled/M
 import IOSCommonDialog from '../components/common/Dialog/styled/IOSCommonDialog';
 import WindowsDialog from '../components/common/Dialog/styled/WindowsDialog';
 import MaterialDialog from '../components/common/Dialog/styled/MaterialDialog';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption, DialogProps, DialogAction } from '../components/common/types';
+import IOSCommonPopover from '../components/common/Popover/styled/IOSCommonPopover';
+import WindowsPopover from '../components/common/Popover/styled/WindowsPopover';
+import MaterialPopover from '../components/common/Popover/styled/MaterialPopover';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption, DialogProps, DialogAction, PopoverProps } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -58,7 +61,7 @@ const DeleteIcon = () => (
 
 const SettingsIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
   </svg>
 );
 
@@ -170,6 +173,10 @@ interface TestDialogProps extends DialogProps {
   style?: React.CSSProperties;
 }
 
+interface TestPopoverProps extends PopoverProps {
+  style?: React.CSSProperties;
+}
+
 const TestPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<PlatformStyle>('ios-common');
   const [loadingStates, setLoadingStates] = useState<{[key: string]: boolean}>({});
@@ -191,6 +198,18 @@ const TestPage: React.FC = () => {
     fullscreen: false,
     scrollable: false,
     multiButton: false
+  });
+  const [popoverStates, setPopoverStates] = useState<{[key: string]: boolean}>({
+    basic: false,
+    withTitle: false,
+    login: false,
+    positioning: false
+  });
+  const [popoverAnchors, setPopoverAnchors] = useState<{[key: string]: HTMLElement | null}>({
+    basic: null,
+    withTitle: null,
+    login: null,
+    positioning: null
   });
   
 
@@ -404,6 +423,24 @@ const TestPage: React.FC = () => {
         return <MaterialDialog {...dialogProps} {...dialogStyle} />;
       default:
         return <IOSCommonDialog {...dialogProps} {...dialogStyle} />;
+    }
+  };
+
+  // 根据选中的tab渲染对应的Popover组件
+  const renderPopover = (props: TestPopoverProps) => {
+    const { style, ...popoverProps } = props;
+    const popoverStyle = style ? { className: props.className, style } : { className: props.className };
+    
+    switch (activeTab) {
+      case 'ios-common':
+      case 'ios-liquid':
+        return <IOSCommonPopover {...popoverProps} {...popoverStyle} />;
+      case 'windows':
+        return <WindowsPopover {...popoverProps} {...popoverStyle} />;
+      case 'material':
+        return <MaterialPopover {...popoverProps} {...popoverStyle} />;
+      default:
+        return <IOSCommonPopover {...popoverProps} {...popoverStyle} />;
     }
   };
 
@@ -2249,6 +2286,155 @@ const TestPage: React.FC = () => {
     );
   };
 
+  // Popover 测试数据和函数
+  const openPopover = (popoverType: string, anchorElement: HTMLElement) => {
+    setPopoverAnchors(prev => ({ ...prev, [popoverType]: anchorElement }));
+    setPopoverStates(prev => ({ ...prev, [popoverType]: true }));
+  };
+
+  const closePopover = (popoverType: string) => {
+    setPopoverStates(prev => ({ ...prev, [popoverType]: false }));
+    // 延迟清除锚点，让动画完成
+    setTimeout(() => {
+      setPopoverAnchors(prev => ({ ...prev, [popoverType]: null }));
+    }, 200);
+  };
+
+  const renderPopoverSection = () => {
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">Popover 组件测试</h2>
+        
+        <div className="test-grid">
+          {/* 基础弹出层 */}
+          <div className="test-item">
+            <h3>基础弹出层</h3>
+            <button 
+              className="test-button"
+              onClick={(e) => openPopover('basic', e.currentTarget)}
+            >
+              显示基础弹出层
+            </button>
+            {renderPopover({
+              open: popoverStates.basic,
+              onClose: () => closePopover('basic'),
+              anchorEl: popoverAnchors.basic,
+              content: '这是一个基础的弹出层内容。可以显示简单的信息或提示。',
+              showCloseButton: false,
+              position: 'bottom'
+            })}
+          </div>
+
+          {/* 带标题的弹出层 */}
+          <div className="test-item">
+            <h3>带标题弹出层</h3>
+            <button 
+              className="test-button"
+              onClick={(e) => openPopover('withTitle', e.currentTarget)}
+            >
+              显示带标题弹出层
+            </button>
+            {renderPopover({
+              open: popoverStates.withTitle,
+              onClose: () => closePopover('withTitle'),
+              anchorEl: popoverAnchors.withTitle,
+              title: '消息通知',
+              content: '您有3条新消息等待查看。点击查看详情或关闭此提醒。',
+              showCloseButton: true,
+              position: 'bottom'
+            })}
+          </div>
+
+          {/* 登录提示弹出层 */}
+          <div className="test-item">
+            <h3>登录提示弹出层</h3>
+            <button 
+              className="test-button"
+              onClick={(e) => openPopover('login', e.currentTarget)}
+            >
+              显示登录提示
+            </button>
+            {renderPopover({
+              open: popoverStates.login,
+              onClose: () => closePopover('login'),
+              anchorEl: popoverAnchors.login,
+              title: '请先登录',
+              content: (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>
+                    您需要登录才能访问此功能
+                  </p>
+                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                    <button 
+                      style={{ 
+                        padding: '6px 12px', 
+                        border: '1px solid #ddd', 
+                        background: '#fff',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => closePopover('login')}
+                    >
+                      取消
+                    </button>
+                    <button 
+                      style={{ 
+                        padding: '6px 12px', 
+                        border: 'none', 
+                        background: '#007AFF',
+                        color: '#fff',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => {
+                        console.log('跳转到登录页面');
+                        closePopover('login');
+                      }}
+                    >
+                      登录
+                    </button>
+                  </div>
+                </div>
+              ),
+              showCloseButton: true,
+              position: 'bottom'
+            })}
+          </div>
+
+          {/* 位置测试弹出层 */}
+          <div className="test-item">
+            <h3>位置测试</h3>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {(['top', 'bottom', 'left', 'right', 'auto'] as const).map((pos) => (
+                <button 
+                  key={pos}
+                  className="test-button"
+                  style={{ fontSize: '12px', padding: '6px 12px' }}
+                  onClick={(e) => {
+                    setPopoverAnchors(prev => ({ ...prev, positioning: e.currentTarget }));
+                    setPopoverStates(prev => ({ ...prev, positioning: true }));
+                  }}
+                >
+                  {pos}位置
+                </button>
+              ))}
+            </div>
+            {renderPopover({
+              open: popoverStates.positioning,
+              onClose: () => closePopover('positioning'),
+              anchorEl: popoverAnchors.positioning,
+              title: '位置测试',
+              content: '这个弹出层会根据按钮位置自动调整显示位置，确保内容完全可见。',
+              showCloseButton: true,
+              position: 'auto',
+              arrow: true
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -2272,6 +2458,7 @@ const TestPage: React.FC = () => {
          {renderDropdownSection()}
          {renderSegmentControlSection()}
          {renderDialogSection()}
+         {renderPopoverSection()}
        </div>
     </div>
   );

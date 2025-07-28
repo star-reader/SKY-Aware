@@ -1,0 +1,288 @@
+// iOS Popover 样式
+.ios-popover {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow: 
+    0 0 0 0.5px rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.12),
+    0 16px 32px rgba(0, 0, 0, 0.08);
+  max-width: 320px;
+  min-width: 200px;
+  position: absolute;
+  z-index: 1050;
+  transform-origin: center;
+  animation: ios-popover-enter 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  // 位置变体
+  &--top {
+    transform: translateX(-50%) translateY(-100%);
+
+    &.ios-popover--with-arrow .ios-popover__arrow {
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%) rotate(180deg);
+    }
+  }
+
+  &--bottom {
+    transform: translateX(-50%);
+
+    &.ios-popover--with-arrow .ios-popover__arrow {
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  &--left {
+    transform: translateX(-100%) translateY(-50%);
+
+    &.ios-popover--with-arrow .ios-popover__arrow {
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+    }
+  }
+
+  &--right {
+    transform: translateY(-50%);
+
+    &.ios-popover--with-arrow .ios-popover__arrow {
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+    }
+  }
+
+  // 关闭动画
+  &--closing {
+    animation: ios-popover-exit 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+}
+
+// Popover Header
+.ios-popover__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 8px;
+  border-bottom: 0.5px solid rgba(60, 60, 67, 0.1);
+}
+
+// Popover Title
+.ios-popover__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1C1C1E;
+  line-height: 1.3;
+  flex: 1;
+}
+
+// Close Button
+.ios-popover__close-button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(60, 60, 67, 0.08);
+  color: #8E8E93;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+  margin-left: 12px;
+
+  &:hover {
+    background: rgba(60, 60, 67, 0.12);
+    color: #1C1C1E;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background: rgba(60, 60, 67, 0.16);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// Popover Content
+.ios-popover__content {
+  padding: 16px;
+  color: #3C3C43;
+  font-size: 15px;
+  line-height: 1.4;
+
+  // 当没有标题时增加上边距
+  .ios-popover__header + & {
+    padding-top: 12px;
+  }
+
+  // 单独内容时的样式
+  .ios-popover:not(:has(.ios-popover__header)) & {
+    padding: 16px;
+  }
+}
+
+// Arrow
+.ios-popover__arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.12));
+  z-index: -1;
+}
+
+// Backdrop
+.ios-popover__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040;
+  background: rgba(0, 0, 0, 0.1);
+  animation: ios-popover-backdrop-enter 0.2s ease;
+
+  &--closing {
+    animation: ios-popover-backdrop-exit 0.15s ease forwards;
+  }
+}
+
+// 动画
+@keyframes ios-popover-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(-50%);
+  }
+}
+
+@keyframes ios-popover-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateX(-50%);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateX(-50%);
+  }
+}
+
+@keyframes ios-popover-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ios-popover-backdrop-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .ios-popover {
+    background: rgba(44, 44, 46, 0.95);
+    color: #FFFFFF;
+    box-shadow: 
+      0 0 0 0.5px rgba(255, 255, 255, 0.04),
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 8px 16px rgba(0, 0, 0, 0.4),
+      0 16px 32px rgba(0, 0, 0, 0.3);
+
+    &__header {
+      border-bottom-color: rgba(84, 84, 88, 0.4);
+    }
+
+    &__title {
+      color: #FFFFFF;
+    }
+
+    &__close-button {
+      background: rgba(255, 255, 255, 0.08);
+      color: #AEAEB2;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #FFFFFF;
+      }
+
+      &:active {
+        background: rgba(255, 255, 255, 0.16);
+      }
+    }
+
+    &__content {
+      color: #AEAEB2;
+    }
+
+    &__arrow {
+      border-bottom-color: rgba(44, 44, 46, 0.95);
+      filter: drop-shadow(0 -1px 2px rgba(0, 0, 0, 0.4));
+    }
+  }
+
+  .ios-popover__backdrop {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .ios-popover {
+    max-width: calc(100vw - 32px);
+    min-width: calc(100vw - 64px);
+
+    &__header {
+      padding: 12px 16px 8px;
+    }
+
+    &__content {
+      padding: 12px 16px 16px;
+      font-size: 14px;
+    }
+
+    &__title {
+      font-size: 15px;
+    }
+  }
+}
+
+// 动画优化
+@media (prefers-reduced-motion: reduce) {
+  .ios-popover {
+    animation: none !important;
+
+    &--closing {
+      animation: none !important;
+    }
+  }
+
+  .ios-popover__backdrop {
+    animation: none !important;
+
+    &--closing {
+      animation: none !important;
+    }
+  }
+} 
