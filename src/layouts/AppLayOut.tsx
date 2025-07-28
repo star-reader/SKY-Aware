@@ -26,9 +26,38 @@ import MaterialNavbar from "../components/common/Navbar/styled/MaterialNavbar";
 import useWindowWidth from "../hooks/common/useWindowWidth"
 import constants from "../configs/constants"
 
+/**
+ * 根据currentTab显示不同的内容
+ */
+const ContentArea = ({ currentTab }: { currentTab: string }) => {
+    return (
+        currentTab === '地图' ? (
+            <div>地图</div>
+        ) : currentTab === '列表' ? (
+            <div>列表</div>
+        ) : currentTab === '统计' ? (
+            <div>统计</div>
+        ) : currentTab === '设置' ? (
+            <div>设置</div>
+        ) : currentTab === '关于' ? (
+            <div>关于</div>
+        ) : null
+    )
+}
+
+/**
+ * 基础总布局
+ * @description 根据平台和尺寸确定的布局方案
+ */
 export default function AppLayOut() {
-    const [platform, setPlatform] = useState<PlatformType>();
+    const [platform, setPlatform] = useState<PlatformType>()
+    const [currentTab, setCurrentTab] = useState<string>('地图')
     const windowWidth = useWindowWidth();
+
+    const handleNavItemClick = (item: any) => {
+        setCurrentTab(item.label)
+    }
+
 
     // fluent 图标
     const Dashboard = bundleIcon(Board20Filled, Board20Regular)
@@ -81,12 +110,10 @@ export default function AppLayOut() {
                         <WindowsNavbar
                             items={navItems}
                             position="sidebar"
-                            onItemClick={(item) => {
-                                // TODO: handle navigation
-                            }}
+                            onItemClick={handleNavItemClick}
                         />
                         <div className="flex-1 overflow-auto">
-                            {/* Content area */}
+                            <ContentArea currentTab={currentTab} />
                         </div>
                     </div>
                 ) : (platform === 'ios' || platform === 'macos') ? (
@@ -95,12 +122,10 @@ export default function AppLayOut() {
                             <IOSCommonNavbar
                                 items={navItems}
                                 position="bottom"
-                                onItemClick={(item) => {
-                                    // TODO: handle navigation
-                                }}
+                                onItemClick={handleNavItemClick}
                             />
                             <div className="flex-1 h-[calc(100vh-56px)] overflow-auto">
-                                {/* Content area */}
+                                <ContentArea currentTab={currentTab} />
                             </div>
                         </div>
                     ) : (
@@ -108,11 +133,11 @@ export default function AppLayOut() {
                             <IOSCommonNavbar
                                 items={navItems}
                                 position="sidebar"
-                                onItemClick={(item) => {
-                                    // TODO: handle navigation
-                                }}
+                                onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 overflow-auto"></div>
+                            <div className="flex-1 overflow-auto">
+                                <ContentArea currentTab={currentTab} />
+                            </div>
                         </div>
                     )    
                 ) : (
@@ -121,9 +146,10 @@ export default function AppLayOut() {
                             <MaterialNavbar
                                 items={navItems}
                                 position="bottom"
+                                onItemClick={handleNavItemClick}
                             />
                             <div className="flex-1 h-[calc(100vh-56px)] overflow-auto">
-                                {/* Content area */}
+                                <ContentArea currentTab={currentTab} />
                             </div>
                         </div>
                     ) : (
@@ -131,8 +157,11 @@ export default function AppLayOut() {
                             <MaterialNavbar
                                 items={navItems}
                                 position="sidebar"
+                                onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 overflow-auto"></div>
+                            <div className="flex-1 overflow-auto">
+                                <ContentArea currentTab={currentTab} />
+                            </div>
                         </div>
                     )
                 )
