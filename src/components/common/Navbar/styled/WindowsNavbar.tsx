@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Badge, Tooltip, makeStyles } from '@fluentui/react-components';
-import { 
+import {
   Hamburger,
   NavDrawer,
   NavDrawerBody,
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     transition: "width 0.2s ease-in-out",
   },
   navCollapsed: {
-    width: "60px", 
+    width: "60px",
     transition: "width 0.2s ease-in-out",
   },
 });
@@ -30,19 +30,19 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
   className = '',
   style,
 }) => {
-  const styles = useStyles();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isShowText, setIsShowText] = useState(true);
+  const styles = useStyles()
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isShowText, setIsShowText] = useState(true)
 
   useEffect(() => {
     if (isCollapsed) {
-      setIsShowText(false);
+      setIsShowText(false)
     } else {
       setTimeout(() => {
         setIsShowText(!isCollapsed);
-      }, 200);
+      }, 200)
     }
-  }, [isCollapsed]);
+  }, [isCollapsed])
 
   const handleNavItemSelect = (data: OnNavItemSelectData) => {
     const item = items.find(item => item.label === data.value);
@@ -56,14 +56,14 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
     // 对于非sidebar位置，暂时返回一个简单的div
     // 可以在将来扩展为其他Fluent UI组件
     return (
-      <div 
-         className={className}
-         style={{
-           display: 'flex',
-           padding: '8px',
-           ...style
-         }}
-       >
+      <div
+        className={className}
+        style={{
+          display: 'flex',
+          padding: '8px',
+          ...style
+        }}
+      >
         {items.map((item) => (
           <div
             key={item.label}
@@ -84,8 +84,8 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
             {item.icon}
             {showLabels && item.label}
             {item.badge && (
-              <Badge 
-                appearance="filled" 
+              <Badge
+                appearance="filled"
                 color="danger"
                 size="small"
               >
@@ -100,18 +100,18 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
 
   // Sidebar位置使用NavDrawer
   return (
-         <NavDrawer
-       defaultSelectedValue={activeItem || '地图'}
-       defaultSelectedCategoryValue=""
-       open={true}
-       type="inline"
-       className={isCollapsed ? styles.navCollapsed : styles.nav}
-       onNavItemSelect={(_, data) => handleNavItemSelect(data)}
-       style={style}
-     >
+    <NavDrawer
+      defaultSelectedValue={activeItem || '地图'}
+      defaultSelectedCategoryValue=""
+      open={true}
+      type="inline"
+      className={isCollapsed ? styles.navCollapsed : styles.nav}
+      onNavItemSelect={(_, data) => handleNavItemSelect(data)}
+      style={style}
+    >
       <NavDrawerHeader>
-        <Tooltip 
-          content={isCollapsed ? "展开导航" : "收起导航"} 
+        <Tooltip
+          content={isCollapsed ? "展开导航" : "收起导航"}
           relationship="label"
           positioning="before-top"
         >
@@ -121,15 +121,15 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
 
       <NavDrawerBody>
         {items.map((item) => (
-          <NavItem 
+          <NavItem
             key={item.label}
-            icon={item.icon as any} 
+            icon={item.icon as any}
             value={item.label}
           >
             {isShowText && showLabels && item.label}
             {item.badge && !isShowText && (
-              <Badge 
-                appearance="filled" 
+              <Badge
+                appearance="filled"
                 color="danger"
                 size="small"
               >

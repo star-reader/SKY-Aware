@@ -1,3 +1,9 @@
+/**
+ * 应用基础布局
+ * @author: Jerry Jin 2025-07-28
+ * @description: Windows下统一使用左侧导航栏，iOS和Android、Web根据尺寸切换
+ */
+
 import { useEffect, useState } from "react";
 import { MapOutlined, ListAltOutlined, SettingsOutlined, BarChartOutlined, InfoOutlined } from '@mui/icons-material';
 import {
@@ -20,11 +26,6 @@ import MaterialNavbar from "../components/common/Navbar/styled/MaterialNavbar";
 import useWindowWidth from "../hooks/common/useWindowWidth"
 import constants from "../configs/constants"
 
-/**
- * 应用基础布局
- * @author: Jerry Jin 2025-07-28
- * @description: Windows下统一使用左侧导航栏，iOS和Android、Web根据尺寸切换
- */
 export default function AppLayOut() {
     const [platform, setPlatform] = useState<PlatformType>();
     const windowWidth = useWindowWidth();
