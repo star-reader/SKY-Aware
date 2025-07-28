@@ -287,6 +287,28 @@ export interface DialogProps {
   'aria-describedby'?: string;
 }
 
+// Popover types
+export type PopoverPosition = 'top' | 'bottom' | 'left' | 'right' | 'auto';
+export type PopoverTrigger = 'click' | 'hover' | 'manual';
+
+export interface PopoverProps {
+  open: boolean;
+  onClose?: () => void;
+  anchorEl?: HTMLElement | null;
+  position?: PopoverPosition;
+  trigger?: PopoverTrigger;
+  title?: string;
+  content?: ReactNode;
+  showCloseButton?: boolean;
+  backdrop?: boolean;
+  backdropDismiss?: boolean;
+  arrow?: boolean;
+  offset?: number;
+  className?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+}
+
 // NavigationTitleBar types
 export interface NavigationAction {
   icon: ReactNode;

@@ -2070,16 +2070,33 @@ const TestPage: React.FC = () => {
               content: (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div>
-                    <label>姓名:</label>
-                    <input type="text" placeholder="请输入姓名" style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
+                    {renderInput({
+                      label: '姓名',
+                      placeholder: '请输入姓名',
+                      type: 'text',
+                      value: '',
+                      onChange: (event) => console.log('Name:', event.target.value),
+                      style: { marginBottom: '8px' }
+                    })}
                   </div>
                   <div>
-                    <label>邮箱:</label>
-                    <input type="email" placeholder="请输入邮箱" style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
+                    {renderInput({
+                      label: '邮箱',
+                      placeholder: '请输入邮箱',
+                      type: 'email',
+                      value: '',
+                      onChange: (event) => console.log('Email:', event.target.value),
+                      style: { marginBottom: '8px' }
+                    })}
                   </div>
                   <div>
-                    <label>备注:</label>
-                    <textarea placeholder="请输入备注" style={{ width: '100%', padding: '8px', marginTop: '4px', minHeight: '80px' }} />
+                    {renderInput({
+                      label: '备注',
+                      placeholder: '请输入备注',
+                      type: 'text',
+                      value: '',
+                      onChange: (event) => console.log('Notes:', event.target.value)
+                    })}
                   </div>
                 </div>
               ),
