@@ -40,7 +40,8 @@ import MaterialPopover from '../components/common/Popover/styled/MaterialPopover
 import IOSCommonFormDialog from '../components/common/FormDialog/styled/IOSCommonFormDialog';
 import WindowsFormDialog from '../components/common/FormDialog/styled/WindowsFormDialog';
 import MaterialFormDialog from '../components/common/FormDialog/styled/MaterialFormDialog';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption, DialogProps, DialogAction, PopoverProps, FormDialogProps, FormDialogAction } from '../components/common/types';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, 
+  SegmentControlProps, SegmentOption, DialogProps, DialogAction, PopoverProps, FormDialogProps } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -1709,7 +1710,7 @@ const TestPage: React.FC = () => {
                 options: basicOptions,
                 placeholder: '请选择一个选项',
                 value: dropdownValues.basic as string,
-                onSelectionChange: (option: DropdownOption | DropdownOption[] | undefined, value?: string | string[]) => {
+                onSelectionChange: (_: DropdownOption | DropdownOption[] | undefined, value?: string | string[]) => {
                   setDropdownValues(prev => ({ ...prev, basic: value as string }));
                 },
               })}
@@ -1747,7 +1748,7 @@ const TestPage: React.FC = () => {
                 placeholder: '请选择技能...',
                 multiSelect: true,
                 value: dropdownValues.multiSelect as string[],
-                onSelectionChange: (options: DropdownOption | DropdownOption[] | undefined, values?: string | string[]) => {
+                onSelectionChange: (_: DropdownOption | DropdownOption[] | undefined, values?: string | string[]) => {
                   setDropdownValues(prev => ({ ...prev, multiSelect: values as string[] }));
                 },
               })}
@@ -1779,7 +1780,7 @@ const TestPage: React.FC = () => {
                 searchable: true,
                 clearable: true,
                 value: dropdownValues.withSearch as string,
-                onSelectionChange: (option, value) => {
+                onSelectionChange: (_, value) => {
                   setDropdownValues(prev => ({ ...prev, withSearch: value as string }));
                 },
               })}
@@ -1812,7 +1813,7 @@ const TestPage: React.FC = () => {
                 error: !dropdownValues.withError,
                 errorMessage: '请选择一个选项',
                 value: dropdownValues.withError as string,
-                onSelectionChange: (option, value) => {
+                onSelectionChange: (_, value) => {
                   setDropdownValues(prev => ({ ...prev, withError: value as string }));
                 },
               })}

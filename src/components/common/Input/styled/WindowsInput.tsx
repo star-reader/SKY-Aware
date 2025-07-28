@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Input, Label, Field } from '@fluentui/react-components';
+import { Input, Field } from '@fluentui/react-components';
 import { InputProps } from '../../types';
 
 const WindowsInput = forwardRef<HTMLInputElement, InputProps>(({
@@ -15,7 +15,6 @@ const WindowsInput = forwardRef<HTMLInputElement, InputProps>(({
   'aria-label': ariaLabel,
   ...props
 }, ref) => {
-  // Map our InputType to Fluent UI type
   const getInputType = (): any => {
     switch (type) {
       case 'text':
