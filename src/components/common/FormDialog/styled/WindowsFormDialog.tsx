@@ -18,7 +18,6 @@ const WindowsFormDialog: React.FC<FormDialogProps> = ({
   action,
   size = 'medium',
   backdrop = true,
-  backdropDismiss = true,
   icon,
   className = '',
   'aria-label': ariaLabel,
@@ -47,16 +46,6 @@ const WindowsFormDialog: React.FC<FormDialogProps> = ({
   const handleActionClick = () => {
     if (!action.disabled && !action.loading) {
       action.onClick();
-    }
-  };
-
-  // 映射尺寸
-  const getDialogSize = () => {
-    switch (size) {
-      case 'small': return 'small';
-      case 'large': return 'large';
-      case 'medium':
-      default: return 'medium';
     }
   };
 

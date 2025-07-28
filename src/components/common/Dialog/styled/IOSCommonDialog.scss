@@ -9,7 +9,6 @@
   position: relative;
   animation: ios-dialog-enter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-  // iOS 样式（移动端）
   &--ios {
     width: 90%;
     max-width: 320px;
@@ -18,11 +17,9 @@
     .ios-dialog__actions {
       display: flex;
       flex-direction: column;
-      // 移除难看的分界线
       border-top: none;
 
       .ios-dialog__action-button--ios {
-        // 移除按钮之间的分界线
         border-bottom: none;
         border-radius: 0;
         border-top: 0.5px solid rgba(60, 60, 67, 0.29);
@@ -48,7 +45,6 @@
     }
   }
 
-  // macOS 样式（桌面端）- 完全重新设计以100%匹配参考图片
   &--macos {
     width: auto;
     min-width: 260px;
@@ -62,7 +58,7 @@
       0 1px 2.5px rgba(0, 0, 0, 0.12),
       0 4px 12px rgba(0, 0, 0, 0.15),
       0 8px 24px rgba(0, 0, 0, 0.12);
-    animation: none; // 移除动画，使用原生macOS感觉
+    animation: none;
 
     .ios-dialog__header {
       flex-direction: column;
@@ -260,7 +256,6 @@
   }
 }
 
-// Close Button (macOS only) - 移除macOS的关闭按钮，使用原生按钮样式
 .ios-dialog__close-button {
   position: absolute;
   top: 12px;
@@ -297,7 +292,7 @@
   }
 
   .ios-dialog--macos & {
-    display: none; // 移除macOS关闭按钮，使用底部按钮
+    display: none;
   }
 }
 
@@ -305,19 +300,18 @@
 .ios-dialog__content {
   padding: 0 20px 20px;
   color: #3C3C43;
-  font-size: 13px; // 减小字体大小
+  font-size: 13px;
   line-height: 1.4;
   text-align: center;
 
   .ios-dialog--macos & {
     padding: 0 16px 16px;
     text-align: center;
-    font-size: 11px; // macOS 原生内容字体大小
+    font-size: 11px;
     color: #1d1d1f;
     line-height: 1.4;
   }
 
-  // 当有标题时减少上边距
   .ios-dialog__header + & {
     padding-top: 0;
   }

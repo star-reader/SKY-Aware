@@ -6,11 +6,9 @@ const WindowsSpinner: React.FC<SpinnerProps> = ({
   size = 'medium',
   visible = true,
   label,
-  variant = 'indeterminate',
   'aria-label': ariaLabel,
   className = '',
 }) => {
-  // Map our size to Fluent UI size
   const getFluentSize = (): 'tiny' | 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large' | 'huge' => {
     switch (size) {
       case 'small':
@@ -20,17 +18,14 @@ const WindowsSpinner: React.FC<SpinnerProps> = ({
       case 'large':
         return 'large';
       default:
-        return 'medium';
+        return 'medium';  
     }
   };
 
-  // Fluent UI Spinner doesn't have determinate variant, always indeterminate
-  // If visible is false, don't render the component
   if (!visible) {
     return null;
   }
 
-  // If label is provided, wrap with Field component
   if (label) {
     return (
       <Field 

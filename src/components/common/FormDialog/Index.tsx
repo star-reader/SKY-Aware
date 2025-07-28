@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FormDialogProps } from '../types';
-import getPlatform, { PlatformType } from '../../utils/getPlatform';
+import getPlatform, { PlatformType } from '../../../utils/getPlatform';
 import IOSCommonFormDialog from './styled/IOSCommonFormDialog';
 import WindowsFormDialog from './styled/WindowsFormDialog';
 import MaterialFormDialog from './styled/MaterialFormDialog';

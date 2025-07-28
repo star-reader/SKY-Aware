@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, AlertTitle, IconButton, Box, Slide, Fade, Zoom } from '@mui/material';
+import { Alert, IconButton, Box, Slide, Zoom } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { AlertProps } from '../../types';
 

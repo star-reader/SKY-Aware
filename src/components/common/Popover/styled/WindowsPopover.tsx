@@ -16,10 +16,6 @@ const WindowsPopover: React.FC<PopoverProps> = ({
   title,
   content,
   showCloseButton = true,
-  backdrop = true,
-  backdropDismiss = true,
-  arrow = true,
-  className = '',
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }) => {

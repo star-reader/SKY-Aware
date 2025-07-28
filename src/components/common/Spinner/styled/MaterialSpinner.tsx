@@ -13,7 +13,6 @@ const MaterialSpinner: React.FC<SpinnerProps> = ({
   'aria-label': ariaLabel,
   className = '',
 }) => {
-  // Map our size to Material UI size (number in pixels)
   const getMUISize = (): number => {
     switch (size) {
       case 'small':
@@ -27,16 +26,13 @@ const MaterialSpinner: React.FC<SpinnerProps> = ({
     }
   };
 
-  // Map our color to Material UI color
   const getMUIColor = (): 'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' => {
     if (color) {
-      // If a custom color is provided, use 'inherit' and handle with sx
       return 'inherit';
     }
     return 'primary';
   };
 
-  // If visible is false, don't render the component
   if (!visible) {
     return null;
   }
@@ -56,7 +52,6 @@ const MaterialSpinner: React.FC<SpinnerProps> = ({
     />
   );
 
-  // If label is provided, wrap with Box and Typography
   if (label) {
     return (
       <Box

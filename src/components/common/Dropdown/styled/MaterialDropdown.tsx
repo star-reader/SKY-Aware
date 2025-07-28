@@ -10,7 +10,7 @@ import {
   OutlinedInput,
   SelectChangeEvent,
 } from '@mui/material';
-import { DropdownProps, DropdownOption } from '../../types';
+import { DropdownProps } from '../../types';
 
 const MaterialDropdown: React.FC<DropdownProps> = ({
   options,

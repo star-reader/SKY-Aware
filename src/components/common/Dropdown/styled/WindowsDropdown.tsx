@@ -3,9 +3,10 @@ import {
   Dropdown, 
   Field, 
   Option,
-  DropdownProps as FluentDropdownProps 
+  SelectionEvents,
+  OptionOnSelectData
 } from '@fluentui/react-components';
-import { DropdownProps, DropdownOption } from '../../types';
+import { DropdownProps } from '../../types';
 
 const WindowsDropdown: React.FC<DropdownProps> = ({
   options,
@@ -22,18 +23,19 @@ const WindowsDropdown: React.FC<DropdownProps> = ({
   className = '',
   'aria-label': ariaLabel,
 }) => {
-  const handleSelectionChange: FluentDropdownProps['onSelectionChange'] = (event, data) => {
+  const handleSelectionChange = (_event: SelectionEvents, data: OptionOnSelectData) => {
     if (onSelectionChange) {
-      const selectedOptions = data.selectedOptions;
-      
       if (multiSelect) {
+        // For multiselect, we need to handle the selected options differently
+        const selectedKeys = data.selectedOptions || [];
         const selectedItems = options.filter(option => 
-          selectedOptions.includes(option.key)
+          selectedKeys.includes(option.key)
         );
         const selectedValues = selectedItems.map(item => item.value || item.key);
         onSelectionChange(selectedItems, selectedValues);
       } else {
-        const selectedKey = data.value;
+        // For single select
+        const selectedKey = data.optionValue;
         const selectedOption = options.find(option => option.key === selectedKey);
         const selectedValue = selectedOption?.value || selectedKey;
         onSelectionChange(selectedOption, selectedValue as string);
@@ -54,14 +56,21 @@ const WindowsDropdown: React.FC<DropdownProps> = ({
     return [];
   };
 
+  const getCurrentValue = () => {
+    if (multiSelect) {
+      return undefined; // For multiselect, use selectedOptions
+    }
+    return (value as string) || (defaultValue as string) || undefined;
+  };
+
   const dropdownElement = (
     <Dropdown
       multiselect={multiSelect}
       placeholder={placeholder}
       disabled={disabled}
-      value={multiSelect ? undefined : (value as string) || (defaultValue as string)}
-      selectedOptions={getSelectedOptions()}
-      onSelectionChange={handleSelectionChange}
+      value={getCurrentValue()}
+      selectedOptions={multiSelect ? getSelectedOptions() : undefined}
+      onOptionSelect={handleSelectionChange}
       aria-label={ariaLabel}
       className={className}
       style={{

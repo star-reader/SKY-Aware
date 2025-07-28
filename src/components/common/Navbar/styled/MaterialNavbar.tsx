@@ -118,7 +118,6 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
     );
   }
 
-  // Bottom position - BottomNavigation
   if (position === 'bottom') {
     return (
              <BottomNavigation
@@ -220,7 +219,7 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
                       padding: isCollapsed ? '8px' : '8px 16px',
                       borderRadius: '8px',
                       margin: '2px 8px',
-                                             justifyContent: 'flex-start', // 始终保持左对齐，通过图标margin控制居中
+                      justifyContent: 'flex-start',
                       transition: 'all 0.2s ease-in-out', // 添加按钮过渡效果
                       '&.Mui-selected': {
                         backgroundColor: 'primary.main',
@@ -231,12 +230,12 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
                       },
                     }}
                >
-                                 <ListItemIcon
+               <ListItemIcon
                     sx={{
                       color: isSelected ? 'inherit' : 'text.secondary',
                       minWidth: isCollapsed ? '24px' : '40px',
                       justifyContent: 'center',
-                      marginLeft: isCollapsed ? '2px' : 0, // 折叠时向右偏移2px实现精确居中
+                      marginLeft: isCollapsed ? '2px' : 0,
                       transition: 'all 0.2s ease-in-out !important', // 强制图标过渡效果
                     }}
                  >

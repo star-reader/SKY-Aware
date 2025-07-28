@@ -18,12 +18,10 @@ const Spinner: React.FC<SpinnerProps> = (props) => {
     detectPlatform();
   }, []);
 
-  // Don't render anything while detecting platform
   if (!platform) {
     return null;
   }
 
-  // Render platform-specific Spinner
   switch (platform) {
     case 'ios':
     case 'macos':

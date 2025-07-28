@@ -14,7 +14,6 @@ const MaterialButton: React.FC<ButtonProps> = ({
   className = '',
   type = 'button',
 }) => {
-  // Map variant to MUI variant
   const getMuiVariant = () => {
     switch (variant) {
       case 'contained':
@@ -61,7 +60,6 @@ const MaterialButton: React.FC<ButtonProps> = ({
         <CircularProgress size={spinnerSize} color="inherit" />
       ) : icon}
       sx={{
-        // 强制覆盖MUI默认尺寸，与其他平台保持完全一致
         minWidth: '64px !important',
         width: 'auto',
         height: size === 'small' ? '32px !important' : size === 'large' ? '44px !important' : '36px !important',
@@ -70,7 +68,6 @@ const MaterialButton: React.FC<ButtonProps> = ({
         padding: size === 'small' ? '6px 12px !important' : size === 'large' ? '12px 20px !important' : '8px 16px !important',
         textTransform: 'none',
         lineHeight: '1.4',
-        // 移除MUI默认的间距和边距
         margin: 0,
         '& .MuiButton-startIcon': {
           marginLeft: 0,

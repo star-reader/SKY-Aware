@@ -13,7 +13,6 @@ const IOSCommonSpinner: React.FC<SpinnerProps> = ({
   'aria-label': ariaLabel,
   className = '',
 }) => {
-  // Get size in pixels for iOS
   const getIOSSize = (): number => {
     switch (size) {
       case 'small':
@@ -27,7 +26,6 @@ const IOSCommonSpinner: React.FC<SpinnerProps> = ({
     }
   };
 
-  // If visible is false, don't render the component
   if (!visible) {
     return null;
   }

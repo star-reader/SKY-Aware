@@ -20,11 +20,9 @@ const MaterialFormDialog: React.FC<FormDialogProps> = ({
   content,
   action,
   size = 'medium',
-  backdrop = true,
   backdropDismiss = true,
   icon,
   className = '',
-  'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,
 }) => {
   const [isOpen, setIsOpen] = useState(open);

@@ -1,4 +1,3 @@
-// iOS SegmentControl 样式
 .ios-segment-control {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
   display: inline-flex;
@@ -132,13 +131,11 @@
     }
   }
 
-  // 标签样式
   &__label {
     font-inherit: inherit;
     line-height: inherit;
   }
 
-  // Tabs 变体样式
   &--tabs {
     background: transparent;
     padding: 0;

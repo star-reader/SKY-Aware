@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { DropdownProps, DropdownOption } from '../../types';
 import './IOSCommonDropdown.scss';
 
-// 自定义 SVG 图标
 const ChevronDownIcon = () => (
   <svg className="ios-dropdown__chevron" viewBox="0 0 24 24" fill="none">
     <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -66,14 +65,12 @@ const IOSCommonDropdown: React.FC<DropdownProps> = ({
     };
   }, [isOpen]);
 
-  // 优雅的开启动画：平滑展开
   const handleOpen = () => {
     if (disabled) return;
     
     setIsOpen(true);
     setAnimationPhase('expanding');
     
-    // 单阶段平滑动画（200ms）
     setTimeout(() => {
       setAnimationPhase('open');
     }, 200);
@@ -112,7 +109,7 @@ const IOSCommonDropdown: React.FC<DropdownProps> = ({
     } else {
       newValue = option.key;
       selectedOptions = option;
-      handleClose(); // 单选时选择后自动关闭
+      handleClose();
     }
 
     setSelectedValue(newValue);

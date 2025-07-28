@@ -16,9 +16,7 @@ const MaterialPopover: React.FC<PopoverProps> = ({
   title,
   content,
   showCloseButton = true,
-  backdrop = true,
   backdropDismiss = true,
-  arrow = false, // Material Design 通常不使用箭头
   className = '',
   'aria-label': ariaLabel,
   'aria-describedby': ariaDescribedBy,

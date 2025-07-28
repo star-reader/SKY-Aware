@@ -19,22 +19,10 @@ const MaterialSegmentControl: React.FC<SegmentControlProps> = ({
     }
   };
 
-  // 映射尺寸
-  const getTabsSize = () => {
-    switch (size) {
-      case 'small': return 'small';
-      case 'large': return 'large';
-      case 'medium':
-      default: return 'medium';
-    }
-  };
-
-  // 设置Material UI的variant
   const getMuiVariant = () => {
     return variant === 'tabs' ? 'standard' : 'fullWidth';
   };
 
-  // 设置样式
   const tabsStyle = {
     width: fullWidth ? '100%' : 'auto',
     minHeight: 'auto',
@@ -76,20 +64,16 @@ const MaterialSegmentControl: React.FC<SegmentControlProps> = ({
         value={value}
         onChange={handleChange}
         variant={fullWidth ? 'fullWidth' : getMuiVariant()}
-        size={getTabsSize()}
         aria-label={ariaLabel}
         sx={tabsStyle}
-        disabled={disabled}
       >
-        {options.map((option) => (
-          <Tab
-            key={option.value}
-            value={option.value}
-            label={option.label}
-            icon={option.icon}
-            iconPosition="start"
-            disabled={disabled || option.disabled}
-            sx={{
+        {options.map((option) => {
+          const tabProps: any = {
+            key: option.value,
+            value: option.value,
+            label: option.label,
+            disabled: disabled || option.disabled,
+            sx: {
               minWidth: 'auto',
               padding: size === 'small' ? '6px 12px' : 
                       size === 'large' ? '12px 24px' : 
@@ -101,9 +85,15 @@ const MaterialSegmentControl: React.FC<SegmentControlProps> = ({
                 marginBottom: option.icon && option.label ? '4px !important' : 0,
                 marginRight: option.icon && option.label ? '8px !important' : 0,
               },
-            }}
-          />
-        ))}
+            }
+          };
+
+          if (option.icon && React.isValidElement(option.icon)) {
+            tabProps.icon = option.icon;
+          }
+
+          return <Tab {...tabProps} />;
+        })}
       </Tabs>
     </Box>
   );

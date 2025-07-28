@@ -19,7 +19,6 @@ const WindowsDialog: React.FC<DialogProps> = ({
   size = 'medium',
   scrollable = false,
   backdrop = true,
-  backdropDismiss = true,
   icon,
   className = '',
   'aria-label': ariaLabel,

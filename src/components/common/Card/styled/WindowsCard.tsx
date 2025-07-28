@@ -1,12 +1,10 @@
 import React from 'react';
 import { 
   Card, 
-  CardFooter, 
   CardHeader, 
   CardPreview,
   Text,
   Caption1,
-  Button
 } from '@fluentui/react-components';
 import { CardProps } from '../../types';
 

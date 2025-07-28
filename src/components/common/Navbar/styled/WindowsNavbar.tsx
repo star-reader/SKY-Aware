@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Badge, Tooltip, makeStyles, tokens } from '@fluentui/react-components';
+import { Badge, Tooltip, makeStyles } from '@fluentui/react-components';
 import { 
   Hamburger,
   NavDrawer,
@@ -27,7 +27,6 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
   activeItem,
   onItemClick,
   showLabels = true,
-  safeArea = true,
   className = '',
   style,
 }) => {

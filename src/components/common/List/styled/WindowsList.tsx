@@ -48,7 +48,7 @@ const WindowsList: React.FC<ListProps> = ({
     letterSpacing: '0.5px',
   };
 
-  const getItemStyle = (item: ListItem, isSelected: boolean, isLast: boolean): React.CSSProperties => ({
+  const getItemStyle = (_: ListItem, __: boolean, isLast: boolean): React.CSSProperties => ({
     position: 'relative' as const,
     ...(dividers && !isLast && {
       borderBottom: '1px solid var(--colorNeutralStroke2)',
@@ -75,10 +75,11 @@ const WindowsList: React.FC<ListProps> = ({
     ...(item.disabled && {
       opacity: 0.6,
     }),
-    '&:hover': !item.disabled && !isSelected ? {
+    // @ts-ignore
+    ':hover': !item.disabled && !isSelected ? {
       background: 'var(--colorNeutralBackground1Hover)',
     } : {},
-    '&:active': !item.disabled ? {
+    ':active': !item.disabled ? {
       background: 'var(--colorNeutralBackground1Pressed)',
     } : {},
     '&:focus': {

@@ -18,12 +18,10 @@ const Panel: React.FC<PanelProps> = (props) => {
     detectPlatform();
   }, []);
 
-  // Don't render anything while detecting platform
   if (!platform) {
     return null;
   }
 
-  // Render platform-specific Panel
   switch (platform) {
     case 'ios':
     case 'macos':
