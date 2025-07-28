@@ -309,30 +309,6 @@ export interface PopoverProps {
   'aria-describedby'?: string;
 }
 
-// FormDialog types
-export interface FormDialogAction {
-  label: string;
-  onClick: () => void;
-  variant?: 'primary' | 'secondary' | 'destructive';
-  disabled?: boolean;
-  loading?: boolean;
-}
-
-export interface FormDialogProps {
-  open: boolean;
-  onClose?: () => void;
-  title?: string;
-  content?: ReactNode;
-  action: FormDialogAction; // 只有一个操作按钮
-  size?: 'small' | 'medium' | 'large';
-  backdrop?: boolean;
-  backdropDismiss?: boolean;
-  showCloseButton?: boolean;
-  className?: string;
-  'aria-label'?: string;
-  'aria-describedby'?: string;
-}
-
 // NavigationTitleBar types
 export interface NavigationAction {
   icon: ReactNode;
@@ -348,4 +324,27 @@ export interface NavigationTitleBarProps {
   safeArea?: boolean;
   onBack?: () => void;
   className?: string;
+}
+
+// FormDialog types (Dialog variant for forms)
+export interface FormDialogAction {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+export interface FormDialogProps {
+  open: boolean;
+  onClose?: () => void;
+  title?: string;
+  content?: ReactNode;
+  action: FormDialogAction; // Single primary action
+  size?: 'small' | 'medium' | 'large';
+  backdrop?: boolean;
+  backdropDismiss?: boolean;
+  icon?: ReactNode;
+  className?: string;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
 } 

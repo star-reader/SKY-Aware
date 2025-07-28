@@ -11,6 +11,7 @@ export { default as Dropdown } from './Dropdown/Index';
 export { default as SegmentControl } from './SegmentControl/Index';
 export { default as Dialog } from './Dialog/Index';
 export { default as Popover } from './Popover/Index';
+export { default as FormDialog } from './FormDialog/Index';
 
 // Export types
 export * from './types'; 

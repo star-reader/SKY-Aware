@@ -135,7 +135,7 @@ export default ({ onNavTabSelect, currentTab }: WindowsLayOutProps) => {
             {isShowText && "统计"}
           </NavItem>
           <NavItem icon={<TestIcon />} value="test">
-            {isShowText && "组件测试"}
+            {isShowText && "组件"}
           </NavItem>
           <NavItem icon={<SettingsIcon />} value="settings">
             {isShowText && "设置"}

@@ -26,6 +26,8 @@
 - [Dropdown](#dropdown) - 下拉选择组件
 - [SegmentControl](#segmentcontrol) - 分段控制器组件
 - [Dialog](#dialog) - 对话框组件
+- [Popover](#popover) - 弹出层组件
+- [FormDialog](#formdialog) - 表单对话框组件
 
 ---
 
@@ -897,6 +899,184 @@ function App() {
   );
 }
 ```
+
+---
+
+## FormDialog
+
+表单对话框组件，专为表单场景设计的Dialog变体，只有一个主要操作按钮，类似macOS登录界面效果。
+
+### Props
+
+| 属性 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| open | `boolean` | - | 是否打开对话框 |
+| onClose | `() => void` | - | 关闭回调函数 |
+| title | `string` | - | 对话框标题 |
+| content | `ReactNode` | - | 对话框内容 |
+| action | `FormDialogAction` | - | 单个主要操作按钮 |
+| size | `'small' \| 'medium' \| 'large'` | `'medium'` | 对话框尺寸 |
+| backdrop | `boolean` | `true` | 是否显示背景遮罩 |
+| backdropDismiss | `boolean` | `true` | 点击背景是否关闭 |
+| icon | `ReactNode` | - | 标题图标 |
+| className | `string` | - | 自定义CSS类名 |
+| aria-label | `string` | - | 无障碍标签 |
+| aria-describedby | `string` | - | 无障碍描述 |
+
+### FormDialogAction
+
+| 属性 | 类型 | 描述 |
+|------|------|------|
+| label | `string` | 按钮文本 |
+| onClick | `() => void` | 点击回调 |
+| disabled | `boolean` | 是否禁用 |
+| loading | `boolean` | 是否显示加载状态 |
+
+### 设计特点
+
+- **macOS风格**: 桌面端使用类似macOS系统登录界面的设计
+- **单一操作**: 专为表单场景设计，只有一个主要操作按钮
+- **全宽按钮**: 操作按钮占满容器宽度，突出主要操作
+- **响应式**: 移动端和桌面端自动适配不同的视觉效果
+
+### 示例
+
+```tsx
+import { FormDialog } from '@/components/common';
+
+function App() {
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      // 执行登录逻辑
+      await login();
+      setLoginOpen(false);
+    } catch (error) {
+      console.error('登录失败:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <Button onClick={() => setLoginOpen(true)}>
+        登录
+      </Button>
+
+      {/* 登录弹窗 */}
+      <FormDialog
+        open={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        title="登录到您的账户"
+        icon={<UserIcon />}
+        content={
+          <form>
+            <Input
+              label="用户名"
+              placeholder="请输入用户名或邮箱"
+              type="text"
+            />
+            <Input
+              label="密码"
+              placeholder="请输入密码"
+              type="password"
+            />
+          </form>
+        }
+        action={{
+          label: loading ? '登录中...' : '登录',
+          loading: loading,
+          onClick: handleLogin
+        }}
+        size="medium"
+      />
+
+      {/* 注册弹窗 */}
+      <FormDialog
+        open={false}
+        title="创建新账户"
+        icon={<AddUserIcon />}
+        content={
+          <div>
+            <Input type="email" placeholder="邮箱地址" />
+            <Input type="password" placeholder="密码" />
+            <Input type="password" placeholder="确认密码" />
+          </div>
+        }
+        action={{
+          label: '创建账户',
+          onClick: () => console.log('注册')
+        }}
+        size="large"
+      />
+
+      {/* 确认删除弹窗 */}
+      <FormDialog
+        open={false}
+        title="确认删除"
+        icon={<DeleteIcon style={{ color: '#FF3B30' }} />}
+        content={
+          <div>
+            <p>您确定要删除这个项目吗？此操作无法撤销。</p>
+            <Input 
+              placeholder="输入 DELETE 确认"
+              onChange={(e) => console.log(e.target.value)}
+            />
+          </div>
+        }
+        action={{
+          label: '确认删除',
+          onClick: () => console.log('删除'),
+          disabled: false // 根据输入动态控制
+        }}
+        size="small"
+      />
+
+      {/* 上传进度弹窗 */}
+      <FormDialog
+        open={false}
+        title="上传文件"
+        icon={<UploadIcon />}
+        content={
+          <div style={{ textAlign: 'center' }}>
+            <p>正在上传您的文件，请稍候...</p>
+            <ProgressBar value={65} />
+            <p>65% 完成</p>
+          </div>
+        }
+        action={{
+          label: '上传中...',
+          loading: true,
+          onClick: () => {}
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### 使用场景
+
+- ✅ 登录/注册表单
+- ✅ 确认操作对话框
+- ✅ 单步骤表单提交
+- ✅ 信息收集弹窗
+- ✅ 文件上传进度
+- ✅ 权限请求界面
+
+### 与Dialog的区别
+
+| 特性 | Dialog | FormDialog |
+|------|--------|------------|
+| 操作按钮 | 多个（取消/确认） | 单个主要操作 |
+| 使用场景 | 通用对话框 | 表单专用 |
+| 按钮布局 | 水平排列 | 全宽单按钮 |
+| 视觉重点 | 平衡展示 | 突出主操作 |
+| 设计风格 | 系统标准 | 类似登录界面 |
 
 ---
 

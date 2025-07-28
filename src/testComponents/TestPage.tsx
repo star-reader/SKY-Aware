@@ -37,7 +37,10 @@ import MaterialDialog from '../components/common/Dialog/styled/MaterialDialog';
 import IOSCommonPopover from '../components/common/Popover/styled/IOSCommonPopover';
 import WindowsPopover from '../components/common/Popover/styled/WindowsPopover';
 import MaterialPopover from '../components/common/Popover/styled/MaterialPopover';
-import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption, DialogProps, DialogAction, PopoverProps } from '../components/common/types';
+import IOSCommonFormDialog from '../components/common/FormDialog/styled/IOSCommonFormDialog';
+import WindowsFormDialog from '../components/common/FormDialog/styled/WindowsFormDialog';
+import MaterialFormDialog from '../components/common/FormDialog/styled/MaterialFormDialog';
+import { ButtonProps, NavbarProps, AlertProps, PanelProps, InputProps, ListProps, SpinnerProps, CardProps, DropdownProps, DropdownOption, SegmentControlProps, SegmentOption, DialogProps, DialogAction, PopoverProps, FormDialogProps, FormDialogAction } from '../components/common/types';
 import './TestPage.scss';
 
 // Test icons (简单的 SVG 图标)
@@ -210,6 +213,16 @@ const TestPage: React.FC = () => {
     withTitle: null,
     login: null,
     positioning: null
+  });
+  const [formDialogStates, setFormDialogStates] = useState<{[key: string]: boolean}>({
+    login: false,
+    register: false,
+    confirm: false,
+    loading: false,
+    disabled: false,
+    'platform-ios': false,
+    'platform-windows': false,
+    'platform-material': false
   });
   
 
@@ -2300,6 +2313,43 @@ const TestPage: React.FC = () => {
     }, 200);
   };
 
+  // FormDialog 测试数据和函数
+  const openFormDialog = (dialogType: string) => {
+    setFormDialogStates(prev => ({ ...prev, [dialogType]: true }));
+  };
+
+  const closeFormDialog = (dialogType: string) => {
+    setFormDialogStates(prev => ({ ...prev, [dialogType]: false }));
+  };
+
+  // FormDialog 渲染函数
+  interface TestFormDialogProps extends FormDialogProps {
+    platform?: string;
+  }
+
+  const renderFormDialog = ({ platform, ...props }: TestFormDialogProps) => {
+    if (platform === 'ios') {
+      return <IOSCommonFormDialog {...props} />;
+    } else if (platform === 'windows') {
+      return <WindowsFormDialog {...props} />;
+    } else if (platform === 'material') {
+      return <MaterialFormDialog {...props} />;
+    } else {
+      // 自动检测平台
+      switch (detectedPlatform) {
+        case 'ios':
+        case 'macos':
+          return <IOSCommonFormDialog {...props} />;
+        case 'windows':
+          return <WindowsFormDialog {...props} />;
+        case 'web':
+        case 'android':
+        default:
+          return <MaterialFormDialog {...props} />;
+      }
+    }
+  };
+
   const renderPopoverSection = () => {
     return (
       <section className="test-section">
@@ -2435,6 +2485,284 @@ const TestPage: React.FC = () => {
     );
   };
 
+  const renderFormDialogSection = () => {
+    return (
+      <section className="test-section">
+        <h2 className="test-section__title">FormDialog 组件测试</h2>
+        
+        <div className="test-grid">
+          {/* 登录弹窗 */}
+          <div className="test-item">
+            <h3>登录弹窗</h3>
+            <button 
+              className="test-button"
+              onClick={() => openFormDialog('login')}
+            >
+              显示登录弹窗
+            </button>
+            {renderFormDialog({
+              open: formDialogStates.login,
+              onClose: () => closeFormDialog('login'),
+              title: '登录到您的账户',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V21C3 22.11 3.89 23 5 23H11V21H5V3H14V8H21V9H21ZM17 13V15L21 11.5L17 8V10H14V13H17ZM13 18V20H15V18H13Z"/>
+                </svg>
+              ),
+              content: renderInput({
+                label: '用户名',
+                placeholder: '请输入用户名或邮箱',
+                type: 'text',
+                value: '',
+                onChange: (event) => console.log('Username:', event.target.value),
+                style: { marginBottom: '16px' }
+              }),
+              action: {
+                label: '登录',
+                onClick: () => {
+                  console.log('执行登录');
+                  closeFormDialog('login');
+                }
+              },
+              size: 'medium'
+            })}
+          </div>
+
+          {/* 注册弹窗 */}
+          <div className="test-item">
+            <h3>注册弹窗</h3>
+            <button 
+              className="test-button"
+              onClick={() => openFormDialog('register')}
+            >
+              显示注册弹窗
+            </button>
+            {renderFormDialog({
+              open: formDialogStates.register,
+              onClose: () => closeFormDialog('register'),
+              title: '创建新账户',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z"/>
+                </svg>
+              ),
+              content: (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {renderInput({
+                    label: '邮箱',
+                    placeholder: '请输入邮箱地址',
+                    type: 'email',
+                    value: '',
+                    onChange: (event) => console.log('Email:', event.target.value)
+                  })}
+                  {renderInput({
+                    label: '密码',
+                    placeholder: '请输入密码',
+                    type: 'password',
+                    value: '',
+                    onChange: (event) => console.log('Password:', event.target.value)
+                  })}
+                </div>
+              ),
+              action: {
+                label: '创建账户',
+                onClick: () => {
+                  console.log('执行注册');
+                  closeFormDialog('register');
+                }
+              },
+              size: 'large'
+            })}
+          </div>
+
+          {/* 确认操作弹窗 */}
+          <div className="test-item">
+            <h3>确认操作</h3>
+            <button 
+              className="test-button"
+              onClick={() => openFormDialog('confirm')}
+            >
+              显示确认弹窗
+            </button>
+            {renderFormDialog({
+              open: formDialogStates.confirm,
+              onClose: () => closeFormDialog('confirm'),
+              title: '确认删除',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="currentColor" style={{ color: '#FF3B30' }}>
+                  <path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/>
+                </svg>
+              ),
+              content: (
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#666' }}>
+                    您确定要删除这个项目吗？此操作无法撤销。
+                  </p>
+                  {renderInput({
+                    label: '请输入 "DELETE" 确认',
+                    placeholder: 'DELETE',
+                    type: 'text',
+                    value: '',
+                    onChange: (event) => console.log('Confirm:', event.target.value)
+                  })}
+                </div>
+              ),
+              action: {
+                label: '确认删除',
+                onClick: () => {
+                  console.log('执行删除');
+                  closeFormDialog('confirm');
+                }
+              },
+              size: 'small'
+            })}
+          </div>
+
+          {/* 加载状态弹窗 */}
+          <div className="test-item">
+            <h3>加载状态</h3>
+            <button 
+              className="test-button"
+              onClick={() => openFormDialog('loading')}
+            >
+              显示加载弹窗
+            </button>
+            {renderFormDialog({
+              open: formDialogStates.loading,
+              onClose: () => closeFormDialog('loading'),
+              title: '上传文件',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+              ),
+              content: (
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ margin: '0 0 16px', fontSize: '14px', color: '#666' }}>
+                    正在上传您的文件，请稍候...
+                  </p>
+                  <div style={{ width: '100%', height: '8px', backgroundColor: '#f0f0f0', borderRadius: '4px', overflow: 'hidden' }}>
+                    <div style={{ width: '65%', height: '100%', backgroundColor: '#007AFF', borderRadius: '4px', transition: 'width 0.3s ease' }}></div>
+                  </div>
+                  <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#999' }}>
+                    65% 完成
+                  </p>
+                </div>
+              ),
+              action: {
+                label: '上传中...',
+                loading: true,
+                onClick: () => {}
+              }
+            })}
+          </div>
+
+          {/* 禁用状态弹窗 */}
+          <div className="test-item">
+            <h3>禁用状态</h3>
+            <button 
+              className="test-button"
+              onClick={() => openFormDialog('disabled')}
+            >
+              显示禁用弹窗
+            </button>
+            {renderFormDialog({
+              open: formDialogStates.disabled,
+              onClose: () => closeFormDialog('disabled'),
+              title: '服务不可用',
+              icon: (
+                <svg viewBox="0 0 24 24" fill="currentColor" style={{ color: '#FF9500' }}>
+                  <path d="M13,13H11V7H13M11,15H13V17H11M15.73,3H8.27L3,8.27V15.73L8.27,21H15.73L21,15.73V8.27L15.73,3Z"/>
+                </svg>
+              ),
+              content: (
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ margin: '0', fontSize: '14px', color: '#666' }}>
+                    抱歉，该服务暂时不可用。请稍后再试或联系管理员。
+                  </p>
+                </div>
+              ),
+              action: {
+                label: '我知道了',
+                disabled: true,
+                onClick: () => closeFormDialog('disabled')
+              }
+            })}
+          </div>
+
+          {/* 各平台样式对比 */}
+          <div className="test-item test-item--full">
+            <h3>平台样式对比</h3>
+            <div className="test-platform-comparison">
+              <div className="test-platform-item">
+                <h4>iOS</h4>
+                <button 
+                  className="test-button"
+                  onClick={() => openFormDialog('platform-ios')}
+                >
+                  iOS 样式
+                </button>
+                {renderFormDialog({
+                  platform: 'ios',
+                  open: formDialogStates['platform-ios'],
+                  onClose: () => closeFormDialog('platform-ios'),
+                  title: 'iOS Form Dialog',
+                  content: 'This is how the form dialog looks on iOS platform.',
+                  action: {
+                    label: 'Continue',
+                    onClick: () => closeFormDialog('platform-ios')
+                  }
+                })}
+              </div>
+
+              <div className="test-platform-item">
+                <h4>Windows</h4>
+                <button 
+                  className="test-button"
+                  onClick={() => openFormDialog('platform-windows')}
+                >
+                  Windows 样式
+                </button>
+                {renderFormDialog({
+                  platform: 'windows',
+                  open: formDialogStates['platform-windows'],
+                  onClose: () => closeFormDialog('platform-windows'),
+                  title: 'Windows Form Dialog',
+                  content: 'This is how the form dialog looks on Windows platform.',
+                  action: {
+                    label: 'Continue',
+                    onClick: () => closeFormDialog('platform-windows')
+                  }
+                })}
+              </div>
+
+              <div className="test-platform-item">
+                <h4>Material</h4>
+                <button 
+                  className="test-button"
+                  onClick={() => openFormDialog('platform-material')}
+                >
+                  Material 样式
+                </button>
+                {renderFormDialog({
+                  platform: 'material',
+                  open: formDialogStates['platform-material'],
+                  onClose: () => closeFormDialog('platform-material'),
+                  title: 'Material Form Dialog',
+                  content: 'This is how the form dialog looks on Material platform.',
+                  action: {
+                    label: 'Continue',
+                    onClick: () => closeFormDialog('platform-material')
+                  }
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
    return (
     <div className={`test-page test-page--${activeTab}`}>
       <div className="test-page__header">
@@ -2459,6 +2787,7 @@ const TestPage: React.FC = () => {
          {renderSegmentControlSection()}
          {renderDialogSection()}
          {renderPopoverSection()}
+         {renderFormDialogSection()}
        </div>
     </div>
   );
