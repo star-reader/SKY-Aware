@@ -3,8 +3,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import pubsub from 'pubsub-js'
-import WindowsLayOut from './layouts/WindowsLayOut'
 import getPlatform from './utils/getPlatform'
+import AppLayOut from './layouts/AppLayOut'
 
 
 export default () => {
@@ -18,8 +18,8 @@ export default () => {
   useEffect(() => {
     // 初始化检测系统主题
     const initTheme = async (isNeedListen?: boolean) => {
-      const systemTheme = await getCurrentWindow().theme();
       try {
+        const systemTheme = await getCurrentWindow().theme();
         setIsDark(systemTheme === 'dark')
         setTheme(systemTheme === 'dark' ? webDarkTheme : webLightTheme)
         document.documentElement.setAttribute('aria-label', systemTheme === 'dark' ? 'dark' : 'light')
@@ -29,19 +29,23 @@ export default () => {
           }
         }))
       } catch (e) {
-        console.error('Failed to get system theme:', e)
+        console.log('Failed to get system theme:')
       }
 
-      if (isNeedListen) {
-        await getCurrentWindow().onThemeChanged(({ payload: theme }) => {
-          setIsDark(theme === 'dark')
-          setTheme(theme === 'dark' ? webDarkTheme : webLightTheme)
-          setMuiTheme(createTheme({
-            palette: {
-              mode: theme === 'dark' ? 'dark' : 'light'
-            }
-          }))
-        })
+      try {
+        if (isNeedListen) {
+          await getCurrentWindow().onThemeChanged(({ payload: theme }) => {
+            setIsDark(theme === 'dark')
+            setTheme(theme === 'dark' ? webDarkTheme : webLightTheme)
+            setMuiTheme(createTheme({
+              palette: {
+                mode: theme === 'dark' ? 'dark' : 'light'
+              }
+            }))
+          })
+        }
+      } catch (error) {
+        console.log('Failed to listen theme change:')
       }
     }
 
@@ -111,7 +115,8 @@ export default () => {
         <ThemeProvider theme={muiTheme}>          
             {/* 同时初始化MUI和Fluent UI */}
             {/* {platform === 'windows' ? */}
-              <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} />
+              {/* <WindowsLayOut onNavTabSelect={onNavTabSelect} currentTab={currentTab} /> */}
+              <AppLayOut />
             {/* <MobileLayOut /> */}
             {/* } */}
         </ThemeProvider>

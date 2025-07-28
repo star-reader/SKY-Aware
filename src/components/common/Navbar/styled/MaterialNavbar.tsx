@@ -28,7 +28,7 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
   className = '',
   style,
 }) => {
-  const [selectedValue, setSelectedValue] = React.useState(activeItem || '');
+  const [selectedValue, setSelectedValue] = React.useState(activeItem || '地图');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isShowText, setIsShowText] = useState(true);
 
@@ -120,8 +120,8 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
 
   if (position === 'bottom') {
     return (
-             <BottomNavigation
-         value={selectedValue}
+      <BottomNavigation
+         value={selectedValue || '地图'}
          onChange={handleBottomNavChange}
          className={className}
          sx={{
@@ -133,11 +133,11 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
            height: '64px',
            borderTop: '1px solid',
            borderTopColor: 'divider',
-           '& .MuiBottomNavigationAction-root': {
-             fontSize: '14px',
-             minWidth: '64px',
-             padding: '6px 12px',
-           },
+          //  '& .MuiBottomNavigationAction-root': {
+          //    fontSize: '14px',
+          //    minWidth: '64px',
+          //    padding: '6px 12px',
+          //  },
            '& .MuiBottomNavigationAction-label': {
              fontSize: '10px',
              '&.Mui-selected': {
@@ -169,7 +169,7 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
 
   // Sidebar position - Drawer with List
   return (
-             <Drawer
+    <Drawer
       variant="permanent"
       className={className}
       sx={{
@@ -211,7 +211,7 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
           const isSelected = selectedValue === item.label;
           return (
             <ListItem key={item.label} disablePadding>
-                                                               <ListItemButton
+              <ListItemButton
                     selected={isSelected}
                     onClick={() => handleItemClick(item)}
                     sx={{

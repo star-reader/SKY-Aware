@@ -101,7 +101,7 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
   // Sidebar位置使用NavDrawer
   return (
          <NavDrawer
-       defaultSelectedValue={activeItem || ''}
+       defaultSelectedValue={activeItem || '地图'}
        defaultSelectedCategoryValue=""
        open={true}
        type="inline"

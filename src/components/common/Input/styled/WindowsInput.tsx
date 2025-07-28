@@ -82,7 +82,7 @@ const WindowsInput = forwardRef<HTMLInputElement, InputProps>(({
       aria-label={ariaLabel}
       className={className}
       contentBefore={icon ? (
-        <div style={{ 
+        <div style={{
           display: 'flex', 
           alignItems: 'center', 
           color: 'var(--colorNeutralForeground3)',

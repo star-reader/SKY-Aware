@@ -5,7 +5,7 @@ import './IOSCommonNavbar.scss';
 const IOSCommonNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = ({
   items,
   position = 'bottom',
-  activeItem,
+  activeItem = '地图',
   onItemClick,
   showLabels = true,
   safeArea = true,
