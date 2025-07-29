@@ -27,21 +27,18 @@ import useWindowWidth from "../hooks/common/useWindowWidth"
 import constants from "../configs/constants"
 
 /**
- * 根据currentTab显示不同的内容
+ * 根据currentTab显示不同的内容，使用style属性控制显示与隐藏，而不是控制组件是否渲染
  */
 const ContentArea = ({ currentTab }: { currentTab: string }) => {
     return (
-        currentTab === '地图' ? (
-            <div>地图</div>
-        ) : currentTab === '列表' ? (
-            <div>列表</div>
-        ) : currentTab === '统计' ? (
-            <div>统计</div>
-        ) : currentTab === '设置' ? (
-            <div>设置</div>
-        ) : currentTab === '关于' ? (
-            <div>关于</div>
-        ) : null
+        <>
+            <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>地图</div>
+            <div style={{ display: currentTab === '列表' ? 'block' : 'none' }}>列表</div>
+            <div style={{ display: currentTab === '统计' ? 'block' : 'none' }}>统计</div>
+            <div style={{ display: currentTab === '设置' ? 'block' : 'none' }}>设置</div>
+            <div style={{ display: currentTab === '关于' ? 'block' : 'none' }}>关于</div>
+            
+        </>
     )
 }
 
