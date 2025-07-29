@@ -1,6 +1,6 @@
 .ios-navbar {
   display: flex;
-  background-color: rgba(248, 248, 248, 0.8);
+  background-color: rgba(248, 248, 248, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 0.5px solid rgba(60, 60, 67, 0.29);
@@ -41,7 +41,7 @@
   &--sidebar {
     position: relative;
     flex-direction: column;
-    width: 260px;
+    width: 170px;
     height: 100vh;
     border-top: none;
     border-right: 0.5px solid rgba(60, 60, 67, 0.15);

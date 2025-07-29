@@ -12,7 +12,7 @@ import { NavbarProps } from '../../types';
 
 const useStyles = makeStyles({
   nav: {
-    width: "250px",
+    width: "170px",
     transition: "width 0.2s ease-in-out",
   },
   navCollapsed: {

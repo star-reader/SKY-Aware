@@ -19,7 +19,7 @@ export default ({system}: {system: 'ios' | 'macos'}) => {
     ]
 
     return (
-        <div className="flex flex-col gap-4 p-2">
+        <div className="flex flex-col gap-4 p-4">
             <div className="text-2xl font-bold">设置</div>
             <div className="text-lg text-gray-500">主题设置</div>
             <div className="flex items-center gap-4" style={

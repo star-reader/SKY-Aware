@@ -130,14 +130,15 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
            left: style?.left !== undefined ? style.left : 0,
            right: style?.right !== undefined ? style.right : 0,
            zIndex: 1000,
-           height: '64px',
+           height: '50px',
            borderTop: '1px solid',
            borderTopColor: 'divider',
-          //  '& .MuiBottomNavigationAction-root': {
-          //    fontSize: '14px',
-          //    minWidth: '64px',
-          //    padding: '6px 12px',
-          //  },
+           backdropFilter: 'blur(30px)',
+           '& .MuiBottomNavigationAction-root': {
+             fontSize: '12px',
+             minWidth: '34px',
+             height: '50px'
+           },
            '& .MuiBottomNavigationAction-label': {
              fontSize: '10px',
              '&.Mui-selected': {
@@ -173,11 +174,11 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
       variant="permanent"
       className={className}
       sx={{
-        width: isCollapsed ? 60 : 250,
+        width: isCollapsed ? 60 : 170,
         flexShrink: 0,
         transition: 'width 0.2s ease-in-out',
                  '& .MuiDrawer-paper': {
-           width: isCollapsed ? 60 : 250,
+           width: isCollapsed ? 60 : 170,
            transition: 'width 0.2s ease-in-out',
            boxSizing: 'border-box',
            borderRight: '1px solid',

@@ -129,7 +129,7 @@ export default function AppLayOut() {
                                 activeItem={currentTab}
                                 onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 h-[calc(100vh-56px)] overflow-auto page-container">
+                            <div className="flex-1 h-[calc(100vh-50px)] overflow-auto page-container">
                                 <ContentArea currentTab={currentTab} />
                             </div>
                         </div>
@@ -154,7 +154,7 @@ export default function AppLayOut() {
                                 position="bottom"
                                 onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 h-[calc(100vh-56px)] overflow-auto page-container">
+                            <div className="flex-1 h-[calc(100vh-50px)] overflow-auto page-container">
                                 <ContentArea currentTab={currentTab} />
                             </div>
                         </div>

@@ -40,6 +40,10 @@
   background: transparent;
 }
 
+.MuiBottomNavigation-root{
+  background-color: #f0f4f8b1 !important;
+}
+
 
 // 夜间模式或日间模式的导航栏侧边背景色
 html[aria-label="light"]{
@@ -81,5 +85,9 @@ html[aria-label="dark"]{
   .MuiDrawer-root, .MuiPaper-root {
     background-color: #1C2228 !important;
     border-right: 1px solid #272F34;
+  }
+
+  .MuiBottomNavigation-root{
+    background-color: #1c22288e !important;
   }
 }
