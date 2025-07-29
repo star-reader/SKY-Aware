@@ -174,17 +174,18 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
       variant="permanent"
       className={className}
       sx={{
-        width: isCollapsed ? 60 : 170,
+        width: isCollapsed ? 60 : 180,
         flexShrink: 0,
         transition: 'width 0.2s ease-in-out',
                  '& .MuiDrawer-paper': {
-           width: isCollapsed ? 60 : 170,
+           width: isCollapsed ? 60 : 180,
            transition: 'width 0.2s ease-in-out',
            boxSizing: 'border-box',
            borderRight: '1px solid',
            borderRightColor: 'divider',
            position: style?.position || 'fixed',
            height: style?.height || 'auto',
+           zIndex: 1000,
          },
         ...style,
       }}

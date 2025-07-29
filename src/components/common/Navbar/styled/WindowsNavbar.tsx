@@ -12,7 +12,7 @@ import { NavbarProps } from '../../types';
 
 const useStyles = makeStyles({
   nav: {
-    width: "170px",
+    width: "180px",
     transition: "width 0.2s ease-in-out",
   },
   navCollapsed: {
@@ -107,7 +107,7 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
       type="inline"
       className={isCollapsed ? styles.navCollapsed : styles.nav}
       onNavItemSelect={(_, data) => handleNavItemSelect(data)}
-      style={style}
+      style={{...style, zIndex: 1000}}
     >
       <NavDrawerHeader>
         <Tooltip

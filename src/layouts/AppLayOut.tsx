@@ -32,11 +32,11 @@ import SettingPage from "../pages/SettingPage/IndexSettingPage";
 /**
  * 根据currentTab显示不同的内容，使用style属性控制显示与隐藏，而不是控制组件是否渲染
  */
-const ContentArea = ({ currentTab }: { currentTab: string }) => {
+const ContentArea = ({ currentTab, platform }: { currentTab: string, platform: string | undefined }) => {
     return (
         <>
             <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>
-                <MapPage />
+                <MapPage platform={platform} />
             </div>
             <div style={{ display: currentTab === '列表' ? 'block' : 'none' }}>列表</div>
             <div style={{ display: currentTab === '活动' ? 'block' : 'none' }}>活动</div>
@@ -117,7 +117,7 @@ export default function AppLayOut() {
                             onItemClick={handleNavItemClick}
                         />
                         <div className="flex-1 overflow-auto page-container">
-                            <ContentArea currentTab={currentTab} />
+                            <ContentArea currentTab={currentTab} platform={platform} />
                         </div>
                     </div>
                 ) : (platform === 'ios' || platform === 'macos') ? (
@@ -130,7 +130,7 @@ export default function AppLayOut() {
                                 onItemClick={handleNavItemClick}
                             />
                             <div className="flex-1 h-[calc(100vh-50px)] overflow-auto page-container">
-                                <ContentArea currentTab={currentTab} />
+                                <ContentArea currentTab={currentTab} platform={platform} />
                             </div>
                         </div>
                     ) : (
@@ -142,7 +142,7 @@ export default function AppLayOut() {
                                 activeItem={currentTab}
                             />
                             <div className="flex-1 overflow-auto page-container">
-                                <ContentArea currentTab={currentTab} />
+                                <ContentArea currentTab={currentTab} platform={platform} />
                             </div>
                         </div>
                     )    
@@ -155,7 +155,7 @@ export default function AppLayOut() {
                                 onItemClick={handleNavItemClick}
                             />
                             <div className="flex-1 h-[calc(100vh-50px)] overflow-auto page-container">
-                                <ContentArea currentTab={currentTab} />
+                                <ContentArea currentTab={currentTab} platform={platform} />
                             </div>
                         </div>
                     ) : (
@@ -166,7 +166,7 @@ export default function AppLayOut() {
                                 onItemClick={handleNavItemClick}
                             />
                             <div className="flex-1 overflow-auto page-container">
-                                <ContentArea currentTab={currentTab} />
+                                <ContentArea currentTab={currentTab} platform={platform} />
                             </div>
                         </div>
                     )

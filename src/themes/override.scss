@@ -44,6 +44,10 @@
   background-color: #f0f4f8b1 !important;
 }
 
+.MuiDrawer-root {
+  z-index: 1000;
+}
+
 
 // 夜间模式或日间模式的导航栏侧边背景色
 html[aria-label="light"]{

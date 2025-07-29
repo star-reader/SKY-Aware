@@ -1,9 +1,9 @@
 import BaseMapPage from "./BaseMapPage"
 
-export default () => {
+export default ({ platform }: { platform: string | undefined }) => {
     return (
         <div className="relative w-full h-full">
-            <BaseMapPage />
+            <BaseMapPage platform={platform} />
         </div>
     )
 }
