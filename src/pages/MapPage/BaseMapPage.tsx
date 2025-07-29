@@ -46,6 +46,12 @@ export default ({ platform }: { platform: string | undefined }) => {
                 )
             }
         })
+
+        pubsub.subscribe('current-tab', (_, data) => {
+            if (map && data === '地图') {
+                map.resize()
+            }
+        })
     }, [])
     
     return (

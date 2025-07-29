@@ -19,6 +19,7 @@ import {
     Info20Regular,
     Info20Filled,
   } from "@fluentui/react-icons";
+import pubsub from "pubsub-js"
 import getPlatform, { PlatformType } from "../utils/getPlatform";
 import WindowsNavbar from "../components/common/Navbar/styled/WindowsNavbar"
 import IOSCommonNavbar from "../components/common/Navbar/styled/IOSCommonNavbar";
@@ -61,6 +62,10 @@ export default function AppLayOut() {
     const handleNavItemClick = (item: any) => {
         setCurrentTab(item.label)
     }
+
+    useEffect(() => {
+        pubsub.publish('current-tab', currentTab)
+    }, [currentTab])
 
 
     // fluent 图标
