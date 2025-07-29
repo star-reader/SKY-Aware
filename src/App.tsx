@@ -13,7 +13,6 @@ export default () => {
   const [muiTheme, setMuiTheme] = useState(createTheme())
   // MUI的夜间模式配置
   const [isDark, setIsDark] = useState(false)
-  const [currentTab, setCurrentTab] = useState('settings')
 
   useEffect(() => {
     // 初始化检测系统主题
@@ -28,6 +27,7 @@ export default () => {
             mode: systemTheme === 'dark' ? 'dark' : 'light'
           }
         }))
+        pubsub.publish('theme-mode', systemTheme === 'dark' ? 'dark' : 'light')
       } catch (e) {
         console.log('Failed to get system theme:')
       }
@@ -89,10 +89,6 @@ export default () => {
     }
   }, [])
 
-  // 导航栏选择
-  const onNavTabSelect = (to: string) => {
-    setCurrentTab(to)
-  }
 
   useEffect(() => {
     // 初始化的一瞬间获取平台信息
