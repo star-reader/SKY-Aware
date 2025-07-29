@@ -46,15 +46,22 @@
 
 .MuiDrawer-root {
   z-index: 1000;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.fui-InlineDrawer{
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 
 
 // 夜间模式或日间模式的导航栏侧边背景色
 html[aria-label="light"]{
   .fui-InlineDrawer{
-    background-color: #F0F4F8;
+    background-color: #f0f4f8;
     button{
-      background-color: #F0F4F8;
+      background-color: #f0f4f8d3;
       &:hover{
         background-color: #eaf0f5;
       }
@@ -66,16 +73,16 @@ html[aria-label="light"]{
 
   // Material UI Drawer 背景色
   .MuiDrawer-root, .MuiPaper-root {
-    background-color: #F0F4F8 !important;
+    background-color: #f0f4f8a4 !important;
     border-right: 1px solid #E6EBF0;
   }
 }
 
 html[aria-label="dark"]{
   .fui-InlineDrawer{
-    background-color: #1C2228;
+    background-color: #1c2228ad;
     button{
-      background-color: #1C2228;
+      background-color: #1c2228d7;
       &:hover{
         background-color: #232B30;
       }
@@ -87,7 +94,7 @@ html[aria-label="dark"]{
 
   // Material UI Drawer 背景色
   .MuiDrawer-root, .MuiPaper-root {
-    background-color: #1C2228 !important;
+    background-color: #1c2228 !important;
     border-right: 1px solid #272F34;
   }
 

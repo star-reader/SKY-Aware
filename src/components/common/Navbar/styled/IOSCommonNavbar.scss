@@ -9,7 +9,7 @@
   -webkit-tap-highlight-color: transparent;
   z-index: 1000;
 
-  .ios-navbar__item span{
+  .ios-navbar__item span {
     margin-left: 6px !important;
   }
 
@@ -29,7 +29,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    
+
     // 允许通过style属性覆盖定位
     &[style*="position: relative"] {
       position: relative !important;
@@ -46,8 +46,10 @@
     height: 100vh;
     border-top: none;
     border-right: 0.5px solid rgba(60, 60, 67, 0.15);
-    background-color: #F0F4F8;
+    background-color: #f0f4f89d;
     transition: width 0.2s ease-in-out;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
 
     &.ios-navbar--collapsed {
       width: 60px;
@@ -69,24 +71,24 @@
     }
   }
 
-     &__content {
-     display: flex;
-     width: 100%;
-     max-width: 100%;
-     padding: 8px 0;
-     transition: all 0.2s ease-in-out; // 内容容器过渡
+  &__content {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 0;
+    transition: all 0.2s ease-in-out; // 内容容器过渡
 
-     .ios-navbar--sidebar & {
-       flex-direction: column;
-       padding: 60px 16px 20px 16px;
-       gap: 2px;
-       transition: all 0.2s ease-in-out; // sidebar内容过渡
-     }
+    .ios-navbar--sidebar & {
+      flex-direction: column;
+      padding: 60px 16px 20px 16px;
+      gap: 2px;
+      transition: all 0.2s ease-in-out; // sidebar内容过渡
+    }
 
-     .ios-navbar--sidebar.ios-navbar--collapsed & {
-       padding: 60px 8px 20px 8px;
-       transition: all 0.2s ease-in-out; // 折叠内容过渡
-     }
+    .ios-navbar--sidebar.ios-navbar--collapsed & {
+      padding: 60px 8px 20px 8px;
+      transition: all 0.2s ease-in-out; // 折叠内容过渡
+    }
 
     .ios-navbar--top & {
       padding: 12px 16px;
@@ -111,29 +113,29 @@
     color: #8E8E93;
     text-decoration: none;
 
-         .ios-navbar--sidebar & {
-       flex-direction: row;
-       justify-content: flex-start;
-       flex: none;
-       width: 100%;
-       min-height: 36px;
-       padding: 6px 12px;
-       border-radius: 6px;
-       margin-bottom: 2px;
-       font-size: 13px;
-       font-weight: 500;
-       transition: all 0.2s ease-in-out; // 添加过渡效果
+    .ios-navbar--sidebar & {
+      flex-direction: row;
+      justify-content: flex-start;
+      flex: none;
+      width: 100%;
+      min-height: 36px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-bottom: 2px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out; // 添加过渡效果
 
-       &:last-child {
-         margin-bottom: 0;
-       }
-     }
-
-           .ios-navbar--sidebar.ios-navbar--collapsed & {
-        justify-content: flex-start; // 保持左对齐，通过图标margin控制居中
-        padding: 6px;
-        transition: all 0.2s ease-in-out; // 确保折叠状态也有过渡
+      &:last-child {
+        margin-bottom: 0;
       }
+    }
+
+    .ios-navbar--sidebar.ios-navbar--collapsed & {
+      justify-content: flex-start; // 保持左对齐，通过图标margin控制居中
+      padding: 6px;
+      transition: all 0.2s ease-in-out; // 确保折叠状态也有过渡
+    }
 
     .ios-navbar--top & {
       flex-direction: row;
@@ -152,7 +154,7 @@
 
     &:active {
       background-color: rgba(0, 0, 0, 0.1);
-      
+
       .ios-navbar--sidebar & {
         background-color: rgba(0, 0, 0, 0.08);
         transform: scale(0.99);
@@ -173,113 +175,113 @@
     }
   }
 
-     &__icon {
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     width: 24px;
-     height: 24px;
-     font-size: 24px;
-     color: inherit;
-     transition: all 0.2s ease-in-out !important; // 强制过渡效果
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: inherit;
+    transition: all 0.2s ease-in-out !important; // 强制过渡效果
 
-           .ios-navbar--sidebar & {
-        margin-right: 10px;
-        margin-left: 0; // 确保有默认值用于过渡
-        width: 18px;
-        height: 18px;
-        font-size: 18px;
-        transition: all 0.2s ease-in-out !important; // 强制sidebar过渡
-      }
+    .ios-navbar--sidebar & {
+      margin-right: 10px;
+      margin-left: 0; // 确保有默认值用于过渡
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      transition: all 0.2s ease-in-out !important; // 强制sidebar过渡
+    }
 
-           .ios-navbar--sidebar.ios-navbar--collapsed & {
-        margin-right: 0;
-        margin-left: calc((60px - 20px - 12px) / 2); // 居中计算: (容器宽度 - 图标宽度 - 左右padding) / 2
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        transition: all 0.2s ease-in-out !important; // 强制折叠状态过渡
-      }
+    .ios-navbar--sidebar.ios-navbar--collapsed & {
+      margin-right: 0;
+      margin-left: calc((60px - 20px - 12px) / 2); // 居中计算: (容器宽度 - 图标宽度 - 左右padding) / 2
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      transition: all 0.2s ease-in-out !important; // 强制折叠状态过渡
+    }
 
-     .ios-navbar--top & {
-       margin-right: 6px;
-     }
+    .ios-navbar--top & {
+      margin-right: 6px;
+    }
 
-     svg {
-       width: 100%;
-       height: 100%;
-       fill: currentColor;
-       transition: all 0.2s ease-in-out !important; // SVG图标强制过渡
-       transform-origin: center center; // 确保变换从中心开始
-     }
-   }
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+      transition: all 0.2s ease-in-out !important; // SVG图标强制过渡
+      transform-origin: center center; // 确保变换从中心开始
+    }
+  }
 
-     &__label {
-     font-size: 10px;
-     font-weight: 500;
-     line-height: 1.2;
-     margin-top: 2px;
-     text-align: center;
-     color: inherit;
+  &__label {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 2px;
+    text-align: center;
+    color: inherit;
 
-     .ios-navbar--sidebar & {
-       font-size: 13px;
-       font-weight: 500;
-       margin-top: 0;
-       text-align: left;
-       opacity: 1;
-       transition: opacity 0.2s ease-in-out;
-     }
+    .ios-navbar--sidebar & {
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 0;
+      text-align: left;
+      opacity: 1;
+      transition: opacity 0.2s ease-in-out;
+    }
 
-     .ios-navbar--sidebar.ios-navbar--collapsed & {
-       opacity: 0;
-       width: 0;
-       overflow: hidden;
-       transition: all 0.2s ease-in-out; // 标签折叠过渡
-     }
+    .ios-navbar--sidebar.ios-navbar--collapsed & {
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+      transition: all 0.2s ease-in-out; // 标签折叠过渡
+    }
 
-     .ios-navbar--top & {
-       font-size: 14px;
-       margin-top: 0;
-     }
-   }
+    .ios-navbar--top & {
+      font-size: 14px;
+      margin-top: 0;
+    }
+  }
 
-       &__hamburger {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      width: 32px;
-      height: 32px;
-      border: none;
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 6px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #8E8E93;
-      transition: all 0.2s ease-in-out !important; // 统一过渡效果
-      z-index: 999;
+  &__hamburger {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8E8E93;
+    transition: all 0.2s ease-in-out !important; // 统一过渡效果
+    z-index: 999;
 
-     &:hover {
-       background: rgba(0, 0, 0, 0.1);
-       color: #007AFF;
-     }
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #007AFF;
+    }
 
-     &:active {
-       background: rgba(0, 0, 0, 0.15);
-       transform: scale(0.95);
-     }
+    &:active {
+      background: rgba(0, 0, 0, 0.15);
+      transform: scale(0.95);
+    }
 
-     svg {
-       width: 16px;
-       height: 16px;
-     }
+    svg {
+      width: 16px;
+      height: 16px;
+    }
 
-     .ios-navbar--collapsed & {
-       left: 14px;
-     }
-   }
+    .ios-navbar--collapsed & {
+      left: 14px;
+    }
+  }
 
   &__badge {
     position: absolute;
@@ -317,7 +319,7 @@ html[aria-label="dark"] {
     border-color: rgba(84, 84, 88, 0.6);
 
     &--sidebar {
-      background-color: #1C2228;
+      background-color: #1c22289d;
       border-right-color: rgba(84, 84, 88, 0.3);
     }
 
@@ -396,39 +398,39 @@ html[aria-label="dark"] {
       }
     }
 
-         &__item {
-                .ios-navbar--sidebar & {
-          padding: 5px 10px;
-          min-height: 32px;
-          transition: all 0.2s ease-in-out; // 响应式item过渡
-        }
+    &__item {
+      .ios-navbar--sidebar & {
+        padding: 5px 10px;
+        min-height: 32px;
+        transition: all 0.2s ease-in-out; // 响应式item过渡
+      }
 
-                 .ios-navbar--sidebar.ios-navbar--collapsed & {
-           justify-content: flex-start; // 保持左对齐
-           padding: 5px;
-           transition: all 0.2s ease-in-out; // 响应式折叠状态过渡
-         }
-     }
+      .ios-navbar--sidebar.ios-navbar--collapsed & {
+        justify-content: flex-start; // 保持左对齐
+        padding: 5px;
+        transition: all 0.2s ease-in-out; // 响应式折叠状态过渡
+      }
+    }
 
-         &__icon {
-               .ios-navbar--sidebar & {
-          margin-right: 8px;
-          margin-left: 0; // 响应式默认margin-left
-          width: 16px;
-          height: 16px;
-          font-size: 16px;
-          transition: all 0.2s ease-in-out; // 响应式也要过渡
-        }
+    &__icon {
+      .ios-navbar--sidebar & {
+        margin-right: 8px;
+        margin-left: 0; // 响应式默认margin-left
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        transition: all 0.2s ease-in-out; // 响应式也要过渡
+      }
 
-               .ios-navbar--sidebar.ios-navbar--collapsed & {
-          margin-right: 0;
-          margin-left: calc((50px - 18px - 10px) / 2); // 响应式居中: (50px容器 - 18px图标 - 10px左右padding) / 2
-          width: 18px;
-          height: 18px;
-          font-size: 18px;
-          transition: all 0.2s ease-in-out; // 响应式折叠状态也要过渡
-        }
-     }
+      .ios-navbar--sidebar.ios-navbar--collapsed & {
+        margin-right: 0;
+        margin-left: calc((50px - 18px - 10px) / 2); // 响应式居中: (50px容器 - 18px图标 - 10px左右padding) / 2
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        transition: all 0.2s ease-in-out; // 响应式折叠状态也要过渡
+      }
+    }
 
     &__label {
       .ios-navbar--sidebar & {
@@ -486,4 +488,4 @@ html[aria-label="dark"] {
       }
     }
   }
-} 
+}
