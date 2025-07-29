@@ -1,0 +1,664 @@
+// macOS Dropdown 样式
+.macos-dropdown {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+
+  // 标签样式
+  &__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 510;
+    color: #1d1d1f;
+    margin-bottom: 6px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+
+    &--required::after {
+      content: ' *';
+      color: #ff3b30;
+    }
+  }
+
+  // 触发器样式 - macOS风格
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 22px;
+    padding: 4px 8px 4px 10px;
+    background: linear-gradient(to bottom, #ffffff 0%, #f7f7f7 100%);
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.08s ease-out, box-shadow 0.08s ease-out;
+    outline: none;
+    position: relative;
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 1px 1px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      background: linear-gradient(to bottom, #fafafa 0%, #f0f0f0 100%);
+      border-color: #a6a6a6;
+    }
+
+    &:focus {
+      background: linear-gradient(to bottom, #fafafa 0%, #f0f0f0 100%);
+      border-color: #4A90E2;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 0 3px rgba(74, 144, 226, 0.2),
+        0 1px 1px rgba(0, 0, 0, 0.08);
+    }
+
+    &:active {
+      background: linear-gradient(to bottom, #e8e8e8 0%, #d8d8d8 100%);
+      border-color: #999999;
+      box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.1),
+        0 1px 1px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // 文本显示
+  &__text {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 400;
+    color: #1d1d1f;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &--placeholder {
+      color: #86868b;
+    }
+  }
+
+  // 操作按钮区域
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+  }
+
+  // 清除按钮
+  &__clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.08s ease-out;
+    color: #86868b;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    &:hover {
+      background-color: #e5e5e7;
+      color: #1d1d1f;
+    }
+
+    &:active {
+      background-color: #d1d1d6;
+    }
+  }
+
+  // 下拉箭头 - macOS样式
+  &__chevron {
+    width: 16px;
+    height: 16px;
+    color: #86868b;
+    transition: transform 0.08s ease-out;
+  }
+
+  // 下拉菜单 - macOS风格，简化动画
+  &__menu {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    border-radius: 6px;
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+    overflow: hidden;
+    transform-origin: top center;
+    
+    // 简化的动画效果
+    &--expanding {
+      opacity: 0;
+      transform: scale(0.98);
+      animation: macos-dropdown-appear 100ms ease-out forwards;
+    }
+
+    &--open {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &--closed {
+      opacity: 1;
+      transform: scale(1);
+      animation: macos-dropdown-disappear 80ms ease-in forwards;
+    }
+
+    &--searchable {
+      padding-top: 6px;
+    }
+  }
+
+  // 搜索框
+  &__search {
+    padding: 0 8px 6px 8px;
+    border-bottom: 1px solid #e5e5e7;
+  }
+
+  &__search-input {
+    width: 100%;
+    height: 22px;
+    padding: 3px 6px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #1d1d1f;
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.08s ease-out, box-shadow 0.08s ease-out;
+
+    &::placeholder {
+      color: #86868b;
+      font-size: 13px;
+    }
+
+    &:focus {
+      border-color: #4A90E2;
+      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    }
+  }
+
+  // 选项列表
+  &__options {
+    max-height: 200px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    // macOS风格滚动条
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 7px;
+      border: 3px solid #ffffff;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+  }
+
+  // 选项 - macOS风格，移除过多动画
+  &__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #1d1d1f;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    background: transparent;
+
+    &:hover {
+      background: linear-gradient(to bottom, #4A90E2 0%, #357ABD 100%);
+      color: #ffffff;
+    }
+
+    &:focus {
+      background: linear-gradient(to bottom, #4A90E2 0%, #357ABD 100%);
+      color: #ffffff;
+    }
+
+    &:active {
+      background: linear-gradient(to bottom, #357ABD 0%, #2968A3 100%);
+      color: #ffffff;
+    }
+
+    &--selected {
+      background: linear-gradient(to bottom, #4A90E2 0%, #357ABD 100%);
+      color: #ffffff;
+
+      &:hover {
+        background: linear-gradient(to bottom, #5BA0F2 0%, #4A90E2 100%);
+      }
+
+      &:focus {
+        background: linear-gradient(to bottom, #5BA0F2 0%, #4A90E2 100%);
+      }
+
+      &:active {
+        background: linear-gradient(to bottom, #357ABD 0%, #2968A3 100%);
+      }
+    }
+
+    &--disabled {
+      color: #86868b;
+      cursor: not-allowed;
+      background: transparent !important;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background: transparent !important;
+        color: #86868b !important;
+      }
+    }
+  }
+
+  &__option-text {
+    flex: 1;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // 选中图标
+  &__check {
+    width: 14px;
+    height: 14px;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+
+  // 无选项提示
+  &__no-options {
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #86868b;
+    font-style: italic;
+  }
+
+  // 错误消息
+  &__error {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #ff3b30;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  // 打开状态
+  &--open {
+    .macos-dropdown__chevron {
+      transform: rotate(180deg);
+      color: #1d1d1f;
+    }
+
+    .macos-dropdown__trigger {
+      border-color: #4A90E2;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 0 0 3px rgba(74, 144, 226, 0.2),
+        0 1px 1px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // 禁用状态
+  &--disabled {
+    .macos-dropdown__trigger {
+      background: linear-gradient(to bottom, #f7f7f7 0%, #e8e8e8 100%);
+      border-color: #d1d1d6;
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background: linear-gradient(to bottom, #f7f7f7 0%, #e8e8e8 100%);
+        border-color: #d1d1d6;
+        box-shadow: none;
+      }
+    }
+
+    .macos-dropdown__text {
+      color: #86868b;
+    }
+
+    .macos-dropdown__chevron {
+      color: #c7c7cc;
+    }
+  }
+
+  // 错误状态
+  &--error {
+    .macos-dropdown__trigger {
+      border-color: #ff3b30;
+      background: linear-gradient(to bottom, #fff5f5 0%, #ffebeb 100%);
+
+      &:hover,
+      &:focus {
+        border-color: #ff3b30;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.7),
+          0 0 0 3px rgba(255, 59, 48, 0.2),
+          0 1px 1px rgba(0, 0, 0, 0.08);
+      }
+    }
+  }
+}
+
+// 简化的动画定义
+@keyframes macos-dropdown-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes macos-dropdown-disappear {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+// 深色模式
+html[aria-label="dark"] {
+  .macos-dropdown {
+    &__label {
+      color: #f5f5f7;
+    }
+
+    &__trigger {
+      background: linear-gradient(to bottom, #3a3a3c 0%, #2c2c2e 100%);
+      border-color: #48484a;
+      color: #f5f5f7;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 1px 1px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        background: linear-gradient(to bottom, #424244 0%, #343436 100%);
+        border-color: #5a5a5e;
+      }
+
+      &:focus {
+        background: linear-gradient(to bottom, #424244 0%, #343436 100%);
+        border-color: #0A84FF;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 0 0 3px rgba(10, 132, 255, 0.2),
+          0 1px 1px rgba(0, 0, 0, 0.2);
+      }
+
+      &:active {
+        background: linear-gradient(to bottom, #2c2c2e 0%, #1c1c1e 100%);
+        border-color: #3a3a3c;
+        box-shadow: 
+          inset 0 1px 2px rgba(0, 0, 0, 0.2),
+          0 1px 1px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    &__text {
+      color: #f5f5f7;
+
+      &--placeholder {
+        color: #8e8e93;
+      }
+    }
+
+    &__clear {
+      color: #8e8e93;
+
+      &:hover {
+        background-color: #48484a;
+        color: #f5f5f7;
+      }
+
+      &:active {
+        background-color: #5a5a5e;
+      }
+    }
+
+    &__chevron {
+      color: #8e8e93;
+    }
+
+    &__menu {
+      background: #2c2c2e;
+      border-color: #48484a;
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    &__search {
+      border-bottom-color: #48484a;
+    }
+
+    &__search-input {
+      background: #3a3a3c;
+      border-color: #48484a;
+      color: #f5f5f7;
+
+      &:focus {
+        border-color: #0A84FF;
+        box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.2);
+      }
+    }
+
+    &__options {
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: #2c2c2e;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:active {
+          background-color: rgba(255, 255, 255, 0.4);
+        }
+      }
+    }
+
+    &__option {
+      color: #f5f5f7;
+
+      &:hover {
+        background: linear-gradient(to bottom, #0A84FF 0%, #0066CC 100%);
+        color: #ffffff;
+      }
+
+      &:focus {
+        background: linear-gradient(to bottom, #0A84FF 0%, #0066CC 100%);
+        color: #ffffff;
+      }
+
+      &:active {
+        background: linear-gradient(to bottom, #0066CC 0%, #0051A3 100%);
+        color: #ffffff;
+      }
+
+      &--selected {
+        background: linear-gradient(to bottom, #0A84FF 0%, #0066CC 100%);
+        color: #ffffff;
+
+        &:hover {
+          background: linear-gradient(to bottom, #409CFF 0%, #0A84FF 100%);
+        }
+
+        &:focus {
+          background: linear-gradient(to bottom, #409CFF 0%, #0A84FF 100%);
+        }
+
+        &:active {
+          background: linear-gradient(to bottom, #0066CC 0%, #0051A3 100%);
+        }
+      }
+
+      &--disabled {
+        color: #8e8e93;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background: transparent !important;
+          color: #8e8e93 !important;
+        }
+      }
+    }
+
+    &__no-options {
+      color: #8e8e93;
+    }
+
+    &__error {
+      color: #ff453a;
+    }
+
+    &--open {
+      .macos-dropdown__chevron {
+        color: #f5f5f7;
+      }
+
+      .macos-dropdown__trigger {
+        border-color: #0A84FF;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 0 0 3px rgba(10, 132, 255, 0.2),
+          0 1px 1px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    &--disabled {
+      .macos-dropdown__trigger {
+        background: linear-gradient(to bottom, #2c2c2e 0%, #1c1c1e 100%);
+        border-color: #48484a;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background: linear-gradient(to bottom, #2c2c2e 0%, #1c1c1e 100%);
+          border-color: #48484a;
+        }
+      }
+
+      .macos-dropdown__text {
+        color: #8e8e93;
+      }
+
+      .macos-dropdown__chevron {
+        color: #5a5a5e;
+      }
+    }
+
+    &--error {
+      .macos-dropdown__trigger {
+        border-color: #ff453a;
+        background: linear-gradient(to bottom, #2c1b1b 0%, #1c1111 100%);
+
+        &:hover,
+        &:focus {
+          border-color: #ff453a;
+          box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 0 3px rgba(255, 69, 58, 0.2),
+            0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .macos-dropdown {
+    max-width: 100%;
+
+    &__trigger {
+      min-height: 32px;
+      padding: 6px 12px 6px 14px;
+    }
+
+    &__text {
+      font-size: 16px;
+    }
+
+    &__option {
+      padding: 8px 14px;
+      font-size: 16px;
+    }
+
+    &__search-input {
+      font-size: 16px;
+      height: 32px;
+      padding: 6px 10px;
+    }
+  }
+}
+
+// 动画优化
+@media (prefers-reduced-motion: reduce) {
+  .macos-dropdown {
+    &__menu {
+      animation: none !important;
+    }
+
+    &__trigger,
+    &__option,
+    &__clear,
+    &__chevron {
+      transition: none !important;
+    }
+  }
+}

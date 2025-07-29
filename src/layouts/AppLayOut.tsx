@@ -25,6 +25,8 @@ import IOSCommonNavbar from "../components/common/Navbar/styled/IOSCommonNavbar"
 import MaterialNavbar from "../components/common/Navbar/styled/MaterialNavbar";
 import useWindowWidth from "../hooks/common/useWindowWidth"
 import constants from "../configs/constants"
+// 页面组件
+import SettingPage from "../pages/SettingPage/IndexSettingPage";
 
 /**
  * 根据currentTab显示不同的内容，使用style属性控制显示与隐藏，而不是控制组件是否渲染
@@ -35,7 +37,9 @@ const ContentArea = ({ currentTab }: { currentTab: string }) => {
             <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>地图</div>
             <div style={{ display: currentTab === '列表' ? 'block' : 'none' }}>列表</div>
             <div style={{ display: currentTab === '统计' ? 'block' : 'none' }}>统计</div>
-            <div style={{ display: currentTab === '设置' ? 'block' : 'none' }}>设置</div>
+            <div style={{ display: currentTab === '设置' ? 'block' : 'none' }}>
+                <SettingPage />
+            </div>
             <div style={{ display: currentTab === '关于' ? 'block' : 'none' }}>关于</div>
             
         </>
@@ -109,7 +113,7 @@ export default function AppLayOut() {
                             position="sidebar"
                             onItemClick={handleNavItemClick}
                         />
-                        <div className="flex-1 overflow-auto">
+                        <div className="flex-1 overflow-auto page-container">
                             <ContentArea currentTab={currentTab} />
                         </div>
                     </div>
@@ -119,9 +123,10 @@ export default function AppLayOut() {
                             <IOSCommonNavbar
                                 items={navItems}
                                 position="bottom"
+                                activeItem={currentTab}
                                 onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 h-[calc(100vh-56px)] overflow-auto">
+                            <div className="flex-1 h-[calc(100vh-56px)] overflow-auto page-container">
                                 <ContentArea currentTab={currentTab} />
                             </div>
                         </div>
@@ -131,8 +136,9 @@ export default function AppLayOut() {
                                 items={navItems}
                                 position="sidebar"
                                 onItemClick={handleNavItemClick}
+                                activeItem={currentTab}
                             />
-                            <div className="flex-1 overflow-auto">
+                            <div className="flex-1 overflow-auto page-container">
                                 <ContentArea currentTab={currentTab} />
                             </div>
                         </div>
@@ -145,7 +151,7 @@ export default function AppLayOut() {
                                 position="bottom"
                                 onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 h-[calc(100vh-56px)] overflow-auto">
+                            <div className="flex-1 h-[calc(100vh-56px)] overflow-auto page-container">
                                 <ContentArea currentTab={currentTab} />
                             </div>
                         </div>
@@ -156,7 +162,7 @@ export default function AppLayOut() {
                                 position="sidebar"
                                 onItemClick={handleNavItemClick}
                             />
-                            <div className="flex-1 overflow-auto">
+                            <div className="flex-1 overflow-auto page-container">
                                 <ContentArea currentTab={currentTab} />
                             </div>
                         </div>

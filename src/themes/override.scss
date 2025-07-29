@@ -57,8 +57,9 @@ html[aria-label="light"]{
   }
 
   // Material UI Drawer 背景色
-  .MuiDrawer-paper {
+  .MuiDrawer-root, .MuiPaper-root {
     background-color: #F0F4F8 !important;
+    border-right: 1px solid #E6EBF0;
   }
 }
 
@@ -77,7 +78,8 @@ html[aria-label="dark"]{
   }
 
   // Material UI Drawer 背景色
-  .MuiDrawer-paper {
+  .MuiDrawer-root, .MuiPaper-root {
     background-color: #1C2228 !important;
+    border-right: 1px solid #272F34;
   }
 }

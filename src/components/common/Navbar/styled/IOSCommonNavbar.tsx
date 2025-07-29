@@ -15,7 +15,7 @@ const IOSCommonNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> =
   const [isCollapsed, setIsCollapsed] = useState(false);
   const handleItemClick = (item: any) => {
     if (onItemClick) {
-      onItemClick(item);
+      onItemClick(item)
     }
   };
 

@@ -19,7 +19,7 @@ export default () => {
     // 初始化检测系统主题
     const initTheme = async (isNeedListen?: boolean) => {
       try {
-        const systemTheme = await getCurrentWindow().theme();
+        const systemTheme = window['__TAURI_OS_PLUGIN_INTERNALS__'] ?  await getCurrentWindow().theme() : 'light';
         setIsDark(systemTheme === 'dark')
         setTheme(systemTheme === 'dark' ? webDarkTheme : webLightTheme)
         document.documentElement.setAttribute('aria-label', systemTheme === 'dark' ? 'dark' : 'light')
@@ -33,7 +33,7 @@ export default () => {
       }
 
       try {
-        if (isNeedListen) {
+        if (isNeedListen && window['__TAURI_OS_PLUGIN_INTERNALS__']) {
           await getCurrentWindow().onThemeChanged(({ payload: theme }) => {
             setIsDark(theme === 'dark')
             setTheme(theme === 'dark' ? webDarkTheme : webLightTheme)
@@ -53,7 +53,7 @@ export default () => {
 
     // 监听主题模式变化
     const onThemeModeChange = (_: string, data: string) => {
-      if (data === '亮色') {
+      if (data === '亮色' || data === 'light') {
         setTheme(webLightTheme)
         setIsDark(false)
         document.documentElement.setAttribute('aria-label', 'light')
@@ -62,7 +62,7 @@ export default () => {
             mode: 'light'
           }
         }))
-      } else if (data === '暗色') {
+      } else if (data === '暗色' || data === 'dark') {
         setTheme(webDarkTheme)
         setIsDark(true)
         document.documentElement.setAttribute('aria-label', 'dark')
