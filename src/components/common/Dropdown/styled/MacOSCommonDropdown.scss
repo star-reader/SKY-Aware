@@ -47,10 +47,10 @@
 
     &:focus {
       background: linear-gradient(to bottom, #fafafa 0%, #f0f0f0 100%);
-      border-color: #4A90E2;
+      border-color: #4481E3;
       box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 0 3px rgba(74, 144, 226, 0.2),
+        0 0 0 3px rgba(68, 129, 227, 0.2),
         0 1px 1px rgba(0, 0, 0, 0.08);
     }
 
@@ -191,8 +191,8 @@
     }
 
     &:focus {
-      border-color: #4A90E2;
-      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      border-color: #4481E3;
+      box-shadow: 0 0 0 2px rgba(68, 129, 227, 0.2);
     }
   }
 
@@ -245,34 +245,34 @@
     background: transparent;
 
     &:hover {
-      background: linear-gradient(to bottom, #4A90E2 0%, #357ABD 100%);
+      background: linear-gradient(to bottom, #4481E3 0%, #3570C9 100%);
       color: #ffffff;
     }
 
     &:focus {
-      background: linear-gradient(to bottom, #4A90E2 0%, #357ABD 100%);
+      background: linear-gradient(to bottom, #4481E3 0%, #3570C9 100%);
       color: #ffffff;
     }
 
     &:active {
-      background: linear-gradient(to bottom, #357ABD 0%, #2968A3 100%);
+      background: linear-gradient(to bottom, #3570C9 0%, #265DAF 100%);
       color: #ffffff;
     }
 
     &--selected {
-      background: linear-gradient(to bottom, #4A90E2 0%, #357ABD 100%);
+      background: linear-gradient(to bottom, #4481E3 0%, #3570C9 100%);
       color: #ffffff;
 
       &:hover {
-        background: linear-gradient(to bottom, #5BA0F2 0%, #4A90E2 100%);
+        background: linear-gradient(to bottom, #5A91F3 0%, #4481E3 100%);
       }
 
       &:focus {
-        background: linear-gradient(to bottom, #5BA0F2 0%, #4A90E2 100%);
+        background: linear-gradient(to bottom, #5A91F3 0%, #4481E3 100%);
       }
 
       &:active {
-        background: linear-gradient(to bottom, #357ABD 0%, #2968A3 100%);
+        background: linear-gradient(to bottom, #3570C9 0%, #265DAF 100%);
       }
     }
 
@@ -333,10 +333,10 @@
     }
 
     .macos-dropdown__trigger {
-      border-color: #4A90E2;
+      border-color: #4481E3;
       box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.7),
-        0 0 0 3px rgba(74, 144, 226, 0.2),
+        0 0 0 3px rgba(68, 129, 227, 0.2),
         0 1px 1px rgba(0, 0, 0, 0.08);
     }
   }

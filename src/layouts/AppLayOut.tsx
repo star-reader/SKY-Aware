@@ -36,7 +36,7 @@ const ContentArea = ({ currentTab }: { currentTab: string }) => {
         <>
             <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>地图</div>
             <div style={{ display: currentTab === '列表' ? 'block' : 'none' }}>列表</div>
-            <div style={{ display: currentTab === '统计' ? 'block' : 'none' }}>统计</div>
+            <div style={{ display: currentTab === '活动' ? 'block' : 'none' }}>活动</div>
             <div style={{ display: currentTab === '设置' ? 'block' : 'none' }}>
                 <SettingPage />
             </div>
@@ -87,9 +87,9 @@ export default function AppLayOut() {
           route: '/list',
         },
         {
-            label: '统计',
+            label: '活动',
             icon: platform === 'windows' ? <Dashboard /> : <BarChartOutlined />,
-            route: '/statistics',
+            route: '/activity',
         },
         {
             label: '设置',
