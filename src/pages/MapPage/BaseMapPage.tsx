@@ -36,7 +36,9 @@ export default ({ platform }: { platform: string | undefined }) => {
     }, [])
     
     return (
-        <div className="fixed w-full h-full z-0" style={generatedStyle}>
+        // generatedStyle 是根据平台和窗口宽度计算的样式，用于控制地图的宽度；但因为Windows Fluent UI透明度的问题，所以暂时弃用
+        // 这个弃用只是暂时的，所以使用width再次覆盖，后续透明度系统修好后可以直接恢复
+        <div className="fixed w-full h-full z-0" style={{...generatedStyle, zIndex: 0, width: '100vw'}}>
             <div ref={mapRef} className="relative w-full h-full"></div>
         </div>
     )
