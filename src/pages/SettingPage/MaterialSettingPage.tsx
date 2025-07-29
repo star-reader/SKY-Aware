@@ -11,8 +11,8 @@ export default () => {
     }
 
     return (
-        <div className='flex flex-col gap-4'>
-            <Typography variant="h5" gutterBottom>
+        <div className='flex flex-col gap-4 p-4'>
+            <Typography variant="h5" gutterBottom style={{fontWeight: 'bold'}}>
                 设置
             </Typography>
 

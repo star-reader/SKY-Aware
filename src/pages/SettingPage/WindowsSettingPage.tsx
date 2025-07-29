@@ -16,7 +16,8 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         alignItems: "baseline",
-        marginLeft: '25px'
+        marginLeft: '5px',
+        padding: '14px'
     },
     dropArea: {
         display: "grid",

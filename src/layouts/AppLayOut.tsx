@@ -26,6 +26,7 @@ import MaterialNavbar from "../components/common/Navbar/styled/MaterialNavbar";
 import useWindowWidth from "../hooks/common/useWindowWidth"
 import constants from "../configs/constants"
 // 页面组件
+import MapPage from "../pages/MapPage/IndexMapPage";
 import SettingPage from "../pages/SettingPage/IndexSettingPage";
 
 /**
@@ -34,7 +35,9 @@ import SettingPage from "../pages/SettingPage/IndexSettingPage";
 const ContentArea = ({ currentTab }: { currentTab: string }) => {
     return (
         <>
-            <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>地图</div>
+            <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>
+                <MapPage />
+            </div>
             <div style={{ display: currentTab === '列表' ? 'block' : 'none' }}>列表</div>
             <div style={{ display: currentTab === '活动' ? 'block' : 'none' }}>活动</div>
             <div style={{ display: currentTab === '设置' ? 'block' : 'none' }}>
