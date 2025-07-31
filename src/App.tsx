@@ -1,5 +1,5 @@
 import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
@@ -8,6 +8,8 @@ import getPlatform from './utils/getPlatform'
 import AppLayOut from './layouts/AppLayOut'
 import endpoints from './configs/apis/endpoints'
 import useGraphqlStore from './store/useGraphqlStore'
+import useOnlineStore from './store/useOnlineStore';
+import graphql from './configs/apis/graphql';
 
 
 export default () => {
@@ -101,14 +103,53 @@ export default () => {
       // setPlatform(platform)
     }
     handlePlatformChange()
+
+
+    const intervalGetOnlineFlights = () => {
+        // @ts-ignore
+        const client = useGraphqlStore.getState().client as ApolloClient<NormalizedCacheObject>
+        const fetchPilotData = async () => {
+            const { data } = await client.query({
+                query: graphql().getOnlineFlights,
+            })
+            useOnlineStore.setState({ onlineFlights: data.onlineFlights })
+        }
+
+        const fetchControllerData = async () => {
+            const { data } = await client.query({
+                query: graphql().getOnlineControllers,
+            })
+            useOnlineStore.setState({ onlineControllers: data.onlineControllers })
+        }
+
+        fetchPilotData()
+        setInterval(fetchPilotData, 6000)
+        fetchControllerData()
+        setInterval(fetchControllerData, 30000)
+    }
+
+    const initGraphql = () => {
+     // graphql配置
+      let client = new ApolloClient({
+        uri: endpoints.graphql,
+        cache: new InMemoryCache(),
+        defaultOptions: {
+          watchQuery: {
+            fetchPolicy: 'no-cache',
+          },
+          query: {
+            fetchPolicy: 'no-cache',
+          },
+        },
+      })
+      useGraphqlStore.setState({ client: client })
+
+      intervalGetOnlineFlights()
+    }
+    initGraphql()
+
   }, [])
 
-  // graphql配置
-  let client = new ApolloClient({
-    uri: endpoints.graphql,
-    cache: new InMemoryCache()
-  })
-  useGraphqlStore.setState({ client: client })
 
 
   return (

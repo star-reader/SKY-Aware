@@ -20,7 +20,7 @@ export default () => {
                     session_id
                     logon_time
                     flight_plan {
-                        flightRules
+                        flight_rules
                         aircraft
                         departure
                         arrival
@@ -33,6 +33,25 @@ export default () => {
                         remarks
                         route
                     }
+                }
+            }
+        `,
+        getOnlineControllers: gql`
+            query OnlineControllers {
+                onlineControllers {
+                    cid
+                    name
+                    callsign
+                    frequency
+                    latitude
+                    longitude
+                    facility
+                    rating
+                    server
+                    visual_range
+                    text_atis
+                    session_id
+                    logon_time
                 }
             }
         `

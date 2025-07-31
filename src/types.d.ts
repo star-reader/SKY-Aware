@@ -1,5 +1,5 @@
 interface FlightPlan {
-  flightRules: string;
+  flight_rules: string;
   aircraft: string;
   departure: string;
   arrival: string;

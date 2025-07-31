@@ -7,6 +7,7 @@ import useWindowWidth from '../../hooks/common/useWindowWidth'
 import constants from '../../configs/constants'
 import useCurrentTheme from '../../hooks/common/useCurrentTheme'
 import useGraphqlStore from '../../store/useGraphqlStore'
+import graphql from '../../configs/apis/graphql'
 
 export default ({ platform }: { platform: string | undefined }) => {
     const mapRef = useRef<HTMLDivElement>(null)
@@ -40,16 +41,16 @@ export default ({ platform }: { platform: string | undefined }) => {
             })
 
             map.on('style.load', () => {
-                intervalGetOnlineFlights()
+                // intervalGetOnlineFlights()
+                // !todo 添加图标等资源
+                drawOnlineFlights()
             })
         }
 
-        const intervalGetOnlineFlights = () => {
-            // @ts-ignore
-            const client = useGraphqlStore.getState().client as ApolloClient<NormalizedCacheObject>
-            client
+        const drawOnlineFlights = () => {
             
         }
+
 
         initMap()
 
