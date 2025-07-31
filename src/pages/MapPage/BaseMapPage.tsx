@@ -9,6 +9,7 @@ import useCurrentTheme from '../../hooks/common/useCurrentTheme'
 import { addOnlineFlightsMarker, addSKYlineMarker } from '../../services/mapServices/markerLoader'
 import matchSet from '../../configs/airplanes/matchSet.json'
 import useOnlineStore from '../../store/useOnlineStore'
+import useGetColor from '../../hooks/map/useGetColor'
 
 export default memo(({ platform }: { platform: string | undefined }) => {
     const mapRef = useRef<HTMLDivElement>(null)
@@ -123,10 +124,11 @@ export default memo(({ platform }: { platform: string | undefined }) => {
 
             if (!onlineFlights || onlineFlights.length === 0) return
 
-            for (let flight of onlineFlights) {
+            let userColor = useGetColor().onlineFlight
 
-                const isEmergency = [7700, 7600, 7500].includes(flight.transponder);
-                const color = isEmergency ? '#DC143C' : useCurrentTheme() === 'light' ? '#25569f' : '#87CEFA'
+            for (let flight of onlineFlights) {
+                const isEmergency = [7700, 7600, 7500].includes(flight.transponder)
+                const color = isEmergency ? '#DC143C' : useCurrentTheme() === 'light' ? userColor.day : userColor.night
 
                 const feature: Feature<Geometry, GeoJsonProperties> = {
                     type: 'Feature',
@@ -232,7 +234,7 @@ export default memo(({ platform }: { platform: string | undefined }) => {
                             'case',
                             ['==',['get','emergency'],'true'],
                             'red',
-                            useCurrentTheme() === 'light' ? '#25569f' : '#B0E0E6'
+                            useCurrentTheme() === 'light' ? userColor.day : userColor.night
                         ],
                         'text-color': ['get','color'],
                         'text-halo-width':0,
@@ -262,15 +264,21 @@ export default memo(({ platform }: { platform: string | undefined }) => {
             }
         })
 
-        // 主题切换
-        pubsub.subscribe('theme-mode', () => {
+        // 主题切换与用户自定义颜色切换
+
+        const updateColor = () => {
             if (map) {
                 if (map.getLayer('online-flights')) {
-                    map.setPaintProperty('online-flights', 'text-color', useCurrentTheme() === 'light' ? '#25569f' : '#B0E0E6')
-                    map.setPaintProperty('online-flights', 'icon-color', useCurrentTheme() === 'light' ? '#25569f' : '#B0E0E6')
+                    let userColor = useGetColor().onlineFlight
+                    map.setPaintProperty('online-flights', 'text-color', useCurrentTheme() === 'light' ? userColor.day : userColor.night)
+                    map.setPaintProperty('online-flights', 'icon-color', useCurrentTheme() === 'light' ? userColor.day : userColor.night)
                 }
             }
-        })
+        }
+
+        pubsub.subscribe('theme-mode', updateColor)
+        pubsub.subscribe('pilot-color-schema', updateColor)  // 这个是用户在设置中切换自定义颜色，进行更新
+
     }, [])
     
     return (
