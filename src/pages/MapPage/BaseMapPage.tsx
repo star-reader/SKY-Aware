@@ -126,7 +126,7 @@ export default memo(({ platform }: { platform: string | undefined }) => {
             for (let flight of onlineFlights) {
 
                 const isEmergency = [7700, 7600, 7500].includes(flight.transponder);
-                const color = isEmergency ? '#DC143C' : '#4169E1'
+                const color = isEmergency ? '#DC143C' : useCurrentTheme() === 'light' ? '#25569f' : '#87CEFA'
 
                 const feature: Feature<Geometry, GeoJsonProperties> = {
                     type: 'Feature',
@@ -232,7 +232,7 @@ export default memo(({ platform }: { platform: string | undefined }) => {
                             'case',
                             ['==',['get','emergency'],'true'],
                             'red',
-                            '#25569f'
+                            useCurrentTheme() === 'light' ? '#25569f' : '#B0E0E6'
                         ],
                         'text-color': ['get','color'],
                         'text-halo-width':0,
