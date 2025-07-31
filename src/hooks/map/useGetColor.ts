@@ -1,11 +1,11 @@
-interface UserCustomColor {
+interface UserCustomColorSchema {
     onlineFlight: {
         day: string,
         night: string
     }
 }
 
-const defaultColor: UserCustomColor = {
+const defaultColor: UserCustomColorSchema = {
     onlineFlight: {
         day: '#25569f',
         night: '#B0E0E6'
@@ -13,11 +13,11 @@ const defaultColor: UserCustomColor = {
 }
 
 export default () => {
-    let userCustomColor: UserCustomColor = defaultColor
+    let userCustomColor: UserCustomColorSchema = defaultColor
 
-    let pilotColroSchema = localStorage.getItem('pilotColroSchema')
-    if (pilotColroSchema) {
-        userCustomColor.onlineFlight = JSON.parse(pilotColroSchema)
+    let pilotColorSchema = localStorage.getItem('pilotColorSchema')
+    if (pilotColorSchema) {
+        userCustomColor.onlineFlight = JSON.parse(pilotColorSchema)
     }
 
     return userCustomColor
