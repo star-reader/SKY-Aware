@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react'
 import mapboxgl from 'mapbox-gl'
 import pubsub from 'pubsub-js'
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import envs from '../../configs/envs'
 import useWindowWidth from '../../hooks/common/useWindowWidth'
 import constants from '../../configs/constants'
 import useCurrentTheme from '../../hooks/common/useCurrentTheme'
+import useGraphqlStore from '../../store/useGraphqlStore'
 
 export default ({ platform }: { platform: string | undefined }) => {
     const mapRef = useRef<HTMLDivElement>(null)
@@ -22,19 +24,34 @@ export default ({ platform }: { platform: string | undefined }) => {
         // 初始化加载，因为mapbox v3用webgl新版，所以别忘了写个界面来检测如果不支持退出
         // !todo 检测webgl是否支持
 
-        mapboxgl.accessToken = envs.MAPBOX_TOKEN
-        map = new mapboxgl.Map({
-            container: mapRef.current as HTMLElement,
-            style: 'mapbox://styles/mapbox/standard',
-            center: [-74.5, 40],
-            zoom: 9,
-            config: {
-                basemap: {
-                    lightPreset: currentTheme === 'light' ? 'day' : 'night',  // day-night
-                    showPointOfInterestLabels: true,
+        const initMap = () => {
+            mapboxgl.accessToken = envs.MAPBOX_TOKEN
+            map = new mapboxgl.Map({
+                container: mapRef.current as HTMLElement,
+                style: 'mapbox://styles/mapbox/standard',
+                center: [-74.5, 40],
+                zoom: 9,
+                config: {
+                    basemap: {
+                        lightPreset: currentTheme === 'light' ? 'day' : 'night',  // day-night
+                        showPointOfInterestLabels: true,
+                    }
                 }
-            }
-        })
+            })
+
+            map.on('style.load', () => {
+                intervalGetOnlineFlights()
+            })
+        }
+
+        const intervalGetOnlineFlights = () => {
+            // @ts-ignore
+            const client = useGraphqlStore.getState().client as ApolloClient<NormalizedCacheObject>
+            client
+            
+        }
+
+        initMap()
 
     }, [])
 

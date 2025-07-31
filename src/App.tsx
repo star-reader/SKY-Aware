@@ -1,10 +1,13 @@
 import { webLightTheme, webDarkTheme, FluentProvider } from '@fluentui/react-components'
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { useEffect, useState } from 'react'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import pubsub from 'pubsub-js'
 import getPlatform from './utils/getPlatform'
 import AppLayOut from './layouts/AppLayOut'
+import endpoints from './configs/apis/endpoints'
+import useGraphqlStore from './store/useGraphqlStore'
 
 
 export default () => {
@@ -99,6 +102,14 @@ export default () => {
     }
     handlePlatformChange()
   }, [])
+
+  // graphql配置
+  let client = new ApolloClient({
+    uri: endpoints.graphql,
+    cache: new InMemoryCache()
+  })
+  useGraphqlStore.setState({ client: client })
+
 
   return (
     <div id="global-entry-hooks-provider" 
