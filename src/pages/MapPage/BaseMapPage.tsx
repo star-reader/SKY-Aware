@@ -222,7 +222,7 @@ export default memo(({ platform }: { platform: string | undefined }) => {
                             8,
                             12
                         ],
-                        'text-offset':[1.8, 1.8],
+                        'text-offset':[1.2, 1.2],
                         'text-allow-overlap': true,
                         'text-pitch-alignment':"viewport",
                         'text-rotation-alignment':'viewport'
@@ -259,6 +259,16 @@ export default memo(({ platform }: { platform: string | undefined }) => {
         pubsub.subscribe('current-tab', (_, data) => {
             if (map && data === '地图') {
                 map.resize()
+            }
+        })
+
+        // 主题切换
+        pubsub.subscribe('theme-mode', () => {
+            if (map) {
+                if (map.getLayer('online-flights')) {
+                    map.setPaintProperty('online-flights', 'text-color', useCurrentTheme() === 'light' ? '#25569f' : '#B0E0E6')
+                    map.setPaintProperty('online-flights', 'icon-color', useCurrentTheme() === 'light' ? '#25569f' : '#B0E0E6')
+                }
             }
         })
     }, [])
