@@ -4,7 +4,7 @@
  * @description: Windows下统一使用左侧导航栏，iOS和Android、Web根据尺寸切换
  */
 
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { MapOutlined, ListAltOutlined, SettingsOutlined, BarChartOutlined, InfoOutlined } from '@mui/icons-material';
 import {
     Board20Filled,
@@ -34,17 +34,24 @@ import SettingPage from "../pages/SettingPage/IndexSettingPage";
  * 根据currentTab显示不同的内容，使用style属性控制显示与隐藏，而不是控制组件是否渲染
  */
 const ContentArea = ({ currentTab, platform }: { currentTab: string, platform: string | undefined }) => {
+
+    const positionStyle: CSSProperties = {
+        'position': 'relative',
+        'width': '100%',
+        'height': '100%',
+    }
+
     return (
         <>
-            <div style={{ display: currentTab === '地图' ? 'block' : 'none' }}>
+            <div style={{ display: currentTab === '地图' ? 'block' : 'none', ...positionStyle }}>
                 <MapPage platform={platform} />
             </div>
-            <div style={{ display: currentTab === '列表' ? 'block' : 'none' }}>列表</div>
-            <div style={{ display: currentTab === '活动' ? 'block' : 'none' }}>活动</div>
-            <div style={{ display: currentTab === '设置' ? 'block' : 'none' }}>
+            <div style={{ display: currentTab === '列表' ? 'block' : 'none', ...positionStyle }}>列表</div>
+            <div style={{ display: currentTab === '活动' ? 'block' : 'none', ...positionStyle }}>活动</div>
+            <div style={{ display: currentTab === '设置' ? 'block' : 'none', ...positionStyle }}>
                 <SettingPage />
             </div>
-            <div style={{ display: currentTab === '关于' ? 'block' : 'none' }}>关于</div>
+            <div style={{ display: currentTab === '关于' ? 'block' : 'none', ...positionStyle }}>关于</div>
             
         </>
     )
