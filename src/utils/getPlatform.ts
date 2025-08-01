@@ -8,7 +8,11 @@ export type PlatformType = 'android' | 'ios' | 'windows' | 'linux' | 'macos' | '
  * @returns {Promise<PlatformType>} 返回具体的平台类型
  */
 export default async (): Promise<PlatformType> => {
-    return 'ios'
+    // return 'macos'
+    let _localDebugPlatform = localStorage.getItem('_lDbg')
+    if (_localDebugPlatform) {
+        return _localDebugPlatform as PlatformType
+    }
     try {
         // 首先检查是否在 Tauri 环境中
         if (typeof window !== 'undefined' && window.__TAURI_OS_PLUGIN_INTERNALS__) {
