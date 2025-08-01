@@ -19,7 +19,7 @@ const ColorButton = ({
     system: 'ios' | 'macos';
 }) => {
     const buttonStyles = system === 'ios' ? {
-        button: "flex items-center gap-3 w-full p-3 rounded-xl",
+        button: "flex items-center gap-3 w-full p-3 rounded-xl bg-[#F2F2F7] dark:bg-[#2e2e2e]",
         colorPreview: "w-6 h-6 rounded-full",
         text: "text-[15px]"
     } : {
