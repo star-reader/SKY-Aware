@@ -70,6 +70,9 @@ export default memo(({ platform }: { platform: string | undefined }) => {
                 showCompass: true,
                 visualizePitch: true
             }), 'top-right')
+            map.addControl(new mapboxgl.ScaleControl({
+                unit: 'metric'
+            }), 'bottom-right')
 
             const zoom: string | null = localStorage.getItem('map-zoom')
             const center: string | null = localStorage.getItem('map-center')
