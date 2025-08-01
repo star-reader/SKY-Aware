@@ -131,9 +131,9 @@ export default () => {
 
 
 
-            <Field hint={'选择机组图标自定义颜色'} className={styles.dropArea}>
+            <Field hint={'选择你喜欢的颜色'} className={styles.dropArea}>
                 <label htmlFor={dropdownId}>机组图标自定义颜色</label>
-                <div className="relative flex text-center gap-6 my-3">
+                <div className="relative flex text-center gap-6 mt-3">
                     {/* 日间模式预览 */}
                     <div className="flex flex-col gap-2 items-center">
                     <Popover
