@@ -10,6 +10,7 @@ import { addOnlineFlightsMarker, addSKYlineMarker } from '../../services/mapServ
 import matchSet from '../../configs/airplanes/matchSet.json'
 import useOnlineStore from '../../store/useOnlineStore'
 import useGetColor from '../../hooks/map/useGetColor'
+import useMouseEvent from '../../hooks/common/useMouseEvent'
 
 export default memo(({ platform }: { platform: string | undefined }) => {
     const mapRef = useRef<HTMLDivElement>(null)
@@ -110,6 +111,8 @@ export default memo(({ platform }: { platform: string | undefined }) => {
                     setInterval(() => {
                         drawOnlineFlights()
                     }, 3000)
+
+                    useMouseEvent(map)
                 }
                 // drawOnlineFlights()
             })
