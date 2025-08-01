@@ -1,4 +1,5 @@
 import { Map } from "mapbox-gl"
+import pubsub from 'pubsub-js'
 
 export default (map: Map) => {
     if (!map) return
@@ -18,7 +19,7 @@ export default (map: Map) => {
             // })
             map.getCanvas().style.cursor = 'pointer'
         })
-        map.on('mouseleave', layer, (e) => {
+        map.on('mouseleave', layer, () => {
             map.getCanvas().style.cursor = ''
         })
     }
@@ -31,7 +32,7 @@ export default (map: Map) => {
             let data = features[0].properties
             if (!data || !data.flight_plan) return
             data.flight_plan = JSON.parse(data.flight_plan as unknown as string)
-            console.log(data)
+            pubsub.publish('query-online-pilot', data)
         })
     }
 
