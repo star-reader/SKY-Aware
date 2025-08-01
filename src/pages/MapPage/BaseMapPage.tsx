@@ -65,7 +65,7 @@ export default memo(({ platform }: { platform: string | undefined }) => {
             })
             // addMapControls()
 
-            map.setMaxZoom(17)
+            map.setMaxZoom(20)
             map.addControl(new mapboxgl.NavigationControl({
                 showCompass: true,
                 visualizePitch: true

@@ -36,8 +36,22 @@ export default () => {
     return userCustomColor
 }
 
-export const getPilotDefaultColor = () => {
+export const getPilotDefaultColor = (material?: boolean) => {
+
     let pilotColorSchema = localStorage.getItem('pilotColorSchema')
+    if (material) {
+        if (pilotColorSchema) {
+            let oriJson = JSON.parse(pilotColorSchema)
+            return {
+                day: oriJson.day,
+                night: oriJson.night
+            }
+        }else{
+            return defaultColor.onlineFlight
+        }
+    }
+
+    
     if (pilotColorSchema) {
         let oriJson = JSON.parse(pilotColorSchema)
         let day = getHSVobjectByString(oriJson.day)
