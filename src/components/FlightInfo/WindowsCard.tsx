@@ -11,6 +11,8 @@ import {
   Dismiss24Regular,
   Location24Regular,
   Clock24Regular,
+  Airplane24Regular,
+  Globe24Regular,
   Navigation24Regular
 } from "@fluentui/react-icons"
 
@@ -19,12 +21,12 @@ const useStyles = makeStyles({
     position: "fixed",
     top: "10px",
     right: "50px",
-    width: "380px",
+    width: "340px",
     maxWidth: "90vw",
     maxHeight: "calc(100vh - 40px)",
     zIndex: 1000,
-    boxShadow: tokens.shadow28,
-    borderRadius: "12px",
+    boxShadow: tokens.shadow16,
+    borderRadius: "10px",
     border: `1px solid ${tokens.colorNeutralStroke1}`,
     display: "flex",
     flexDirection: "column",
@@ -38,42 +40,42 @@ const useStyles = makeStyles({
     fontSize: "20px",
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorBrandForeground1,
-    marginBottom: "4px",
+    marginBottom: "3px",
   },
   pilot: {
-    fontSize: "14px",
+    fontSize: "13px",
     color: tokens.colorNeutralForeground2,
   },
   content: {
-    padding: "20px",
+    padding: "16px",
     flex: 1,
     overflow: "auto",
   },
   routeSection: {
-    marginBottom: "20px",
+    padding: "14px",
+    marginBottom: "16px",
     backgroundColor: tokens.colorNeutralBackground2,
     borderRadius: "8px",
-    padding: "16px",
+    border: `1px solid ${tokens.colorNeutralStroke2}`,
   },
   airport: {
     textAlign: "center",
     minWidth: "80px",
   },
   airportCode: {
-    fontSize: "18px",
+    fontSize: "16px",
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
-    marginBottom: "4px",
+    marginBottom: "3px",
   },
   airportLabel: {
-    fontSize: "12px",
+    fontSize: "11px",
     color: tokens.colorNeutralForeground2,
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
+    fontWeight: tokens.fontWeightMedium,
   },
   routeLine: {
     flex: 1,
-    margin: "0 16px",
+    margin: "0 12px",
     position: "relative",
     height: "2px",
     backgroundColor: tokens.colorNeutralStroke1,
@@ -86,69 +88,79 @@ const useStyles = makeStyles({
     transform: "translate(-50%, -50%)",
     backgroundColor: tokens.colorBrandBackground,
     color: tokens.colorNeutralForegroundOnBrand,
-    padding: "6px",
+    padding: "5px",
     borderRadius: "50%",
-    width: "28px",
-    height: "28px",
+    width: "24px",
+    height: "24px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  dataGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "12px",
-    marginBottom: "20px",
-  },
-  dataCard: {
-    padding: "14px",
-    backgroundColor: tokens.colorNeutralBackground2,
-    borderRadius: "8px",
-    border: `1px solid ${tokens.colorNeutralStroke2}`,
-    textAlign: "center",
-  },
-  dataLabel: {
-    fontSize: "11px",
-    color: tokens.colorNeutralForeground2,
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
-    marginBottom: "6px",
-    fontWeight: tokens.fontWeightMedium,
-  },
-  dataValue: {
-    fontSize: "16px",
-    fontWeight: tokens.fontWeightSemibold,
-    color: tokens.colorNeutralForeground1,
-  },
-  infoSection: {
-    marginBottom: "20px",
   },
   sectionTitle: {
     fontSize: "14px",
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
-    marginBottom: "12px",
+    marginBottom: "10px",
     display: "flex",
     alignItems: "center",
     gap: "6px",
+  },
+  dataGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "10px",
+    marginBottom: "16px",
+  },
+  dataCard: {
+    padding: "14px 12px",
+    backgroundColor: tokens.colorNeutralBackground2,
+    borderRadius: "10px",
+    border: `1px solid ${tokens.colorNeutralStroke2}`,
+    textAlign: "center",
+    transition: "all 0.2s ease",
+    "&:hover": {
+      backgroundColor: tokens.colorNeutralBackground3,
+      // transform: "translateY(-1px)",
+      // boxShadow: tokens.shadow4,
+    },
+  },
+  dataLabel: {
+    fontSize: "10px",
+    color: tokens.colorNeutralForeground2,
+    marginBottom: "6px",
+    fontWeight: tokens.fontWeightSemibold,
+    textTransform: "uppercase",
+    letterSpacing: "0.8px",
+  },
+  dataValue: {
+    fontSize: "16px",
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+    lineHeight: "1.2",
+  },
+  dataUnit: {
+    fontSize: "12px",
+    color: tokens.colorNeutralForeground2,
+    fontWeight: tokens.fontWeightMedium,
+    marginLeft: "2px",
   },
   infoRow: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "8px 0",
+    padding: "6px 0",
     borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
   },
   infoRowLast: {
     borderBottom: "none",
   },
   infoLabel: {
-    fontSize: "13px",
+    fontSize: "12px",
     color: tokens.colorNeutralForeground2,
     fontWeight: tokens.fontWeightMedium,
   },
   infoValue: {
-    fontSize: "13px",
+    fontSize: "12px",
     fontWeight: tokens.fontWeightSemibold,
     color: tokens.colorNeutralForeground1,
     textAlign: "right",
@@ -156,17 +168,19 @@ const useStyles = makeStyles({
     wordBreak: "break-word",
   },
   routeBox: {
-    padding: "14px",
+    padding: "12px",
     backgroundColor: tokens.colorNeutralBackground2,
     borderRadius: "8px",
     border: `1px solid ${tokens.colorNeutralStroke2}`,
+    marginTop: "12px",
   },
   routeText: {
-    fontSize: "12px",
+    fontSize: "11px",
     color: tokens.colorNeutralForeground1,
     wordBreak: "break-all",
-    lineHeight: "1.5",
+    lineHeight: "1.4",
     fontFamily: tokens.fontFamilyMonospace,
+    marginTop: "6px",
   },
   badgeContainer: {
     display: "flex",
@@ -186,13 +200,12 @@ interface WindowsCardProps {
 export default memo(({ flightData }: WindowsCardProps) => {
   const styles = useStyles()
   
-  const formatAltitude = (alt: number) => `${alt.toLocaleString()}`
-  const formatSpeed = (speed: number) => `${speed}`
-  const formatHeading = (heading: number) => `${Math.round(heading)}°`
+  const formatAltitude = (alt: number) => alt.toLocaleString()
+  const formatSpeed = (speed: number) => speed.toString()
+  const formatHeading = (heading: number) => `${Math.round(heading)}`
   const formatSquawk = (squawk: number) => squawk.toString().padStart(4, '0')
   
   const handleClose = () => {
-    // 触发关闭事件
     const event = new CustomEvent('closeFlightCard')
     window.dispatchEvent(event)
   }
@@ -224,19 +237,19 @@ export default memo(({ flightData }: WindowsCardProps) => {
       />
       
       <div className={styles.content}>
-        {/* Route Display */}
+        {/* 航线显示 */}
         <div className={styles.routeSection}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div className={styles.airport}>
               <div className={styles.airportCode}>
                 {flightData.flight_plan?.departure || 'N/A'}
               </div>
-              <div className={styles.airportLabel}>Departure</div>
+              <div className={styles.airportLabel}>起飞</div>
             </div>
             
             <div className={styles.routeLine}>
               <div className={styles.planeIcon}>
-                <Navigation24Regular style={{ fontSize: "14px" }} />
+                <Airplane24Regular style={{ fontSize: "14px" }} />
               </div>
             </div>
             
@@ -244,150 +257,145 @@ export default memo(({ flightData }: WindowsCardProps) => {
               <div className={styles.airportCode}>
                 {flightData.flight_plan?.arrival || 'N/A'}
               </div>
-              <div className={styles.airportLabel}>Arrival</div>
+              <div className={styles.airportLabel}>降落</div>
             </div>
           </div>
         </div>
 
-        {/* Live Flight Data */}
+        {/* 实时飞行数据 */}
+        <div className={styles.sectionTitle}>
+          <Navigation24Regular style={{ fontSize: "16px" }} />
+          实时飞行数据
+        </div>
+        
         <div className={styles.dataGrid}>
           <div className={styles.dataCard}>
-            <div className={styles.dataLabel}>Altitude</div>
-            <div className={styles.dataValue}>{formatAltitude(flightData.altitude)} ft</div>
+            <div className={styles.dataLabel}>高度</div>
+            <div className={styles.dataValue}>
+              {formatAltitude(flightData.altitude)}
+              <span className={styles.dataUnit}>ft</span>
+            </div>
           </div>
           
           <div className={styles.dataCard}>
-            <div className={styles.dataLabel}>Ground Speed</div>
-            <div className={styles.dataValue}>{formatSpeed(flightData.groundspeed)} kts</div>
+            <div className={styles.dataLabel}>地速</div>
+            <div className={styles.dataValue}>
+              {formatSpeed(flightData.groundspeed)}
+              <span className={styles.dataUnit}> kts</span>
+            </div>
           </div>
           
           <div className={styles.dataCard}>
-            <div className={styles.dataLabel}>Heading</div>
-            <div className={styles.dataValue}>{formatHeading(flightData.heading)}</div>
+            <div className={styles.dataLabel}>航向</div>
+            <div className={styles.dataValue}>
+              {formatHeading(flightData.heading)}
+              <span className={styles.dataUnit}>°</span>
+            </div>
           </div>
           
           <div className={styles.dataCard}>
-            <div className={styles.dataLabel}>Squawk</div>
-            <div className={styles.dataValue}>{formatSquawk(flightData.transponder)}</div>
+            <div className={styles.dataLabel}>应答机</div>
+            <div className={styles.dataValue}>
+              {formatSquawk(flightData.transponder)}
+            </div>
           </div>
         </div>
 
-        {/* Flight Information */}
-        <div className={styles.infoSection}>
+        {/* 飞行信息 */}
+        <div>
           <div className={styles.sectionTitle}>
-            <Location24Regular style={{ fontSize: "16px" }} />
-            Flight Information
+            <Globe24Regular style={{ fontSize: "16px" }} />
+            飞行信息
           </div>
           
           <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Pilot ID:</span>
+            <span className={styles.infoLabel}>飞行员CID:</span>
             <span className={styles.infoValue}>{flightData.cid}</span>
           </div>
-          
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Server:</span>
-            <span className={styles.infoValue}>{flightData.server}</span>
-          </div>
 
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Session ID:</span>
+          {/* <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>会话ID:</span>
             <span className={styles.infoValue}>{flightData.session_id}</span>
-          </div>
+          </div> */}
           
           <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Position:</span>
+            <span className={styles.infoLabel}>坐标位置:</span>
             <span className={styles.infoValue}>
               {flightData.latitude.toFixed(4)}, {flightData.longitude.toFixed(4)}
             </span>
           </div>
           
-          <div className={styles.infoRow}>
-            <span className={styles.infoLabel}>Bank Angle:</span>
+          {/* <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>倾斜角:</span>
             <span className={styles.infoValue}>{flightData.bank.toFixed(1)}°</span>
           </div>
           
-          <div className={styles.infoRow + " " + styles.infoRowLast}>
-            <span className={styles.infoLabel}>Pitch Angle:</span>
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>俯仰角:</span>
             <span className={styles.infoValue}>{flightData.pitch.toFixed(1)}°</span>
+          </div> */}
+
+          <div className={styles.infoRow}>
+            <span className={styles.infoLabel}>服务器:</span>
+            <span className={styles.infoValue}>{flightData.server}</span>
           </div>
+
         </div>
 
-        {/* Flight Plan Details */}
+        {/* 飞行计划详情 */}
         {flightData.flight_plan && (
-          <div className={styles.infoSection}>
-            <div className={styles.sectionTitle}>
+          <div>
+            <div className={styles.sectionTitle} style={{ marginTop: "20px" }}>
               <Clock24Regular style={{ fontSize: "16px" }} />
-              Flight Plan
+              飞行计划
             </div>
             
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Flight Rules:</span>
+              <span className={styles.infoLabel}>飞行规则:</span>
               <span className={styles.infoValue}>{flightData.flight_plan.flight_rules}</span>
             </div>
             
             {flightData.flight_plan.cruise_tas && (
               <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Cruise TAS:</span>
+                <span className={styles.infoLabel}>巡航真空速:</span>
                 <span className={styles.infoValue}>{flightData.flight_plan.cruise_tas} kts</span>
               </div>
             )}
             
             {flightData.flight_plan.altitude && (
               <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Cruise Alt:</span>
+                <span className={styles.infoLabel}>巡航高度:</span>
                 <span className={styles.infoValue}>{flightData.flight_plan.altitude} ft</span>
               </div>
             )}
 
             {flightData.flight_plan.alternate && (
               <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Alternate:</span>
+                <span className={styles.infoLabel}>备降机场:</span>
                 <span className={styles.infoValue}>{flightData.flight_plan.alternate}</span>
               </div>
             )}
-
-            {flightData.flight_plan.deptime && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Dep Time:</span>
-                <span className={styles.infoValue}>{flightData.flight_plan.deptime}</span>
-              </div>
-            )}
-
-            {flightData.flight_plan.enroute_time && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoLabel}>Enroute Time:</span>
-                <span className={styles.infoValue}>{flightData.flight_plan.enroute_time}</span>
-              </div>
-            )}
-
-            <div className={styles.infoRow + " " + styles.infoRowLast}>
-              <span className={styles.infoLabel}>Fuel Time:</span>
-              <span className={styles.infoValue}>{flightData.flight_plan.fuel_time || 'N/A'}</span>
-            </div>
           </div>
         )}
 
-        {/* Route */}
+        {/* 航路 */}
         {flightData.flight_plan?.route && (
           <div className={styles.routeBox}>
             <div className={styles.sectionTitle} style={{ marginBottom: "8px" }}>
-              Route
+              <Location24Regular style={{ fontSize: "16px" }} />
+              航路
             </div>
             <div className={styles.routeText}>{flightData.flight_plan.route}</div>
           </div>
         )}
 
-        {/* Remarks */}
+        {/* 备注 */}
         {flightData.flight_plan?.remarks && (
-          <div className={styles.routeBox} style={{ marginTop: "12px" }}>
+          <div className={styles.routeBox}>
             <div className={styles.sectionTitle} style={{ marginBottom: "8px" }}>
-              Remarks
+              备注
             </div>
-            <div style={{ 
-              fontSize: "12px",
-              color: tokens.colorNeutralForeground1,
-              lineHeight: "1.5"
-            }}>
+            <div className={styles.routeText}>
               {flightData.flight_plan.remarks}
             </div>
           </div>
