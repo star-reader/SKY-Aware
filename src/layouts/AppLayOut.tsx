@@ -174,7 +174,7 @@ export default function AppLayOut() {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex h-screen">
+                        <div className="flex h-screen material-navbar-container-pc">
                             <MaterialNavbar
                                 items={navItems}
                                 position="sidebar"

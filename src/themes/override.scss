@@ -97,7 +97,7 @@ html[aria-label="dark"]{
   // Material UI Drawer 背景色
   .material-navbar-container{
     .MuiDrawer-root, .MuiPaper-root {
-      background-color: #1c2228 !important;
+      // background-color: #1c2228 !important;
       border-right: 1px solid #272F34;
     }
   
@@ -107,6 +107,11 @@ html[aria-label="dark"]{
   }
 }
 
+.material-navbar-container-pc{
+  .MuiPaper-root{
+    background-color: unset !important;
+  }
+}
 
 // adm的z-index调整
 .adm-floating-panel{
