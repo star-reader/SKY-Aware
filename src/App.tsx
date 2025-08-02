@@ -27,6 +27,10 @@ export default () => {
         setIsDark(systemTheme === 'dark')
         setTheme(systemTheme === 'dark' ? webDarkTheme : webLightTheme)
         document.documentElement.setAttribute('aria-label', systemTheme === 'dark' ? 'dark' : 'light')
+        document.documentElement.setAttribute(
+          'data-prefers-color-scheme',
+          systemTheme === 'dark' ? 'dark' : 'light'
+        )
         setMuiTheme(createTheme({
           palette: {
             mode: systemTheme === 'dark' ? 'dark' : 'light'
@@ -42,6 +46,10 @@ export default () => {
           await getCurrentWindow().onThemeChanged(({ payload: theme }) => {
             setIsDark(theme === 'dark')
             setTheme(theme === 'dark' ? webDarkTheme : webLightTheme)
+            document.documentElement.setAttribute(
+              'data-prefers-color-scheme',
+              theme === 'dark' ? 'dark' : 'light'
+            )
             setMuiTheme(createTheme({
               palette: {
                 mode: theme === 'dark' ? 'dark' : 'light'
@@ -71,6 +79,10 @@ export default () => {
         setTheme(webDarkTheme)
         setIsDark(true)
         document.documentElement.setAttribute('aria-label', 'dark')
+        document.documentElement.setAttribute(
+          'data-prefers-color-scheme',
+          'dark'
+        )
         setMuiTheme(createTheme({
           palette: {
             mode: 'dark'

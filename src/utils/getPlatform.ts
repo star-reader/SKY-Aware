@@ -11,6 +11,7 @@ export default async (): Promise<PlatformType> => {
     // return 'macos'
     let _localDebugPlatform = localStorage.getItem('_lDbg')
     if (_localDebugPlatform) {
+        if (_localDebugPlatform === 'ios' || _localDebugPlatform === 'macos')
         return _localDebugPlatform as PlatformType
     }
     try {

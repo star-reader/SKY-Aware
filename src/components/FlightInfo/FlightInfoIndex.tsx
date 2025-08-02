@@ -5,6 +5,7 @@ import useWindowWidth from "../../hooks/common/useWindowWidth"
 import constants from "../../configs/constants"
 import WindowsCard from "./WindowsCard"
 import CommonCard from "./CommonCard"
+import useOnlineStore from "../../store/useOnlineStore"
 
 // 把数据存到这里，各个组件去引
 // 根据尺寸和平台选择不同的内容，如fluent card， 其他card；fluent card不需要考虑响应式；其他card考虑响应式
@@ -14,27 +15,90 @@ export default memo(() => {
     const [platform, setPlatform] = useState<PlatformType>('web')
     const windowWidth = useWindowWidth()
 
+    // 判断是否为移动端
+    const isMobileWidth = windowWidth <= constants.mobileMaxWidth
+
     useEffect(() => {
-        getPlatform().then(setPlatform);
-    }, []);
+        getPlatform().then(setPlatform)
+    }, [])
     
     useEffect(() => {
-        pubsub.subscribe('query-online-pilot',(_, data: OnlineFlight) => {
+        const queryToken = pubsub.subscribe('query-online-pilot',(_, data: OnlineFlight) => {
             setIsShow(true)
             setData(data)
         })
-    }, [])
+
+        let fetchInterval: ReturnType<typeof setInterval> | null = null
+
+        if (data) {
+            const fetchInfo = () => {
+                // @ts-ignore
+                const onlineFlights: OnlineFlight[] = useOnlineStore.getState().onlineFlights
+                const flight = onlineFlights.find(flight => 
+                    flight.callsign === data.callsign && flight.session_id === data.session_id
+                )
+                if (flight && flight.cid) {
+                    setData(flight)
+                }
+            }
+
+            fetchInterval = setInterval(fetchInfo, 3000)
+        }
+
+        return () => {
+            pubsub.unsubscribe(queryToken)
+            if (fetchInterval) {
+                clearInterval(fetchInterval)
+            }
+        }
+    }, [data])
+
+    const handleClose = () => {
+        setIsShow(false)
+        setData(null)
+    }
+
+    // 监听ESC键关闭
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && isShow) {
+                handleClose()
+            }
+        }
+
+        if (isShow) {
+            window.addEventListener('keydown', handleKeyDown)
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [isShow])
+
+    // 调试信息
+    console.log('FlightInfo Debug:', {
+        isShow,
+        hasData: !!data,
+        platform,
+        windowWidth,
+        isMobileWidth,
+        mobileMaxWidth: constants.mobileMaxWidth
+    })
+
+    if (!isShow || !data) {
+        return null
+    }
 
     return (
-        isShow && data && (
-            platform === 'windows' ? 
-            // windows fluent ui card
-            <WindowsCard flightData={data} /> : 
-            // other card, props in window size
-            <CommonCard flightData={data} 
-                isMobileWidth={windowWidth <= constants.mobileMaxWidth} 
-            />
-        )
-            
+        platform === 'windows' ? 
+        // windows fluent ui card
+        <WindowsCard flightData={data} /> : 
+        // other card, props in window size
+        <CommonCard
+            flightData={data} 
+            isMobileWidth={isMobileWidth} 
+            platform={platform}
+            onClose={handleClose}
+        />
     )
 })
