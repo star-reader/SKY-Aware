@@ -3,7 +3,7 @@
 * Windows原生Fluent UI的设置页面，用作Windows版本的设置页面
 */
 
-import { makeStyles, Title2, Subtitle2, 
+import { makeStyles, Title2, Subtitle2, Body1,
     Dropdown, Option, useId, Field,
     OptionOnSelectData, Button,
     Popover,
@@ -131,7 +131,7 @@ export default () => {
 
 
 
-            <Field hint={'选择你喜欢的颜色'} className={styles.dropArea}>
+            <Field hint={'选择你喜欢的颜色'} className={styles.dropArea} style={{marginBottom: '20px'}}>
                 <label htmlFor={dropdownId}>机组图标自定义颜色</label>
                 <div className="relative flex text-center gap-6 mt-3">
                     {/* 日间模式预览 */}
@@ -242,6 +242,13 @@ export default () => {
                     </div>
                 </div>
             </Field>
+
+            <Subtitle2>数据设置</Subtitle2>
+            <Body1>数据管理</Body1>
+            <div className="flex flex-col gap-2">
+                <Body1 style={{color: 'red'}}>当前尚未下载离线机场数据</Body1>
+                <Button>下载离线机场数据</Button>
+            </div>
         </div>
     )
 }
