@@ -15,7 +15,6 @@ export default memo(() => {
     const [platform, setPlatform] = useState<PlatformType>('web')
     const windowWidth = useWindowWidth()
 
-    // 判断是否为移动端
     const isMobileWidth = windowWidth <= constants.mobileMaxWidth
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import { memo } from "react"
 import { Card, CardContent, Chip } from "@mui/material"
 import { FloatingPanel } from "antd-mobile"
 import { PlatformType } from "../../utils/getPlatform"
-import "./PlatformStyles.css"
+import "./PlatformStyles.scss"
 
 interface CardProps {
   flightData: OnlineFlight
