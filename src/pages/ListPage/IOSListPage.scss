@@ -1,0 +1,1091 @@
+// iOS List Page Styles
+// 支持日间和夜间模式，使用 html[aria-label="dark"] 选择器
+
+.ios-listpage {
+  min-height: 100vh;
+  background-color: #f2f2f7;
+  padding: 16px 12px;
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+
+  &__header {
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    color: #000;
+    letter-spacing: -0.5px;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: #8e8e93;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__search {
+    margin-bottom: 16px;
+  }
+
+  &__tabs {
+    margin-bottom: 16px;
+  }
+
+  &__content {
+    flex: 1;
+  }
+}
+
+// 搜索框样式
+.ios-search {
+  position: relative;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &:focus-within {
+    background-color: #ffffff;
+    border-color: #007aff;
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.15);
+    transform: translateY(-1px);
+  }
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    color: #8e8e93;
+    transition: color 0.2s ease;
+  }
+
+  &__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #000;
+    background: transparent;
+    
+    &::placeholder {
+      color: #8e8e93;
+    }
+  }
+
+  &:focus-within &__icon {
+    color: #007aff;
+  }
+}
+
+// 分段控制器样式
+.ios-segment-control {
+  display: flex;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  overflow: hidden;
+  position: relative;
+  padding: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &__item {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    &--active {
+      color: #007aff;
+      background-color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:hover:not(&--active) {
+      color: #495057;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__count {
+    font-size: 12px;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+}
+
+// 网格布局
+.ios-grid {
+  &--horizontal {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+
+  &--vertical {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+}
+
+// 卡片样式
+.ios-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 122, 255, 0.1);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  &--vertical {
+    aspect-ratio: 3/3.8;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  &--horizontal {
+    min-height: auto;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+
+    .ios-card--vertical & {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__callsign {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    line-height: 1.1;
+    letter-spacing: -0.3px;
+
+    .ios-card--vertical & {
+      font-size: 16px;
+    }
+  }
+
+  &__name {
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 1.2;
+    font-weight: 500;
+
+    .ios-card--vertical & {
+      font-size: 10px;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__badge {
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+
+    &--primary {
+      background: linear-gradient(135deg, #007aff, #0056cc);
+      color: #ffffff;
+    }
+
+    &--success {
+      background: linear-gradient(135deg, #34c759, #28a745);
+      color: #ffffff;
+    }
+
+    .ios-card--vertical & {
+      margin-bottom: 10px;
+      align-self: center;
+    }
+  }
+
+  &__info-horizontal {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f1f3f4;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__info-text {
+    font-size: 11px;
+    color: #6c757d;
+    flex: 1;
+    font-weight: 500;
+    
+    &:last-child {
+      text-align: right;
+      color: #495057;
+      font-weight: 600;
+    }
+  }
+
+  &__info-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    margin-top: 6px;
+  }
+
+  &__info-item {
+    text-align: center;
+    padding: 6px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+
+    &--route {
+      margin-top: auto;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+  }
+
+  &__info-label {
+    font-size: 9px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+
+  &__info-value {
+    font-size: 11px;
+    color: #1a1a1a;
+    font-weight: 700;
+    line-height: 1.1;
+
+    &--route {
+      font-size: 9px;
+      font-weight: 600;
+    }
+  }
+}
+
+
+
+// 夜间模式样式
+html[aria-label="dark"] {
+  .ios-listpage {
+    background-color: #000000;
+
+    &__title {
+      color: #ffffff;
+    }
+
+    &__subtitle {
+      color: #8e8e93;
+    }
+  }
+
+  .ios-search {
+    background-color: #1c1c1e;
+    
+    &:focus-within {
+      background-color: #2c2c2e;
+      border-color: #0a84ff;
+      box-shadow: 0 4px 16px rgba(10, 132, 255, 0.2);
+    }
+
+    &__input {
+      color: #ffffff;
+
+      &::placeholder {
+        color: #8e8e93;
+      }
+    }
+
+    &:focus-within &__icon {
+      color: #0a84ff;
+    }
+  }
+
+  .ios-segment-control {
+    background-color: #1c1c1e;
+
+    &__item {
+      color: #8e8e93;
+
+      &--active {
+        color: #0a84ff;
+        background-color: #2c2c2e;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      &:hover:not(&--active) {
+        color: #ffffff;
+        background-color: rgba(44, 44, 46, 0.5);
+      }
+    }
+  }
+
+  .ios-card {
+    background-color: #1c1c1e;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      border-color: rgba(10, 132, 255, 0.3);
+    }
+
+    &__callsign {
+      color: #ffffff;
+    }
+
+    &__name {
+      color: #8e8e93;
+    }
+
+    &__badge {
+      &--primary {
+        background: linear-gradient(135deg, #0a84ff, #0056cc);
+      }
+
+      &--success {
+        background: linear-gradient(135deg, #30d158, #28a745);
+      }
+    }
+
+    &__info-text {
+      color: #8e8e93;
+
+      &:last-child {
+        color: #ffffff;
+      }
+    }
+
+    &__info-item {
+      background-color: #2c2c2e;
+      border-color: #38383a;
+
+      &--route {
+        background: linear-gradient(135deg, #2c2c2e, #38383a);
+      }
+    }
+
+    &__info-label {
+      color: #8e8e93;
+    }
+
+    &__info-value {
+      color: #ffffff;
+    }
+  }
+
+
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .ios-listpage {
+    padding: 12px 8px;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    &__subtitle {
+      font-size: 12px;
+    }
+
+    &__header {
+      margin-bottom: 12px;
+    }
+
+    &__search {
+      margin-bottom: 12px;
+    }
+
+    &__tabs {
+      margin-bottom: 12px;
+    }
+  }
+
+  .ios-search {
+    padding: 8px 12px;
+
+    &__icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+
+    &__input {
+      font-size: 14px;
+    }
+  }
+
+  .ios-segment-control {
+    padding: 2px;
+    
+    &__item {
+      padding: 6px 8px;
+      font-size: 12px;
+      gap: 3px;
+    }
+
+    &__icon {
+      width: 13px;
+      height: 13px;
+    }
+
+    &__count {
+      font-size: 10px;
+    }
+  }
+
+  .ios-grid {
+    &--horizontal {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    &--vertical {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+    }
+  }
+
+  .ios-card {
+    padding: 12px;
+    border-radius: 12px;
+
+    &--vertical {
+      aspect-ratio: 3/3.6;
+    }
+
+    &__callsign {
+      font-size: 16px;
+
+      .ios-card--vertical & {
+        font-size: 14px;
+      }
+    }
+
+    &__name {
+      font-size: 11px;
+
+      .ios-card--vertical & {
+        font-size: 9px;
+        margin-bottom: 6px;
+      }
+    }
+
+    &__badge {
+      padding: 3px 8px;
+      font-size: 9px;
+
+      .ios-card--vertical & {
+        margin-bottom: 8px;
+      }
+    }
+
+    &__info-horizontal {
+      gap: 4px;
+    }
+
+    &__info-row {
+      padding: 4px 0;
+      gap: 8px;
+    }
+
+    &__info-text {
+      font-size: 10px;
+    }
+
+    &__info-vertical {
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    &__info-item {
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    &__info-label {
+      font-size: 8px;
+      margin-bottom: 1px;
+    }
+
+    &__info-value {
+      font-size: 10px;
+
+      &--route {
+        font-size: 8px;
+      }
+    }
+  }
+}
+
+// 超小屏幕优化
+@media (max-width: 480px) {
+  .ios-listpage {
+    padding: 10px 6px;
+
+    &__title {
+      font-size: 22px;
+    }
+
+    &__subtitle {
+      font-size: 11px;
+    }
+  }
+
+  .ios-segment-control {
+    padding: 1px;
+    
+    &__item {
+      padding: 5px 6px;
+      font-size: 11px;
+      gap: 2px;
+    }
+
+    &__icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    &__count {
+      font-size: 9px;
+    }
+  }
+
+  .ios-grid {
+    &--vertical {
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+  }
+
+  .ios-card {
+    padding: 10px;
+
+    &--vertical {
+      aspect-ratio: 3/3.4;
+    }
+
+    &__callsign {
+      font-size: 14px;
+
+      .ios-card--vertical & {
+        font-size: 13px;
+      }
+    }
+
+    &__name {
+      font-size: 10px;
+
+      .ios-card--vertical & {
+        font-size: 8px;
+      }
+    }
+
+    &__badge {
+      padding: 2px 6px;
+      font-size: 8px;
+    }
+
+    &__info-text {
+      font-size: 9px;
+    }
+
+    &__info-label {
+      font-size: 7px;
+    }
+
+    &__info-value {
+      font-size: 9px;
+
+      &--route {
+        font-size: 7px;
+      }
+    }
+  }
+}
+
+// iPad和更大屏幕的适配
+@media (min-width: 1024px) {
+  .ios-listpage {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    &__title {
+      font-size: 32px;
+    }
+
+    &__subtitle {
+      font-size: 14px;
+    }
+  }
+
+  .ios-grid {
+    &--horizontal {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+
+    &--vertical {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  }
+
+  .ios-card {
+    padding: 18px;
+
+    &__callsign {
+      font-size: 20px;
+
+      .ios-card--vertical & {
+        font-size: 18px;
+      }
+    }
+
+    &__name {
+      font-size: 13px;
+
+      .ios-card--vertical & {
+        font-size: 11px;
+      }
+    }
+
+    &__badge {
+      padding: 5px 11px;
+      font-size: 11px;
+    }
+
+    &__info-text {
+      font-size: 12px;
+    }
+
+    &__info-label {
+      font-size: 10px;
+    }
+
+    &__info-value {
+      font-size: 12px;
+
+      &--route {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+// HIG风格Drawer样式
+.ios-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  animation: ios-overlay-fade-in 0.3s ease;
+
+  @media (min-width: 768px) {
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+  }
+}
+
+.ios-drawer {
+  background-color: #ffffff;
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+  animation: ios-drawer-slide-up 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    border-radius: 16px;
+    width: 400px;
+    max-height: 80vh;
+    animation: ios-drawer-slide-left 0.3s ease;
+  }
+
+  @media (min-width: 1024px) {
+    width: 480px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e5e5ea;
+    background-color: #f8f9fa;
+    border-radius: 16px 16px 0 0;
+
+    @media (min-width: 768px) {
+      border-radius: 16px 16px 0 0;
+    }
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    flex: 1;
+  }
+
+  &__close {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    border: none;
+    background-color: #e5e5ea;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: #d1d1d6;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// 详情内容样式
+.ios-detail-content {
+  padding: 20px;
+}
+
+.ios-detail-header {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 24px;
+  border: 1px solid #e9ecef;
+
+  &__callsign {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  &__name {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #007aff, #0056cc);
+    color: #ffffff;
+
+    &--success {
+      background: linear-gradient(135deg, #34c759, #28a745);
+    }
+  }
+}
+
+.ios-detail-section {
+  margin-bottom: 24px;
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    color: #007aff;
+  }
+}
+
+.ios-detail-list {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+}
+
+.ios-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  border-bottom: 1px solid #f1f3f4;
+  gap: 16px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &--full {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &__label {
+    font-size: 13px;
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+
+  &__value {
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 600;
+    text-align: right;
+    word-break: break-word;
+
+    &--route {
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.4;
+      background-color: #f8f9fa;
+      padding: 8px;
+      border-radius: 6px;
+      margin-top: 8px;
+      text-align: left;
+      word-break: break-all;
+    }
+
+    &--atis {
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.4;
+      background-color: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      white-space: pre-line;
+      text-align: left;
+    }
+  }
+}
+
+// 动画
+@keyframes ios-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ios-drawer-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes ios-drawer-slide-left {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Drawer夜间模式
+html[aria-label="dark"] {
+  .ios-drawer-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .ios-drawer {
+    background-color: #1c1c1e;
+
+    &__header {
+      background-color: #2c2c2e;
+      border-bottom-color: #38383a;
+    }
+
+    &__title {
+      color: #ffffff;
+    }
+
+    &__close {
+      background-color: #38383a;
+      color: #8e8e93;
+
+      &:hover {
+        background-color: #48484a;
+      }
+    }
+  }
+
+  .ios-detail-header {
+    background: linear-gradient(135deg, #2c2c2e, #38383a);
+    border-color: #38383a;
+
+    &__callsign {
+      color: #ffffff;
+    }
+
+    &__name {
+      color: #8e8e93;
+    }
+  }
+
+  .ios-detail-section {
+    &__title {
+      color: #ffffff;
+    }
+
+    &__icon {
+      color: #0a84ff;
+    }
+  }
+
+  .ios-detail-list {
+    background-color: #1c1c1e;
+    border-color: #38383a;
+  }
+
+  .ios-detail-item {
+    border-bottom-color: #38383a;
+
+    &__label {
+      color: #8e8e93;
+    }
+
+    &__value {
+      color: #ffffff;
+
+      &--route {
+        background-color: #2c2c2e;
+        color: #ffffff;
+      }
+
+      &--atis {
+        background-color: #2c2c2e;
+        color: #ffffff;
+      }
+    }
+  }
+}

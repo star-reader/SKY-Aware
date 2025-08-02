@@ -47,9 +47,12 @@ export default () => {
                 listLayoutType={listLayoutType} 
             />
         case 'ios':
-            return <IOSListPage />
         case 'macos':
-            return <IOSListPage />
+            return <IOSListPage 
+                onlineFlights={onlineFlights} 
+                onlineControllers={onlineControllers} 
+                listLayoutType={listLayoutType} 
+            />
         default:
             return <MaterialListPage
                 onlineFlights={onlineFlights}
