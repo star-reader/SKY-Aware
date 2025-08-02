@@ -58,7 +58,7 @@ export default memo(() => {
         setData(null)
     }
 
-    // 监听ESC键关闭
+    // 监听ESC键和自定义关闭事件
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape' && isShow) {
@@ -66,12 +66,18 @@ export default memo(() => {
             }
         }
 
+        const handleCustomClose = () => {
+            handleClose()
+        }
+
         if (isShow) {
             window.addEventListener('keydown', handleKeyDown)
+            window.addEventListener('closeFlightCard', handleCustomClose)
         }
 
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
+            window.removeEventListener('closeFlightCard', handleCustomClose)
         }
     }, [isShow])
 
