@@ -1,4 +1,4 @@
-import { MenuItem, FormControl, Select, Typography, InputLabel } from '@mui/material'
+import { MenuItem, FormControl, Select, Typography, InputLabel, Button } from '@mui/material'
 import pubsub from 'pubsub-js'
 import { useState } from 'react'
 import { getPilotDefaultColor } from '../../hooks/map/useGetColor'
@@ -78,6 +78,19 @@ export default () => {
                     onChange={handlePilotNightColorChange} 
                 />
             </FormControl>
+
+            <Typography variant="h6" gutterBottom style={{marginTop: '20px'}}>
+                数据设置
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                离线数据管理
+            </Typography>
+            <div className="flex flex-col gap-0">
+            <Typography variant="body2" gutterBottom style={{color: 'red'}}>
+                当前尚未下载离线机场数据
+            </Typography>
+            <Button variant="contained">下载离线机场数据</Button>
+            </div>
             
         </div>
     )   

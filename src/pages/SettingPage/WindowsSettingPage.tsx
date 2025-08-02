@@ -244,7 +244,7 @@ export default () => {
             </Field>
 
             <Subtitle2>数据设置</Subtitle2>
-            <Body1>数据管理</Body1>
+            <Body1>离线数据管理</Body1>
             <div className="flex flex-col gap-2">
                 <Body1 style={{color: 'red'}}>当前尚未下载离线机场数据</Body1>
                 <Button>下载离线机场数据</Button>
