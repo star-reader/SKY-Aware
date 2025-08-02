@@ -34,7 +34,7 @@ const CommonCard = memo(({ flightData, isMobileWidth, platform, onClose }: CardP
       {/* Header */}
       <div className="flex justify-between items-start px-4 py-3 border-b border-gray-200 dark:border-gray-700">
         <div className="flex-1">
-          <h2 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1">
+          <h2 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-1">
             {flightData.callsign}
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -235,6 +235,10 @@ const CommonCard = memo(({ flightData, isMobileWidth, platform, onClose }: CardP
           </div>
         </div>
       )}
+
+      {/* isMobileWidth的底部遮挡 */}
+      {isMobileWidth && <div className="relative h-[50px]"></div>}
+
     </div>
   )
 
