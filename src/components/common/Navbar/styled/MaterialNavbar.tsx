@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import pubsub from 'pubsub-js'
 import {
   AppBar,
   Toolbar,
@@ -40,7 +41,8 @@ const MaterialNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = 
         setIsShowText(!isCollapsed);
       }, 200);
     }
-  }, [isCollapsed]);
+    pubsub.publish('navbar-collapsed', isCollapsed)
+  }, [isCollapsed])
 
   const handleItemClick = (item: any) => {
     setSelectedValue(item.label);

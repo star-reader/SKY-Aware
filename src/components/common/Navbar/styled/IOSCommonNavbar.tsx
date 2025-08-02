@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import pubsub from 'pubsub-js'
 import { NavbarProps } from '../../types';
 import './IOSCommonNavbar.scss';
 
@@ -17,7 +18,11 @@ const IOSCommonNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> =
     if (onItemClick) {
       onItemClick(item)
     }
-  };
+  }
+
+  useEffect(() => {
+    pubsub.publish('navbar-collapsed', isCollapsed)
+  }, [isCollapsed])
 
   const navbarClasses = [
     'ios-navbar',

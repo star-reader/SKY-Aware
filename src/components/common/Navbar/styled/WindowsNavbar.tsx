@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import pubsub from 'pubsub-js'
 import { Badge, Tooltip, makeStyles } from '@fluentui/react-components';
 import {
   Hamburger,
@@ -35,6 +36,7 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
   const [isShowText, setIsShowText] = useState(true)
 
   useEffect(() => {
+    pubsub.publish('navbar-collapsed', isCollapsed)
     if (isCollapsed) {
       setIsShowText(false)
     } else {
@@ -42,6 +44,7 @@ const WindowsNavbar: React.FC<NavbarProps & { style?: React.CSSProperties }> = (
         setIsShowText(!isCollapsed);
       }, 200)
     }
+
   }, [isCollapsed])
 
   const handleNavItemSelect = (data: OnNavItemSelectData) => {

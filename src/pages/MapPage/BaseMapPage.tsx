@@ -16,7 +16,7 @@ export default memo(({ platform }: { platform: string | undefined }) => {
     const mapRef = useRef<HTMLDivElement>(null)
     const windowWidth = useWindowWidth()
     const currentTheme = useCurrentTheme()
-    let map: mapboxgl.Map
+    let map: mapboxgl.Map | null = null
     let isFirstLoad = true
 
     const generatedStyle = {
@@ -94,14 +94,18 @@ export default memo(({ platform }: { platform: string | undefined }) => {
         }
 
         const bindEventListeners = () => {
+            if (!map) return
             map.on('zoomend', () => {
+                if (!map) return
                 localStorage.setItem('map-zoom', map.getZoom().toString())
                 localStorage.setItem('map-center', map.getCenter().toString())
             })
             map.on('dragend', () => {
+                if (!map) return
                 localStorage.setItem('map-center', map.getCenter().toString())
             })
             map.once('style.load', async () => {
+                if (!map) return
                 if (isFirstLoad) {
                     isFirstLoad = false
                     await addOnlineFlightsMarker(map)
@@ -151,6 +155,8 @@ export default memo(({ platform }: { platform: string | undefined }) => {
                 }
                 geojsonData.features.push(feature)
             }
+
+            if (!map) return
 
             if (map.getSource('online-flights')) {
                 // @ts-ignore
@@ -256,12 +262,33 @@ export default memo(({ platform }: { platform: string | undefined }) => {
     }, [])
 
     useEffect(() => {
+        if (!mapRef.current || !map) return
+        
+        const resizeObserver = new ResizeObserver(() => {
+            if (map) {
+                map.resize();
+            }
+        });
+        
+        resizeObserver.observe(mapRef.current)
+        
+        return () => {
+            resizeObserver.disconnect()
+        }
+    }, [map])
+
+    useEffect(() => {
         pubsub.subscribe('theme-mode', (_, data) => {
             if (map) {
                 map.setConfigProperty('basemap', 'lightPreset', 
                     (data === 'light' || data === '亮色') ? 'day' : 'night'
                 )
             }
+        })
+
+        pubsub.subscribe('navbar-collapsed', () => {
+            if (!map) return
+            map.resize()
         })
 
         pubsub.subscribe('current-tab', (_, data) => {
