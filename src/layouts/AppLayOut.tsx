@@ -163,7 +163,7 @@ export default function AppLayOut() {
                     )    
                 ) : (
                     windowWidth < constants.mobileMaxWidth ? (
-                        <div className="flex h-screen">
+                        <div className="flex h-screen material-navbar-container">
                             <MaterialNavbar
                                 items={navItems}
                                 position="bottom"

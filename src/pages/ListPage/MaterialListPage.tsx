@@ -959,7 +959,6 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
         <Box sx={{ 
           flex: 1, 
           overflow: 'auto',
-          bgcolor: 'background.default'
         }}>
           {selectedItem && (
             'callsign' in selectedItem && 'altitude' in selectedItem
