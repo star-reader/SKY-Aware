@@ -72,10 +72,10 @@ html[aria-label="light"]{
   }
 
   // Material UI Drawer 背景色
-  .MuiDrawer-root, .MuiPaper-root {
-    background-color: #f0f4f8a4 !important;
-    border-right: 1px solid #E6EBF0;
-  }
+  // .MuiDrawer-root, .MuiPaper-root {
+  //   background-color: #f0f4f8a4 !important;
+  //   border-right: 1px solid #E6EBF0;
+  // }
 }
 
 html[aria-label="dark"]{
@@ -92,13 +92,13 @@ html[aria-label="dark"]{
     }
   }
 
-  // Material UI Drawer 背景色
-  .MuiDrawer-root, .MuiPaper-root {
-    background-color: #1c2228 !important;
-    border-right: 1px solid #272F34;
-  }
+  // // Material UI Drawer 背景色
+  // .MuiDrawer-root, .MuiPaper-root {
+  //   background-color: #1c2228 !important;
+  //   border-right: 1px solid #272F34;
+  // }
 
-  .MuiBottomNavigation-root{
-    background-color: #1c22288e !important;
-  }
+  // .MuiBottomNavigation-root{
+  //   background-color: #1c22288e !important;
+  // }
 }

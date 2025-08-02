@@ -29,6 +29,7 @@ import constants from "../configs/constants"
 // 页面组件
 import MapPage from "../pages/MapPage/IndexMapPage";
 import SettingPage from "../pages/SettingPage/IndexSettingPage";
+import ListPage from "../pages/ListPage/IndexListPage";
 
 /**
  * 根据currentTab显示不同的内容，使用style属性控制显示与隐藏，而不是控制组件是否渲染
@@ -46,7 +47,9 @@ const ContentArea = ({ currentTab, platform }: { currentTab: string, platform: s
             <div style={{ display: currentTab === '地图' ? 'block' : 'none', ...positionStyle }}>
                 <MapPage platform={platform} />
             </div>
-            <div style={{ display: currentTab === '列表' ? 'block' : 'none', ...positionStyle }}>列表</div>
+            <div style={{ display: currentTab === '列表' ? 'block' : 'none', ...positionStyle }}>
+                <ListPage />
+            </div>
             <div style={{ display: currentTab === '活动' ? 'block' : 'none', ...positionStyle }}>活动</div>
             <div style={{ display: currentTab === '设置' ? 'block' : 'none', ...positionStyle }}>
                 <SettingPage />
