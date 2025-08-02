@@ -17,14 +17,17 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider
+  Divider,
+  TextField,
+  InputAdornment
 } from "@mui/material"
 import {
   Close as CloseIcon,
   Flight as FlightIcon,
   Headset as HeadsetIcon,
   Info as InfoIcon,
-  Route as RouteIcon
+  Route as RouteIcon,
+  Search as SearchIcon
 } from "@mui/icons-material"
 
 import getControllerRating from '../../utils/getControllerRating'
@@ -68,6 +71,7 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
   const [tabValue, setTabValue] = useState(0)
   const [selectedItem, setSelectedItem] = useState<OnlineFlight | OnlineController | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState<string>("")
   
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
@@ -86,6 +90,21 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
     setDrawerOpen(false)
     setSelectedItem(null)
   }
+
+  // 搜索过滤函数
+  const filterItems = <T extends OnlineFlight | OnlineController>(items: T[]): T[] => {
+    if (!searchQuery.trim()) return items
+    
+    const query = searchQuery.toLowerCase().trim()
+    return items.filter(item => 
+      item.callsign.toLowerCase().includes(query) ||
+      item.name.toLowerCase().includes(query) ||
+      item.cid.toString().includes(query)
+    )
+  }
+
+  const filteredFlights = filterItems(onlineFlights)
+  const filteredControllers = filterItems(onlineControllers)
 
   const renderFlightCard = (flight: OnlineFlight) => (
     <Box 
@@ -805,7 +824,6 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
 
   return (
     <Box sx={{ 
-      height: '100vh', 
       display: 'flex', 
       flexDirection: 'column',
       bgcolor: 'background.default'
@@ -826,7 +844,37 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
           sx={{ mb: 2 }}
         >
           当前在线: {onlineFlights.length} 架航班, {onlineControllers.length} 个管制席位
+          {searchQuery && (
+            <> | 筛选结果: {filteredFlights.length} 架航班, {filteredControllers.length} 个管制席位</>
+          )}
         </Typography>
+        
+        {/* 搜索框 */}
+        <Box sx={{ mb: 2 }}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            placeholder="搜索呼号、姓名或CID..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            size="small"
+            sx={{ 
+              maxWidth: 400,
+              '& .MuiOutlinedInput-root': {
+                height: '36px',
+              }
+            }}
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon sx={{ fontSize: 18 }} />
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
+        </Box>
       </Box>
 
       {/* 标签页 */}
@@ -856,12 +904,12 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
       <Box sx={{ flex: 1, overflow: 'auto' }}>
         <TabPanel value={tabValue} index={0}>
           <Box display="flex" flexWrap="wrap">
-            {onlineFlights.map(renderFlightCard)}
+            {filteredFlights.map(renderFlightCard)}
           </Box>
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <Box display="flex" flexWrap="wrap">
-            {onlineControllers.map(renderControllerCard)}
+            {filteredControllers.map(renderControllerCard)}
           </Box>
         </TabPanel>
       </Box>

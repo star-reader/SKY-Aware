@@ -12,6 +12,7 @@ import {
   DrawerHeader,
   DrawerHeaderTitle,
   Button,
+  Input,
   makeStyles,
   tokens
 } from "@fluentui/react-components"
@@ -19,7 +20,8 @@ import {
   Dismiss24Regular,
   Airplane24Regular,
   Headset24Regular,
-  Globe24Regular
+  Globe24Regular,
+  Search24Regular
 } from "@fluentui/react-icons"
 import getControllerRating from '../../utils/getControllerRating'
 
@@ -48,6 +50,13 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground2,
     marginBottom: "16px",
     wordBreak: "break-word",
+  },
+  searchContainer: {
+    marginBottom: "16px",
+  },
+  searchInput: {
+    width: "100%",
+    maxWidth: "400px",
   },
   tabContainer: {
     marginBottom: "20px",
@@ -251,6 +260,7 @@ export default function WindowsListPage({ onlineFlights, onlineControllers, list
   const [selectedTab, setSelectedTab] = useState<string>("flights")
   const [selectedItem, setSelectedItem] = useState<OnlineFlight | OnlineController | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState<string>("")
 
   const handleTabSelect = (_: SelectTabEvent, data: SelectTabData) => {
     setSelectedTab(data.value as string)
@@ -265,6 +275,21 @@ export default function WindowsListPage({ onlineFlights, onlineControllers, list
     setIsDrawerOpen(false)
     setSelectedItem(null)
   }
+
+  // 搜索过滤函数
+  const filterItems = <T extends OnlineFlight | OnlineController>(items: T[]): T[] => {
+    if (!searchQuery.trim()) return items
+    
+    const query = searchQuery.toLowerCase().trim()
+    return items.filter(item => 
+      item.callsign.toLowerCase().includes(query) ||
+      item.name.toLowerCase().includes(query) ||
+      item.cid.toString().includes(query)
+    )
+  }
+
+  const filteredFlights = filterItems(onlineFlights)
+  const filteredControllers = filterItems(onlineControllers)
 
   const renderFlightCard = (flight: OnlineFlight) => (
     <Card 
@@ -558,18 +583,31 @@ export default function WindowsListPage({ onlineFlights, onlineControllers, list
         </div>
         <Text className={styles.subtitle}>
           当前在线: {onlineFlights.length} 架航班, {onlineControllers.length} 个管制席位
+          {searchQuery && (
+            <> | 筛选结果: {filteredFlights.length} 架航班, {filteredControllers.length} 个管制席位</>
+          )}
         </Text>
+      </div>
+
+      <div className={styles.searchContainer}>
+        <Input
+          className={styles.searchInput}
+          placeholder="搜索呼号、姓名或CID..."
+          value={searchQuery}
+          onChange={(_, data) => setSearchQuery(data.value)}
+          contentBefore={<Search24Regular />}
+        />
       </div>
 
       <div className={styles.tabContainer}>
         <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
           <Tab value="flights">
             <Airplane24Regular style={{ marginRight: "8px" }} />
-            机组 ({onlineFlights.length})
+            机组 ({searchQuery ? filteredFlights.length : onlineFlights.length})
           </Tab>
           <Tab value="controllers">
             <Headset24Regular style={{ marginRight: "8px" }} />
-            管制员 ({onlineControllers.length})
+            管制员 ({searchQuery ? filteredControllers.length : onlineControllers.length})
           </Tab>
         </TabList>
       </div>
@@ -577,8 +615,8 @@ export default function WindowsListPage({ onlineFlights, onlineControllers, list
       <div className={styles.listContainer}>
         <div className={listLayoutType === 'vertical' ? styles.verticalLayout : styles.horizontalLayout}>
           {selectedTab === "flights" 
-            ? onlineFlights.map(renderFlightCard)
-            : onlineControllers.map(renderControllerCard)
+            ? filteredFlights.map(renderFlightCard)
+            : filteredControllers.map(renderControllerCard)
           }
         </div>
       </div>
