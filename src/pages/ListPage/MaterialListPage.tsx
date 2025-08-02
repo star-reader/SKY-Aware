@@ -475,7 +475,7 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
   const renderFlightDetails = (flight: OnlineFlight) => (
     <Box sx={{ p: 2 }}>
       {/* 头部信息 */}
-      <Box sx={{ mb: 2, p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
+      <Box sx={{ mb: 2, p: 1.5, borderRadius: 1 }}>
         <Typography variant="h6" fontWeight="bold" color="text.primary">
           {flight.callsign}
         </Typography>
@@ -615,7 +615,7 @@ export default function MaterialListPage({ onlineFlights, onlineControllers, lis
                 <ListItem sx={{ py: 0.25, px: 0 }}>
                   <ListItemText 
                     primary="巡航高度" 
-                    secondary={`${flight.flight_plan.altitude} ft`}
+                    secondary={`${flight.flight_plan.altitude}`}
                     primaryTypographyProps={{ variant: 'body2', color: 'text.secondary' }}
                     secondaryTypographyProps={{ variant: 'body1', fontWeight: 'medium', color: 'text.primary' }}
                   />

@@ -186,13 +186,13 @@ export default function IOSListPage({ onlineFlights, onlineControllers, listLayo
     >
       {listLayoutType === 'vertical' ? (
         <>
+          <div className="ios-card__aircraft-tag">
+            {flight.flight_plan?.aircraft || 'N/A'}
+          </div>
+          
           <div className="ios-card__header">
             <div className="ios-card__callsign">{flight.callsign}</div>
             <div className="ios-card__name">{flight.name}</div>
-          </div>
-          
-          <div className="ios-card__badge ios-card__badge--primary">
-            {flight.flight_plan?.aircraft || 'N/A'}
           </div>
           
           <div className="ios-card__info-vertical">
@@ -214,13 +214,14 @@ export default function IOSListPage({ onlineFlights, onlineControllers, listLayo
         </>
       ) : (
         <>
+          <div className="ios-card__aircraft-tag">
+            {flight.flight_plan?.aircraft || 'N/A'}
+          </div>
+          
           <div className="ios-card__header">
             <div>
               <div className="ios-card__callsign">{flight.callsign}</div>
               <div className="ios-card__name">{flight.name}</div>
-            </div>
-            <div className="ios-card__badge">
-              {flight.flight_plan?.aircraft || 'N/A'}
             </div>
           </div>
           

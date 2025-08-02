@@ -162,41 +162,57 @@
 // 卡片样式
 .ios-card {
   background-color: #ffffff;
-  border-radius: 14px;
-  border: 1px solid transparent;
-  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  padding: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    pointer-events: none;
-  }
-
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    border-color: rgba(0, 122, 255, 0.1);
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   }
 
   &:active {
-    transform: translateY(-1px) scale(0.98);
+    background-color: #e9ecef;
   }
 
   &--vertical {
-    aspect-ratio: 3/3.8;
+    aspect-ratio: 3/3.6;
     display: flex;
     flex-direction: column;
     text-align: center;
+  }
+
+  &__aircraft-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #007aff, #0056cc);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    @media (max-width: 768px) {
+      font-size: 9px;
+      padding: 3px 6px;
+      top: 6px;
+      right: 6px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 8px;
+      padding: 2px 5px;
+    }
   }
 
   &--horizontal {
@@ -214,6 +230,23 @@
       align-items: center;
       text-align: center;
       margin-bottom: 8px;
+      margin-top: 20px; // 为上方的机型tag留出空间
+    }
+
+    @media (max-width: 768px) {
+
+      .ios-card--vertical & {
+        margin-top: 16px;
+        padding-right: 35px;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      .ios-card--vertical & {
+        margin-top: 14px;
+        padding-right: 30px;
+      }
     }
   }
 
@@ -400,11 +433,21 @@ html[aria-label="dark"] {
 
   .ios-card {
     background-color: #1c1c1e;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    border-color: #38383a;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 
     &:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-      border-color: rgba(10, 132, 255, 0.3);
+      background-color: #2c2c2e;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    &:active {
+      background-color: #38383a;
+    }
+
+    &__aircraft-tag {
+      background: linear-gradient(135deg, #0a84ff, #0056cc);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     &__callsign {
@@ -457,8 +500,6 @@ html[aria-label="dark"] {
 // 响应式设计
 @media (max-width: 768px) {
   .ios-listpage {
-    padding: 12px 8px;
-
     &__title {
       font-size: 24px;
     }
@@ -600,7 +641,6 @@ html[aria-label="dark"] {
 // 超小屏幕优化
 @media (max-width: 480px) {
   .ios-listpage {
-    padding: 10px 6px;
 
     &__title {
       font-size: 22px;
@@ -774,7 +814,7 @@ html[aria-label="dark"] {
 
 .ios-drawer {
   background-color: #ffffff;
-  border-radius: 16px 16px 0 0;
+  border-radius: 12px 12px 0 0;
   width: 100%;
   max-height: 90vh;
   overflow: hidden;
@@ -784,7 +824,7 @@ html[aria-label="dark"] {
   flex-direction: column;
 
   @media (min-width: 768px) {
-    border-radius: 16px;
+    border-radius: 10px;
     width: 400px;
     max-height: 80vh;
     animation: ios-drawer-slide-left 0.3s ease;
@@ -798,28 +838,33 @@ html[aria-label="dark"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 16px 20px;
     border-bottom: 1px solid #e5e5ea;
     background-color: #f8f9fa;
-    border-radius: 16px 16px 0 0;
+    border-radius: 12px 12px 0 0;
 
     @media (min-width: 768px) {
-      border-radius: 16px 16px 0 0;
+      border-radius: 10px 10px 0 0;
+      padding: 18px 20px;
     }
   }
 
   &__title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: #1a1a1a;
     margin: 0;
     flex: 1;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
   }
 
   &__close {
-    width: 32px;
-    height: 32px;
-    border-radius: 16px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
     border: none;
     background-color: #e5e5ea;
     color: #6c757d;
@@ -827,21 +872,20 @@ html[aria-label="dark"] {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
     flex-shrink: 0;
 
     &:hover {
       background-color: #d1d1d6;
-      transform: scale(1.05);
     }
 
     &:active {
-      transform: scale(0.95);
+      background-color: #c7c7cc;
     }
 
     svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
     }
   }
 
@@ -854,37 +898,41 @@ html[aria-label="dark"] {
 
 // 详情内容样式
 .ios-detail-content {
-  padding: 20px;
+  padding: 16px 20px 20px;
+
+  @media (min-width: 768px) {
+    padding: 20px;
+  }
 }
 
 .ios-detail-header {
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 8px;
+  padding: 18px;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   border: 1px solid #e9ecef;
 
   &__callsign {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     letter-spacing: -0.5px;
   }
 
   &__name {
-    font-size: 14px;
+    font-size: 16px;
     color: #6c757d;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     font-weight: 500;
   }
 
   &__badge {
     display: inline-block;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
     font-weight: 600;
     background: linear-gradient(135deg, #007aff, #0056cc);
     color: #ffffff;
@@ -896,28 +944,28 @@ html[aria-label="dark"] {
 }
 
 .ios-detail-section {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 
   &__title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: #1a1a1a;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
   &__icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     color: #007aff;
   }
 }
 
 .ios-detail-list {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #e9ecef;
   overflow: hidden;
 }
@@ -926,7 +974,7 @@ html[aria-label="dark"] {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 16px;
+  padding: 14px 16px;
   border-bottom: 1px solid #f1f3f4;
   gap: 16px;
 
@@ -940,7 +988,7 @@ html[aria-label="dark"] {
   }
 
   &__label {
-    font-size: 13px;
+    font-size: 14px;
     color: #6c757d;
     font-weight: 600;
     text-transform: uppercase;
@@ -950,7 +998,7 @@ html[aria-label="dark"] {
   }
 
   &__value {
-    font-size: 15px;
+    font-size: 16px;
     color: #1a1a1a;
     font-weight: 600;
     text-align: right;
@@ -958,10 +1006,10 @@ html[aria-label="dark"] {
 
     &--route {
       font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.4;
       background-color: #f8f9fa;
-      padding: 8px;
+      padding: 10px 12px;
       border-radius: 6px;
       margin-top: 8px;
       text-align: left;
@@ -970,11 +1018,11 @@ html[aria-label="dark"] {
 
     &--atis {
       font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.4;
       background-color: #f8f9fa;
       padding: 12px;
-      border-radius: 8px;
+      border-radius: 6px;
       white-space: pre-line;
       text-align: left;
     }
