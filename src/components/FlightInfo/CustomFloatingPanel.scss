@@ -1,0 +1,167 @@
+// 背景遮罩
+.custom-floating-panel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transition: opacity 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  &.dragging {
+    transition: none;
+  }
+}
+
+// 浮动面板
+.custom-floating-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.08);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 200px;
+  max-height: 100vh;
+  
+  // 动画过渡
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  
+  &.animating {
+    // 动画中保持过渡效果
+  }
+
+  &.dragging {
+    transition: none;
+    user-select: none;
+  }
+
+  // 安全区域适配
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+// 拖拽手柄
+.custom-floating-panel-handle {
+  padding: 12px 0 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: grab;
+  touch-action: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.custom-floating-panel-handle-bar {
+  width: 36px;
+  height: 4px;
+  background: #c7c7cc;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+
+  .custom-floating-panel:hover & {
+    background: #a8a8b0;
+  }
+
+  .custom-floating-panel.dragging & {
+    background: #007aff;
+    width: 48px;
+  }
+}
+
+// 内容区域
+.custom-floating-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  
+  // 阻止内容滚动时的橡皮筋效果影响面板拖拽
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  scrollbar-width: none;
+}
+
+// 夜间模式
+html[aria-label="dark"] {
+  .custom-floating-panel {
+    background: #1c1c1e;
+    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .custom-floating-panel-backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .custom-floating-panel-handle-bar {
+    background: #48484a;
+
+    .custom-floating-panel:hover & {
+      background: #636366;
+    }
+
+    .custom-floating-panel.dragging & {
+      background: #0a84ff;
+    }
+  }
+}
+
+// 响应式适配
+@media (max-width: 768px) {
+  .custom-floating-panel {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .custom-floating-panel-handle {
+    padding: 8px 0 6px;
+  }
+
+  .custom-floating-panel-handle-bar {
+    width: 32px;
+    height: 3px;
+  }
+}
+
+// 超小屏幕适配
+@media (max-width: 480px) {
+  .custom-floating-panel {
+    border-radius: 16px 16px 0 0;
+  }
+
+  .custom-floating-panel-handle {
+    padding: 6px 0 4px;
+  }
+}
+
+// 高性能动画
+.custom-floating-panel {
+  will-change: transform, height;
+  contain: layout style paint;
+}
+
+.custom-floating-panel-backdrop {
+  will-change: opacity;
+  contain: layout style paint;
+}
+
+// 防止选中文本
+.custom-floating-panel.dragging * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}

@@ -3,7 +3,7 @@
 
 .ios-listpage {
   min-height: 100vh;
-  background-color: #f2f2f7;
+  // background-color: #f2f2f7;
   padding: 16px 12px;
   padding-bottom: env(safe-area-inset-bottom, 16px);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
@@ -13,7 +13,7 @@
   }
 
   &__title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     margin: 0 0 6px 0;
     color: #000;
@@ -21,7 +21,7 @@
   }
 
   &__subtitle {
-    font-size: 13px;
+    font-size: 15px;
     color: #8e8e93;
     margin: 0;
     line-height: 1.3;
@@ -72,7 +72,7 @@
     flex: 1;
     border: none;
     outline: none;
-    font-size: 15px;
+    font-size: 16px;
     color: #000;
     background: transparent;
     
@@ -102,7 +102,7 @@
     padding: 10px 12px;
     border: none;
     background: transparent;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: #6c757d;
     cursor: pointer;
@@ -133,12 +133,12 @@
   }
 
   &__icon {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
   }
 
   &__count {
-    font-size: 12px;
+    font-size: 13px;
     opacity: 0.8;
     font-weight: 400;
   }
@@ -147,9 +147,14 @@
 // 网格布局
 .ios-grid {
   &--horizontal {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    
+    & > * {
+      flex: 1 1 280px;
+      min-width: 280px;
+    }
   }
 
   &--vertical {
@@ -193,7 +198,7 @@
     right: 8px;
     padding: 6px 12px;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
     transition: all 0.2s ease;
@@ -202,14 +207,14 @@
     z-index: 2;
 
     @media (max-width: 768px) {
-      font-size: 10px;
+      font-size: 11px;
       padding: 5px 10px;
       top: 6px;
       right: 6px;
     }
 
     @media (max-width: 480px) {
-      font-size: 9px;
+      font-size: 10px;
       padding: 4px 8px;
     }
   }
@@ -250,7 +255,7 @@
   }
 
   &__callsign {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: #1a1a1a;
     margin-bottom: 2px;
@@ -258,18 +263,18 @@
     letter-spacing: -0.3px;
 
     .ios-card--vertical & {
-      font-size: 16px;
+      font-size: 18px;
     }
   }
 
   &__name {
-    font-size: 12px;
+    font-size: 14px;
     color: #6c757d;
     line-height: 1.2;
     font-weight: 500;
 
     .ios-card--vertical & {
-      font-size: 10px;
+      font-size: 12px;
       margin-bottom: 8px;
     }
   }
@@ -277,7 +282,7 @@
   &__badge {
     padding: 6px 12px;
     border-radius: 8px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
     transition: all 0.2s ease;
@@ -317,15 +322,29 @@
   }
 
   &__info-text {
-    font-size: 11px;
+    font-size: 14px;
     color: #6c757d;
     flex: 1;
     font-weight: 500;
+    line-height: 1.3;
     
     &:last-child {
       text-align: right;
       color: #495057;
       font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 15px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 16px;
+      font-weight: 600;
+      
+      &:last-child {
+        font-weight: 700;
+      }
     }
   }
 
@@ -351,7 +370,7 @@
   }
 
   &__info-label {
-    font-size: 9px;
+    font-size: 10px;
     color: #6c757d;
     text-transform: uppercase;
     letter-spacing: 0.6px;
@@ -360,13 +379,13 @@
   }
 
   &__info-value {
-    font-size: 11px;
+    font-size: 12px;
     color: #1a1a1a;
     font-weight: 700;
     line-height: 1.1;
 
     &--route {
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 600;
     }
   }
@@ -377,7 +396,7 @@
 // 夜间模式样式
 html[aria-label="dark"] {
   .ios-listpage {
-    background-color: #000000;
+    // background-color: #000000;
 
     &__title {
       color: #ffffff;
@@ -553,8 +572,12 @@ html[aria-label="dark"] {
 
   .ios-grid {
     &--horizontal {
-      grid-template-columns: 1fr;
       gap: 8px;
+      
+      & > * {
+        flex: 1 1 100%;
+        min-width: 100%;
+      }
     }
 
     &--vertical {
@@ -580,17 +603,17 @@ html[aria-label="dark"] {
     }
 
     &__name {
-      font-size: 11px;
+      font-size: 12px;
 
       .ios-card--vertical & {
-        font-size: 9px;
+        font-size: 11px;
         margin-bottom: 6px;
       }
     }
 
     &__badge {
       padding: 3px 8px;
-      font-size: 9px;
+      font-size: 10px;
 
       .ios-card--vertical & {
         margin-bottom: 8px;
@@ -621,15 +644,15 @@ html[aria-label="dark"] {
     }
 
     &__info-label {
-      font-size: 8px;
+      font-size: 10px;
       margin-bottom: 1px;
     }
 
     &__info-value {
-      font-size: 10px;
+      font-size: 11px;
 
       &--route {
-        font-size: 8px;
+        font-size: 10px;
       }
     }
   }
@@ -663,7 +686,7 @@ html[aria-label="dark"] {
     }
 
     &__count {
-      font-size: 9px;
+      font-size: 11px;
     }
   }
 
@@ -689,31 +712,31 @@ html[aria-label="dark"] {
     }
 
     &__name {
-      font-size: 10px;
+      font-size: 11px;
 
       .ios-card--vertical & {
-        font-size: 8px;
+        font-size: 10px;
       }
     }
 
     &__badge {
       padding: 2px 6px;
-      font-size: 8px;
+      font-size: 10px;
     }
 
     &__info-text {
-      font-size: 9px;
+      font-size: 11px;
     }
 
     &__info-label {
-      font-size: 7px;
+      font-size: 9px;
     }
 
     &__info-value {
-      font-size: 9px;
+      font-size: 10px;
 
       &--route {
-        font-size: 7px;
+        font-size: 9px;
       }
     }
   }
@@ -737,7 +760,10 @@ html[aria-label="dark"] {
 
   .ios-grid {
     &--horizontal {
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      & > * {
+        flex: 1 1 320px;
+        min-width: 320px;
+      }
     }
 
     &--vertical {

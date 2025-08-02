@@ -1,6 +1,6 @@
 import { memo } from "react"
 import { Card, CardContent, Chip } from "@mui/material"
-import { FloatingPanel } from "antd-mobile"
+import CustomFloatingPanel from "./CustomFloatingPanel"
 import { PlatformType } from "../../utils/getPlatform"
 import "./PlatformStyles.scss"
 
@@ -30,7 +30,7 @@ const CommonCard = memo(({ flightData, isMobileWidth, platform, onClose }: CardP
   }
 
   const cardContent = (
-    <div className={`${getPlatformStyles()} w-full bg-white dark:bg-gray-900`}>
+    <div className={`${getPlatformStyles()} w-full`}>
       {/* Header */}
       <div className="flex justify-between items-start px-4 py-3 border-b border-gray-200 dark:border-gray-700">
         <div className="flex-1">
@@ -242,19 +242,12 @@ const CommonCard = memo(({ flightData, isMobileWidth, platform, onClose }: CardP
     </div>
   )
 
-  // 移动端使用 FloatingPanel
+  // 移动端使用自定义浮动面板
   if (isMobileWidth) {
-    const anchors = [100, window.innerHeight * 0.4, window.innerHeight * 0.8]
-
     return (
-      <FloatingPanel 
-        anchors={anchors}
-        onHeightChange={(height, animating) => {
-          // 当拖拽到最低点时关闭
-          if (height <= anchors[0] + 50 && !animating) {
-            onClose?.()
-          }
-        }}
+      <CustomFloatingPanel 
+        onClose={onClose}
+        initialHeight={0.8}
       >
         <div style={{ padding: '16px 0' }}>
           {platform === 'android' ? (
@@ -267,7 +260,7 @@ const CommonCard = memo(({ flightData, isMobileWidth, platform, onClose }: CardP
             cardContent
           )}
         </div>
-      </FloatingPanel>
+      </CustomFloatingPanel>
     )
   }
 

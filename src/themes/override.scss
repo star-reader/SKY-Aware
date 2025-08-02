@@ -106,3 +106,9 @@ html[aria-label="dark"]{
     }
   }
 }
+
+
+// adm的z-index调整
+.adm-floating-panel{
+  z-index: 1001;
+}

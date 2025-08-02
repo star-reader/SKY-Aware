@@ -79,17 +79,7 @@ export default memo(() => {
             window.removeEventListener('closeFlightCard', handleCustomClose)
         }
     }, [isShow])
-
-    // 调试信息
-    console.log('FlightInfo Debug:', {
-        isShow,
-        hasData: !!data,
-        platform,
-        windowWidth,
-        isMobileWidth,
-        mobileMaxWidth: constants.mobileMaxWidth
-    })
-
+    
     if (!isShow || !data) {
         return null
     }

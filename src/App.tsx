@@ -70,6 +70,10 @@ export default () => {
         setTheme(webLightTheme)
         setIsDark(false)
         document.documentElement.setAttribute('aria-label', 'light')
+        document.documentElement.setAttribute(
+          'data-prefers-color-scheme',
+          'light'
+        )
         setMuiTheme(createTheme({
           palette: {
             mode: 'light'
