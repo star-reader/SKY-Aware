@@ -10,6 +10,7 @@ import endpoints from './configs/apis/endpoints'
 import useGraphqlStore from './store/useGraphqlStore'
 import useOnlineStore from './store/useOnlineStore';
 import graphql from './configs/apis/graphql';
+import skyAwareDB from './services/storageServices/indexedDB'
 
 
 export default () => {
@@ -164,6 +165,22 @@ export default () => {
     }
     initGraphql()
 
+  }, [])
+
+  // db相关effect
+  useEffect(() => {
+    const initDB = async () => {
+      await skyAwareDB.init()
+      // 测试一下行不行
+      // await skyAwareDB.setAirlinesData([
+      //     { icao: 'CCA', name: 'Air China' },
+      //     { icao: 'CSN', name: 'China Southern Airlines' }
+      // ], '1.0.0')
+      // 行👍！
+    }
+    initDB()
+
+    
   }, [])
 
 
