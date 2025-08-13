@@ -173,8 +173,7 @@ export default () => {
       await skyAwareDB.init()
       // 测试一下行不行
       // await skyAwareDB.setAirlinesData([
-      //     { icao: 'CCA', name: 'Air China' },
-      //     { icao: 'CSN', name: 'China Southern Airlines' }
+      //     { icao: 'CCA', name: 'Air China' }
       // ], '1.0.0')
       // 行👍！
     }
