@@ -31,7 +31,6 @@ export default async (): Promise<PlatformType> => {
     try {
         // 检查是否在 Tauri 环境中
         const isTauriEnv = await checkTauriEnvironment()
-        console.log('is tauri?', isTauriEnv)
         if (isTauriEnv) {
             try {
                 const tauriPlatform = platform()

@@ -46,3 +46,10 @@ interface OnlineFlight {
   logon_time: string;
   flight_plan: FlightPlan;
 }
+
+
+interface Log {
+  time: Date;
+  type: 'info' | 'warning' | 'error';
+  message: string;
+}
