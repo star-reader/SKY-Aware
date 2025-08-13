@@ -167,7 +167,6 @@ export default () => {
   }, [])
 
 
-
   return (
     <div id="global-entry-hooks-provider" 
       className="w-full h-full"
