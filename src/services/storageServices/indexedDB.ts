@@ -214,6 +214,31 @@ class SkyAwareDB {
     }
 
     /**
+     * 根据类型获取飞行情报区列表
+     * @param {('fir' | 'uir' | 'app')} type - FIR 类型
+     * @returns {Promise<IndexedDBFIRs[]>} 返回匹配类型的 FIR 数组
+     * @throws {Error} 当数据库未初始化时抛出错误
+     */
+    async getFirsByType(type: 'fir' | 'uir' | 'app'): Promise<IndexedDBFIRs[]> {
+        const firs = await this.getAllFirs()
+        if (!firs) return []
+        return firs.filter(fir => fir.type === type)
+    }
+
+    /**
+     * 根据 ICAO 代码和类型获取特定飞行情报区
+     * @param {string} icao - FIR 的 ICAO 代码（如：'ZBPE'）
+     * @param {('fir' | 'uir' | 'app')} type - FIR 类型
+     * @returns {Promise<IndexedDBFIRs | null>} 返回匹配的 FIR 对象，如果未找到返回 null
+     * @throws {Error} 当数据库未初始化时抛出错误
+     */
+    async getFirByIcaoAndType(icao: string, type: 'fir' | 'uir' | 'app'): Promise<IndexedDBFIRs | null> {
+        const firs = await this.getAllFirs()
+        if (!firs) return null
+        return firs.find(fir => fir.icao === icao && fir.type === type) || null
+    }
+
+    /**
      * 设置飞行情报区数据和版本
      * @param {IndexedDBFIRs[]} data - FIR 数据数组
      * @param {string} version - 数据版本号（如：'1.0.0'）

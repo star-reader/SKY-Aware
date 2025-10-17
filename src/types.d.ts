@@ -66,6 +66,7 @@ interface IndexedDBAirports {
 }
 
 interface IndexedDBFIRs {
+  type: 'fir' | 'uir' | 'app'
   icao: string;
   name: string;
   geojson: GeoJSON.FeatureCollection;
